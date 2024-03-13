@@ -1,12 +1,19 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Loginform from './component/Loginform/Loginform';
+import SignUp from './component/SignUp/SignUp';
+import Profile from './component/ProfileUp/ProfileUp'
+import './App.css';
 
 function App() {
-
   return (
-    <>
-      <p>HELLO THEIR WELCOME TO WEB APP</p>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Loginform />} />
+        <Route path="/register" element={<SignUp />} />
+        <Route path="/ProfileUp" element={<Profile/>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
