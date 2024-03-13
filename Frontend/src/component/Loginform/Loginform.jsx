@@ -4,7 +4,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 
 export default function Loginform() {
   return (
-    <div class name='wrapper'>
+    <div className='wrapper'>
       <form action="">
         <h1>Login</h1>
         <div className="input-box">
