@@ -1,12 +1,9 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import Loginform from './component/Loginform/Loginform';
-import SignUp from './component/SignUp/SignUp';
-import Profile from './component/ProfileUp/ProfileUp'
-import Landingpage from "./pages/Landingpage.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
-import Error from "./pages/Error.jsx";
-import { useEffect, useContext, useState } from 'react';
-import { LoginContext } from './component/contexProvider/Context.jsx';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Loginform from './component/Loginform';
+import SignUp from './component/SignUp';
+import Profile from './component/ProfileUp'
+import Card1 from "./component/Card1";
+import './App.css';
 
 function App() {
 
@@ -60,9 +57,10 @@ function App() {
                 <Route path="/login" element={<Loginform />} />
                 <Route path="/dash" element={<Dashboard />} />
                 <Route path="/register" element={<SignUp />} />
-                <Route path="/ProfileUp" element={<Profile/>} />
+                <Route path="/ProfileUp" element={<Profile />} />
                 <Route path='*' element={<Error />} />
-              </Routes>
+                <Route path="/product_card" element={<Card1/>}/>
+      </Routes>
             </BrowserRouter>
           </>
         ) : <div><h1>Loading...</h1></div>
