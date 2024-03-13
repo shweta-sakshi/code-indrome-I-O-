@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaUser, FaLock } from "react-icons/fa";
 import Button from "./Button";
@@ -123,6 +124,7 @@ export default function Loginform() {
         </a>
         <button
           type="submit"
+          onClick={loginUser}
           className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none hover:bg-blue-400 "
         >
           Login
@@ -131,7 +133,7 @@ export default function Loginform() {
           <p>Don't have an account?</p>
         </div>
         <div className="flex items-center justify-center">
-          <Button info="Register Here" onClick={loginUser} />
+          <Link to="/register"><Button info="Register Here"  /></Link>
         </div>
       </form>
       <ToastContainer />

@@ -1,9 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { useEffect, useContext, useState } from 'react';
+import { LoginContext } from './component/contexProvider/Context.jsx';
 import Loginform from './component/Loginform';
 import SignUp from './component/SignUp';
+import Dashboard from "./pages/Dashboard.jsx";
+import Error from "./pages/Error.jsx";
 import Profile from './component/ProfileUp'
+import Landingpage from "./pages/Landingpage.jsx";
 import Card1 from "./component/Card1";
-import './App.css';
 
 function App() {
 
@@ -58,8 +62,8 @@ function App() {
                 <Route path="/dash" element={<Dashboard />} />
                 <Route path="/register" element={<SignUp />} />
                 <Route path="/ProfileUp" element={<Profile />} />
-                <Route path='*' element={<Error />} />
                 <Route path="/product_card" element={<Card1/>}/>
+                <Route path='*' element={<Error />} />
       </Routes>
             </BrowserRouter>
           </>
