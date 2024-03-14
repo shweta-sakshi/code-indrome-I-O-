@@ -6,13 +6,10 @@ import SignUp from './component/SignUp';
 import Profile from './component/UserProfile';
 import Dashboard from "./pages/Dashboard.jsx";
 import Error from "./pages/Error.jsx";
-import Profile from './component/ProfileUp'
 import Landingpage from "./pages/Landingpage.jsx";
 import Card1 from "./component/Card1";
 import Sellerprofile from './component/Sellerprofile';
-import Userprofile from './component/UserProfile';
 import Paymentdetail from './component/Paymentdetail';
-
 
 function App() {
 

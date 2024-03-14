@@ -1,5 +1,4 @@
 import React from 'react'
-import './Seller.css';
 
 const Seller = () => {
     return (
@@ -20,8 +19,8 @@ const Seller = () => {
                     <input type="Password" placeholder='Password' required />
                 </div>
                 <div class name="input-box">
-                    <input type=" Confirm Password" placeholder=' Confirm Password' required />  
-                   
+                    <input type=" Confirm Password" placeholder=' Confirm Password' required />
+
                 </div>
                 <div class name="input-box" >
                     <input type="Location address" placeholder='Location address' required />
@@ -30,11 +29,11 @@ const Seller = () => {
 
                 </div>
                 <div class name="input-box">
-                    <input type="zip code" placeholder='Zip code' required />  
-                    
+                    <input type="zip code" placeholder='Zip code' required />
+
                 </div>
                 <div>
-                <button type="submit">signUp</button>
+                    <button type="submit">signUp</button>
                     <p>Already have an account?<a href="/">sign in </a></p>
                 </div>
 
