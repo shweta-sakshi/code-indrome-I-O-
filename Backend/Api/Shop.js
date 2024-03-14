@@ -7,7 +7,7 @@ const sendMail = require("../utils/sendMail.js");
 const sendSellerToken = require("../utils/sendSellerToken.js");
 const Shop = require("../Models/shopSchema.js");
 const { authenticateSeller } = require("../Middleware/authentication.js");
-const { upload } = require("../Middleware/multer.js");
+const upload = require("../Middleware/multer.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
 const ErrorHandler = require("../Middleware/error.js");
 const fs = require("fs");
@@ -187,7 +187,7 @@ router.get("/validseller", authenticateSeller, async (req, res) => {
 
 //seller signout
 //if seller doesn't have token then we can't logout them
-router.get("/sellerSignOut", authenticate, async (req, res) => {
+router.get("/sellerSignOut", authenticateSeller, async (req, res) => {
     try {
 
         //clear token

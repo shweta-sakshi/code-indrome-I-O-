@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from 'react';
+import axios from "axios";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaUser, FaLock } from "react-icons/fa";
@@ -9,79 +10,79 @@ export default function Loginform() {
 
   const [passShow, setPassShow] = useState(false)
 
-    const [inpval, setInpval] = useState({
-        email: "",
-        password: "",
-    });
+  const [inpval, setInpval] = useState({
+    email: "",
+    password: "",
+  });
 
-    const history = useNavigate();
+  const history = useNavigate();
 
-    const setVal = (e) => {
-        // console.log(e.target.value);
-        const { name, value } = e.target;
+  const setVal = (e) => {
+    // console.log(e.target.value);
+    const { name, value } = e.target;
 
-        setInpval(() => {
-            return {
-                ...inpval,
-                [name]: value
-            }
+    setInpval(() => {
+      return {
+        ...inpval,
+        [name]: value
+      }
+    })
+  };
+
+  //function call when user hit the login button
+  const loginUser = async (e) => {
+    e.preventDefault();
+
+    const { email, password } = inpval;
+
+    if (email === "") {
+      toast.error("email is required!", {
+        position: "top-center"
+      });
+    } else if (!email.includes("@")) {
+      toast.warning("includes @ in your email!", {
+        position: "top-center"
+      });
+    } else if (password === "") {
+      toast.error("password is required!", {
+        position: "top-center"
+      });
+    } else if (password.length < 6) {
+      toast.error("password must be 6 char!", {
+        position: "top-center"
+      });
+    } else {
+
+      //user credential will be check with database.
+      axios.post("/api/login",
+        {
+          email: email,
+          password: password
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
         })
-    };
-
-    //function call when user hit the login button
-    const loginUser = async (e) => {
-        e.preventDefault();
-
-        const { email, password } = inpval;
-
-        if (email === "") {
-            toast.error("email is required!", {
-                position: "top-center"
-            });
-        } else if (!email.includes("@")) {
-            toast.warning("includes @ in your email!", {
-                position: "top-center"
-            });
-        } else if (password === "") {
-            toast.error("password is required!", {
-                position: "top-center"
-            });
-        } else if (password.length < 6) {
-            toast.error("password must be 6 char!", {
-                position: "top-center"
-            });
-        } else {
-
-            //user credential will be check with database.
-            const data = await fetch("/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email, password
-                })
-            });
-
-            const res = data.json();
-
-            if (res.status === 201) {
-                localStorage.setItem("usersdatatoken", res.result.token);
-                history("/dash");
-                setInpval({ ...inpval, email: "", password: "" });
-            } else {
-                toast.error("Invalid Credential", {
-                    position: "top-center"
-                });
-            }
-        }
+        .then(res => {
+          localStorage.setItem("usersdatatoken", res.result.token);
+          history("/dash");
+          setInpval({ ...inpval, email: "", password: "" });
+        })
+        .catch(error => {
+          console.log(error)
+          toast.error("Invalid Credential", {
+            position: "top-center"
+          });
+        });
     }
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form className="bg-white p-8 rounded shadow-md">
         <div className="text-4xl text-center mb-8">Login</div>
-        
+
         <div className="mb-4  ">
           <div className="flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2 ">
             <FaUser className="ml-2" />
@@ -133,7 +134,7 @@ export default function Loginform() {
           <p>Don't have an account?</p>
         </div>
         <div className="flex items-center justify-center">
-          <Link to="/register"><Button info="Register Here"  /></Link>
+          <Link to="/register"><Button info="Register Here" /></Link>
         </div>
       </form>
       <ToastContainer />

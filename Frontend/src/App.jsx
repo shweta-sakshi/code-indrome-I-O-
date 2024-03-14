@@ -64,7 +64,7 @@ function App() {
                 <Route path="/ProfileUp" element={<Profile />} />
                 <Route path="/product_card" element={<Card1/>}/>
                 <Route path='*' element={<Error />} />
-      </Routes>
+              </Routes>
             </BrowserRouter>
           </>
         ) : <div><h1>Loading...</h1></div>
