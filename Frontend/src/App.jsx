@@ -8,6 +8,8 @@ import Error from "./pages/Error.jsx";
 import Profile from './component/ProfileUp'
 import Landingpage from "./pages/Landingpage.jsx";
 import Card1 from "./component/Card1";
+import Sellerprofile from './component/Sellerprofile';
+import Userprofile from './component/Userprofile';
 
 function App() {
 
@@ -52,8 +54,8 @@ function App() {
 
   return (
     <>
-     {
-      data ? (
+      {
+        data ? (
           <>
             <BrowserRouter>
               <Routes>
@@ -62,13 +64,15 @@ function App() {
                 <Route path="/dash" element={<Dashboard />} />
                 <Route path="/register" element={<SignUp />} />
                 <Route path="/ProfileUp" element={<Profile />} />
-                <Route path="/product_card" element={<Card1/>}/>
+                <Route path="/product_card" element={<Card1 />} />
+                <Route path="/sellerprofile" element={<Sellerprofile />} />
+                <Route path="/userprofile" element={<Userprofile />} />
                 <Route path='*' element={<Error />} />
-      </Routes>
+              </Routes>
             </BrowserRouter>
           </>
         ) : <div><h1>Loading...</h1></div>
-     }
+      }
     </>
   )
 }
