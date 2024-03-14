@@ -2,16 +2,16 @@ const express = require('express');
 const Users = require("../Models/userSchema");
 const router = new express.Router();
 const bcrypt = require("bcryptjs");
-const authenticate = require("../Middleware/authentication.js");
-const upload = require("../Middleware/multer.js");
+const { authenticate } = require("../Middleware/authentication.js");
+const { upload } = require("../Middleware/multer.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
 const ErrorHandler = require("../Middleware/error.js");
 const sendMail = require("../utils/sendMail.js");
-const sendToken = require("../utils/sendToken.js");
+const { sendToken } = require("../utils/sendToken.js");
 const fs = require("fs");
 
 //for user registration
-router.post("/register", upload.single("file"), async (req, res) => {
+router.post("/SignUp", upload.single("file"), async (req, res) => {
 
     const { fname, email, phone, password, cpassword } = req.body
 
@@ -140,7 +140,7 @@ router.post("/activation", CatchAsyncErrors(async (req, res, next) => {
 }))
 
 //for user Login
-router.post("/login", async (req, res) => {
+router.post("/SignIn", async (req, res) => {
 
     const { email, password } = req.body
 

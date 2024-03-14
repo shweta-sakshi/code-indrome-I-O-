@@ -3,6 +3,7 @@ import { useEffect, useContext, useState } from 'react';
 import { LoginContext } from './component/contexProvider/Context.jsx';
 import Loginform from './component/Loginform';
 import SignUp from './component/SignUp';
+import Profile from './component/UserProfile';
 import Dashboard from "./pages/Dashboard.jsx";
 import Error from "./pages/Error.jsx";
 import Profile from './component/ProfileUp'
