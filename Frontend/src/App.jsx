@@ -3,7 +3,7 @@ import { useEffect, useContext, useState } from 'react';
 import { LoginContext } from './component/contexProvider/Context.jsx';
 import Loginform from './component/Loginform';
 import SignUp from './component/SignUp';
-import Profile from './component/UserProfile';
+import Profile from './component/Userprofile';
 import Dashboard from "./pages/Dashboard.jsx";
 import Error from "./pages/Error.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
@@ -63,10 +63,9 @@ function App() {
                 <Route path="/login" element={<Loginform />} />
                 <Route path="/dash" element={<Dashboard />} />
                 <Route path="/register" element={<SignUp />} />
-                <Route path="/ProfileUp" element={<Profile />} />
+                <Route path="/userprofile" element={<Profile />} />
                 <Route path="/product_card" element={<Card1 />} />
                 <Route path="/sellerprofile" element={<Sellerprofile />} />
-                <Route path="/userprofile" element={<Userprofile />} />
                 <Route path="/Paymentdetail" element={<Paymentdetail />} />
                 <Route path='*' element={<Error />} />
               </Routes>
