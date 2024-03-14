@@ -10,7 +10,9 @@ import Profile from './component/ProfileUp'
 import Landingpage from "./pages/Landingpage.jsx";
 import Card1 from "./component/Card1";
 import Sellerprofile from './component/Sellerprofile';
-import Userprofile from './component/Userprofile';
+import Userprofile from './component/UserProfile';
+import Paymentdetail from './component/Paymentdetail';
+
 
 function App() {
 
@@ -68,6 +70,7 @@ function App() {
                 <Route path="/product_card" element={<Card1 />} />
                 <Route path="/sellerprofile" element={<Sellerprofile />} />
                 <Route path="/userprofile" element={<Userprofile />} />
+                <Route path="/Paymentdetail" element={<Paymentdetail />} />
                 <Route path='*' element={<Error />} />
               </Routes>
             </BrowserRouter>
