@@ -3,11 +3,16 @@ import { useEffect, useContext, useState } from 'react';
 import { LoginContext } from './component/contexProvider/Context.jsx';
 import Loginform from './component/Loginform';
 import SignUp from './component/SignUp';
+import Profile from './component/UserProfile';
 import Dashboard from "./pages/Dashboard.jsx";
 import Error from "./pages/Error.jsx";
 import Profile from './component/ProfileUp'
 import Landingpage from "./pages/Landingpage.jsx";
 import Card1 from "./component/Card1";
+import Sellerprofile from './component/Sellerprofile';
+import Userprofile from './component/UserProfile';
+import Paymentdetail from './component/Paymentdetail';
+
 
 function App() {
 
@@ -52,8 +57,8 @@ function App() {
 
   return (
     <>
-     {
-      data ? (
+      {
+        data ? (
           <>
             <BrowserRouter>
               <Routes>
@@ -62,13 +67,16 @@ function App() {
                 <Route path="/dash" element={<Dashboard />} />
                 <Route path="/register" element={<SignUp />} />
                 <Route path="/ProfileUp" element={<Profile />} />
-                <Route path="/product_card" element={<Card1/>}/>
+                <Route path="/product_card" element={<Card1 />} />
+                <Route path="/sellerprofile" element={<Sellerprofile />} />
+                <Route path="/userprofile" element={<Userprofile />} />
+                <Route path="/Paymentdetail" element={<Paymentdetail />} />
                 <Route path='*' element={<Error />} />
               </Routes>
             </BrowserRouter>
           </>
         ) : <div><h1>Loading...</h1></div>
-     }
+      }
     </>
   )
 }
