@@ -4,20 +4,22 @@ import { LoginContext } from './component/contexProvider/Context.jsx';
 import Loginform from './component/Loginform';
 import SignUp from './component/SignUp';
 import Profile from './component/UserProfile';
-import Dashboard from "./pages/Dashboard.jsx";
 import Error from "./pages/Error.jsx";
-import Profile from './component/ProfileUp'
+import Dashboard from "./pages/Dashboard.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
 import Card1 from "./component/Card1";
+import Sidebar from "./component/Sidebar.jsx";
+import Dash from "./component/Dashboard.jsx";
+
 
 function App() {
-
   const [data, setData] = useState(false);
 
   const { logindata, setLoginData } = useContext(LoginContext);
 
   // const history = useNavigate();
 
+  // Function to check if the user is logged in
   const DashboardValid = async () => {
     //getting value of token
     let token = localStorage.getItem("usersdatatoken");
@@ -25,11 +27,10 @@ function App() {
     //calling validate API
     const res = await fetch("/validuser", {
       method: "GET",
-      headers:
-      {
+      headers: {
         "Content-Type": "application/json",
-        "Authorization": token
-      }
+        Authorization: token,
+      },
     });
 
     const data = await res.json();
@@ -40,38 +41,52 @@ function App() {
       console.log("user verify");
       setLoginData(data);
       // history("/dash");
-      window.location.href = '/dash';
+      window.location.href = "/dash";
     }
-  }
+  };
 
   useEffect(() => {
     setTimeout(() => {
       DashboardValid();
       setData(true);
-    }, 2000)
+    }, 2000);
   }, []);
+
+  //this variable is for opening and closing of sidebar
+  const [sidebarToggle, setSidebarToggle] = useState(false);
 
   return (
     <>
-     {
-      data ? (
-          <>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Landingpage />} />
-                <Route path="/login" element={<Loginform />} />
-                <Route path="/dash" element={<Dashboard />} />
-                <Route path="/register" element={<SignUp />} />
-                <Route path="/ProfileUp" element={<Profile />} />
-                <Route path="/product_card" element={<Card1/>}/>
-                <Route path='*' element={<Error />} />
-      </Routes>
-            </BrowserRouter>
-          </>
-        ) : <div><h1>Loading...</h1></div>
-     }
+      {/* this is sidebar and navbar */}
+      {/* <div className="flex">
+        <Sidebar sidebarToggle={sidebarToggle} />
+        <Dash
+          sidebarToggle={sidebarToggle}
+          setSidebarToggle={setSidebarToggle}
+        />
+      </div> */}
+
+      {data ? (
+        <>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Landingpage />} />
+              <Route path="/login" element={<Loginform />} />
+              <Route path="/dash" element={<Dashboard />} />
+              <Route path="/register" element={<SignUp />} />
+              <Route path="/ProfileUp" element={<Profile />} />
+              <Route path="/product_card" element={<Card1 />} />
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </BrowserRouter>
+        </>
+      ) : (
+        <div>
+          <h1>Loading...</h1>
+        </div>
+      )}
     </>
-  )
+  );
 }
 
 export default App;
