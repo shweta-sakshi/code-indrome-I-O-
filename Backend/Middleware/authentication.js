@@ -47,5 +47,4 @@ const authenticateSeller = async (req, res, next) => {
     }
 }
 
-module.exports = authenticate;
-module.exports = authenticateSeller;
+module.exports = { authenticate, authenticateSeller };

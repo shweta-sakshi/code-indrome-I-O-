@@ -1,8 +1,13 @@
 const express = require('express');
+const path = require("path");
 const Users = require("../Models/userSchema");
 const router = new express.Router();
 const bcrypt = require("bcryptjs");
+<<<<<<< HEAD
 const authenticate = require("../Middleware/authentication.js");
+=======
+const { authenticate } = require("../Middleware/authentication.js");
+>>>>>>> 7e9e1e8e154534dfde5ce24a72b8b2804fb9123d
 const upload = require("../Middleware/multer.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
 const ErrorHandler = require("../Middleware/error.js");
@@ -15,78 +20,68 @@ router.post("/register", upload.single("file"), async (req, res) => {
 
     const { fname, email, phone, password, cpassword } = req.body
 
+    let cloudinaryResponse = null;
+
     if (!fname || !email || !phone || !password || !cpassword) {
         console.log("fill all the details");
         res.status(422).json({ error: "fill all the details" });
     }
 
     try {
-        //we are cheking if email and phone number entered by user is already in database or not.
+        //we are cheking if email entered by user is already in database or not.
         //registration will be done only for new users
-        const preuser = await Users.findOne({ email: email, phone: phone });
+
+        const preuser = await Users.findOne({ email: email });
 
         if (preuser) {
-            //if user already exist then unlink the image.
-            const filename = req.file.filename;
-            const filepath = `StoreFiles/${filename}`
-            fs.unlink(filepath, (err) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({ message: "Error while deleting file" });
-                } else {
-                    res.json({ message: "File deleted successfully" });
-                }
-            })
-            //console.log("user already exist");
+            console.log("user already exist");
             res.status(422).json({ error: "This Email/phone already Exist" });
-
         } else if (password != cpassword) {
-
-            //if password doesn't match then unlink the image.
-            const filename = req.file.filename;
-            const filepath = `StoreFiles/${filename}`
-            fs.unlink(filepath, (err) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({ message: "Error while deleting file" });
-                }
-            })
-
             res.status(422).json({ error: "Confirm password doesn't match" });
         }
 
         //when everthing finds to be correct then save the data.
         else {
+            console.log(req.body);
+            if (req.file) {
+                const localFilePath = req.file.path;
+                // Upload the local file to Cloudinary
+                cloudinaryResponse = await uploadOnCloudinary(localFilePath);
+            }
 
-            const filename = req.file.filename;
-            const fileurl = path.join(filename);
-
-            const Avatar = fileurl;
-
-            const finalUser = { fname, email, phone, password, cpassword, Avatar };
+            console.log("user data...")
+            const finalUser = {
+                fname, email, phone, password, cpassword,
+                Avatar: cloudinaryResponse ? cloudinaryResponse.url : ""
+            };
+            console.log("user data collected")
 
             //To verify Email account before creating user account
             const ActivationToken = createActivationToken(finalUser);
-            const activationUrl = `http://localhost:3000/activation/${ActivationToken}`
+            console.log("activation token created");
+            const activationUrl = `http://localhost:5173/activation/${ActivationToken}`
 
             try {
+                console.log("main message is passed");
                 await sendMail({
                     email: finalUser.fname,
                     subject: "Activate your Chemical Hub account",
                     message: `Hello ${finalUser.fname}, Welcome to Chemical Hub, Please click on the link within 5 minutes to activate your account: ${activationUrl}`
                 })
+
                 res.status(201).json({
-                    succss: true,
+                    success: true,
                     message: "Please check your mail to activate account"
                 })
             } catch (error) {
+                console.log(error)
                 return next(new ErrorHandler(error.message, 500))
             }
         }
 
     } catch (err) {
-        res.status(422).json(err);
         console.log(err);
+        res.status(422).json(err);
     }
 });
 
@@ -125,7 +120,7 @@ router.post("/activation", CatchAsyncErrors(async (req, res, next) => {
                 message: `Hello ${fname}, Welcome to Chemical Hub. Now you can login to the website chemical hub`
             })
             res.status(201).json({
-                succss: true,
+                success: true,
                 message: "Account created"
             })
         } catch (error) {
@@ -195,9 +190,9 @@ router.get("/validuser", authenticate, async (req, res) => {
     }
 });
 
-//seller signout
+//user signout
 //if user doesn't have token then we can't logout them
-router.get("/SignOut", authenticate, async (req, res) => {
+router.get("/logout", authenticate, async (req, res) => {
     try {
 
         //clear token
