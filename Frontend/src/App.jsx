@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Loginform from './component/Loginform';
 import SignUp from './component/SignUp';
-import Profile from './component/ProfileUp'
+import Profile from './component/UserProfile';
 import Card1 from "./component/Card1";
 
 function App() {
