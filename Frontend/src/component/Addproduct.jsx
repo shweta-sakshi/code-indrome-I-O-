@@ -1,12 +1,14 @@
 import { useState } from "react"
-import ItemList from "./components/ItemList"
-import Cart from "./components/Cart"
-import Bill from "./components/Bill"
+import Itemlist from "./Itemlist.jsx"
+import Cart from "./Cart"
+import Bill from "./Bill"
+
+
 
 function App() {
   const [items, setItems] = useState([
     { id: 1, name: "Agricultural Products", price: 500, qty: 0 },
-    { id: 2, name: "Medical Products", price: 50,qty: 0 },
+    { id: 2, name: "Medical Products", price: 50, qty: 0 },
     { id: 3, name: "Household Products", price: 50, qty: 0 },
     { id: 4, name: "Laboratory chemicals", price: 300, qty: 0 },
     { id: 5, name: "Pesticides", price: 200, qty: 0 },
@@ -52,7 +54,7 @@ function App() {
 
   return (
     <div>
-      <ItemList
+      <Itemlist
         items={items}
         addToCart={handleAddItem}
         removeFromCart={handleRemoveItem}

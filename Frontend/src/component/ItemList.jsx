@@ -1,6 +1,6 @@
 import Item from "./Item"
 
-function ItemList({ items, addToCart, removeFromCart }) {
+function Itemlist({ items, addToCart, removeFromCart }) {
   const renderedItems = items.map((item) => {
     return (
       <Item
@@ -24,4 +24,4 @@ function ItemList({ items, addToCart, removeFromCart }) {
   )
 }
 
-export default ItemList
+export default Itemlist

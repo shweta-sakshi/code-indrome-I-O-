@@ -3,22 +3,24 @@ const path = require("path");
 const Users = require("../Models/userSchema");
 const router = new express.Router();
 const bcrypt = require("bcryptjs");
-const { authenticate } = require("../Middleware/authentication.js");
 <<<<<<< HEAD
-const upload = require("../Middleware/multer.js");
+const authenticate = require("../Middleware/authentication.js");
 =======
-const { upload } = require("../Middleware/multer.js");
->>>>>>> 467f71d389b6e0f658d7febcf0846957a09065ee
+const { authenticate } = require("../Middleware/authentication.js");
+>>>>>>> 7e9e1e8e154534dfde5ce24a72b8b2804fb9123d
+const upload = require("../Middleware/multer.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
 const ErrorHandler = require("../Middleware/error.js");
 const sendMail = require("../utils/sendMail.js");
-const { sendToken } = require("../utils/sendToken.js");
+const sendToken = require("../utils/sendToken.js");
 const fs = require("fs");
 
 //for user registration
-router.post("/SignUp", upload.single("file"), async (req, res) => {
+router.post("/register", upload.single("file"), async (req, res) => {
 
     const { fname, email, phone, password, cpassword } = req.body
+
+    let cloudinaryResponse = null;
 
     if (!fname || !email || !phone || !password || !cpassword) {
         console.log("fill all the details");
@@ -26,52 +28,32 @@ router.post("/SignUp", upload.single("file"), async (req, res) => {
     }
 
     try {
-        //we are cheking if email and phone number entered by user is already in database or not.
+        //we are cheking if email entered by user is already in database or not.
         //registration will be done only for new users
+
         const preuser = await Users.findOne({ email: email });
 
         if (preuser) {
-            //if user already exist then unlink the image.
-
-            const filename = req.file.filename;
-            const filepath = `StoreFiles/${filename}`
-            fs.unlink(filepath, (err) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({ message: "Error while deleting file" });
-                } else {
-                    res.json({ message: "File deleted successfully" });
-                }
-            })
-
             console.log("user already exist");
             res.status(422).json({ error: "This Email/phone already Exist" });
-
         } else if (password != cpassword) {
-
-            //if password doesn't match then unlink the image.
-            const filename = req.file.filename;
-            const filepath = `StoreFiles/${filename}`
-            fs.unlink(filepath, (err) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({ message: "Error while deleting file" });
-                }
-            })
-
             res.status(422).json({ error: "Confirm password doesn't match" });
         }
 
         //when everthing finds to be correct then save the data.
         else {
-            console.log(req.file);
-            const filename = req.file.filename;
-            const fileurl = path.join(filename);
-
-            const Avatar = fileurl;
+            console.log(req.body);
+            if (req.file) {
+                const localFilePath = req.file.path;
+                // Upload the local file to Cloudinary
+                cloudinaryResponse = await uploadOnCloudinary(localFilePath);
+            }
 
             console.log("user data...")
-            const finalUser = { fname, email, phone, password, cpassword, Avatar };
+            const finalUser = {
+                fname, email, phone, password, cpassword,
+                Avatar: cloudinaryResponse ? cloudinaryResponse.url : ""
+            };
             console.log("user data collected")
 
             //To verify Email account before creating user account
@@ -153,7 +135,7 @@ router.post("/activation", CatchAsyncErrors(async (req, res, next) => {
 }))
 
 //for user Login
-router.post("/SignIn", async (req, res) => {
+router.post("/login", async (req, res) => {
 
     const { email, password } = req.body
 
@@ -210,7 +192,7 @@ router.get("/validuser", authenticate, async (req, res) => {
 
 //user signout
 //if user doesn't have token then we can't logout them
-router.get("/SignOut", authenticate, async (req, res) => {
+router.get("/logout", authenticate, async (req, res) => {
     try {
 
         //clear token

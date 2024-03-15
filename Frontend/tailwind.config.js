@@ -8,5 +8,10 @@ export default {
     extend: {},
   },
   plugins: [],
+  variants: {
+    extent: {
+      display:["focus-group"]
+    }
+  }
 }
 

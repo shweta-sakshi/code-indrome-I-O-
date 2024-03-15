@@ -1,5 +1,5 @@
 import BillTotal from "./BillTotal"
-import BillItems from "./BillItems"
+import BillItems from "./BillItem"
 
 function Bill({ items }) {
   const requiredItems = items.filter((item) => {
