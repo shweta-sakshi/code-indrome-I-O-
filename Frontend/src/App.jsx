@@ -12,6 +12,7 @@ import Card1 from "./component/Card1";
 import Sellerprofile from './component/Sellerprofile';
 import Userprofile from './component/UserProfile';
 import Paymentdetail from './component/Paymentdetail';
+import Addproduct from './component/Addproduct';
 
 
 function App() {
@@ -69,8 +70,9 @@ function App() {
                 <Route path="/ProfileUp" element={<Profile />} />
                 <Route path="/product_card" element={<Card1 />} />
                 <Route path="/sellerprofile" element={<Sellerprofile />} />
-                <Route path="/userprofile" element={<Userprofile />} />
+                <Route path="/userprofile" element={<Userprofile />} />n
                 <Route path="/Paymentdetail" element={<Paymentdetail />} />
+                <Route path="/Addproduct" element={<Addproduct />} />
                 <Route path='*' element={<Error />} />
               </Routes>
             </BrowserRouter>
