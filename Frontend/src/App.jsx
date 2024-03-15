@@ -7,11 +7,11 @@ import Profile from './component/Userprofile';
 import Error from "./pages/Error.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
 import Card1 from "./component/Card1";
-import Sidebar from "./component/Sidebar.jsx";
 import Dash from "./component/Dashboard.jsx";
 import Sellerprofile from './component/Sellerprofile';
 import Paymentdetail from './component/Paymentdetail';
 import { RiLoader4Line } from "react-icons/ri";
+import Addproduct from './component/Addproduct.jsx';
 
 function App() {
   const [data, setData] = useState(false);
@@ -53,9 +53,6 @@ function App() {
     }, 2000);
   }, []);
 
-  //this variable is for opening and closing of sidebar
-  const [sidebarToggle, setSidebarToggle] = useState(false);
-
   return (
     <>
       {/* <div className="flex">
@@ -69,12 +66,14 @@ function App() {
             <Routes>
               <Route path="/" element={<Landingpage />} />
               <Route path="/login" element={<Loginform />} />
+              <Route path="/dash" element={<Dash />} />
               <Route path="/register" element={<SignUp />} />
               <Route path="/userprofile" element={<Profile />} />
               <Route path="/product_card" element={<Card1 />} />
               <Route path="/sellerprofile" element={<Sellerprofile />} />
               <Route path="/Paymentdetail" element={<Paymentdetail />} />
-              <Route path="*" element={<Error />} />
+              <Route path="/Addproduct" element={<Addproduct />} />
+              <Route path='*' element={<Error />} />
             </Routes>
           </BrowserRouter>
         </>

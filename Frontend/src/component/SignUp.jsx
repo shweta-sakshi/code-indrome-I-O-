@@ -166,7 +166,6 @@ const SignUp = () => {
               className="w-full px-4 py-2  focus:outline-none"
             />
             <div className="showpass" onClick={() => setPassShow(!passShow)}>
-              {!passShow ? "Show" : "Hide"}
             </div>
           </div>
 
@@ -181,8 +180,7 @@ const SignUp = () => {
               required
               className="w-full px-4 py-2  focus:outline-none"
             />
-            <div className="showpass" onClick={() => setCPassShow(!cpassShow)}>
-              {!cpassShow ? "Show" : "Hide"}
+            <div className="showpass" onClick={() => setCPassShow(!cpassShow)}>             
             </div>
           </div>
 
@@ -207,6 +205,7 @@ const SignUp = () => {
             </p>
           </div>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );

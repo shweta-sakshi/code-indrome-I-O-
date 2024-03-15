@@ -1,18 +1,14 @@
 const express = require('express');
-const path = require("path");
 const Users = require("../Models/userSchema");
 const router = new express.Router();
 const bcrypt = require("bcryptjs");
-<<<<<<< HEAD
 const authenticate = require("../Middleware/authentication.js");
-=======
-const { authenticate } = require("../Middleware/authentication.js");
->>>>>>> 7e9e1e8e154534dfde5ce24a72b8b2804fb9123d
 const upload = require("../Middleware/multer.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
 const ErrorHandler = require("../Middleware/error.js");
 const sendMail = require("../utils/sendMail.js");
-const sendToken = require("../utils/sendToken.js");
+const { sendToken } = require("../utils/sendToken.js");
+const jwt = require("jsonwebtoken");
 const fs = require("fs");
 
 //for user registration
@@ -54,12 +50,12 @@ router.post("/register", upload.single("file"), async (req, res) => {
                 fname, email, phone, password, cpassword,
                 Avatar: cloudinaryResponse ? cloudinaryResponse.url : ""
             };
-            console.log("user data collected")
+            console.log(finalUser)
 
             //To verify Email account before creating user account
             const ActivationToken = createActivationToken(finalUser);
             console.log("activation token created");
-            const activationUrl = `http://localhost:5173/activation/${ActivationToken}`
+            const activationUrl = `http://localhost:8000/activation/${ActivationToken}`
 
             try {
                 console.log("main message is passed");
@@ -69,13 +65,14 @@ router.post("/register", upload.single("file"), async (req, res) => {
                     message: `Hello ${finalUser.fname}, Welcome to Chemical Hub, Please click on the link within 5 minutes to activate your account: ${activationUrl}`
                 })
 
+                console.log("completed mail");
                 res.status(201).json({
                     success: true,
                     message: "Please check your mail to activate account"
                 })
             } catch (error) {
                 console.log(error)
-                return next(new ErrorHandler(error.message, 500))
+                res.status(500).json(error);
             }
         }
 
@@ -87,7 +84,7 @@ router.post("/register", upload.single("file"), async (req, res) => {
 
 //create Activation Token
 const createActivationToken = (finalUser) => {
-    return JsonWebTokenError.sign(finalUser, process.env.ACTIVATION_SECRETKEY, {
+    return jwt.sign(finalUser, process.env.ACTIVATION_SECRETKEY, {
         expiresIn: "5m",
     })
 }
@@ -124,13 +121,14 @@ router.post("/activation", CatchAsyncErrors(async (req, res, next) => {
                 message: "Account created"
             })
         } catch (error) {
-            return next(new ErrorHandler(error.message, 500))
+            console.log("error occur while sending msg");
+            res.status(500).json(error);
         }
 
         sendToken(user, 201, res);
 
     } catch (error) {
-        return next(new ErrorHandler(error.message, 500));
+        res.status(500).json(error.message);
     }
 }))
 
