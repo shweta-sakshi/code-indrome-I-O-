@@ -4,12 +4,10 @@ import { LoginContext } from './component/contexProvider/Context.jsx';
 import Loginform from './component/Loginform';
 import SignUp from './component/SignUp';
 import Error from "./pages/Error.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
 import Card1 from "./component/Card1";
-import Sidebar from "./component/Sidebar.jsx";
 import Dash from "./component/Dashboard.jsx";
-import Profile from './component/UserProfile';
+import Profile from './component/Userprofile';
 import Sellerprofile from './component/Sellerprofile';
 import Paymentdetail from './component/Paymentdetail';
 import Addproduct from './component/Addproduct.jsx';
@@ -54,27 +52,15 @@ function App() {
     }, 2000);
   }, []);
 
-  //this variable is for opening and closing of sidebar
-  const [sidebarToggle, setSidebarToggle] = useState(false);
-
   return (
     <>
-      {/* this is sidebar and navbar */}
-      {/* <div className="flex">
-        <Sidebar sidebarToggle={sidebarToggle} />
-        <Dash
-          sidebarToggle={sidebarToggle}
-          setSidebarToggle={setSidebarToggle}
-        />
-      </div> */}
-
       {data ? (
         <>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Landingpage />} />
               <Route path="/login" element={<Loginform />} />
-              <Route path="/dash" element={<Dashboard />} />
+              <Route path="/dash" element={<Dash />} />
               <Route path="/register" element={<SignUp />} />
               <Route path="/userprofile" element={<Profile />} />
               <Route path="/product_card" element={<Card1 />} />

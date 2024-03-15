@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Itemlist from "./Itemlist.jsx"
+import Itemlist from "./ItemList"
 import Cart from "./Cart"
 import Bill from "./Bill"
 

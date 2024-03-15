@@ -207,6 +207,7 @@ const SignUp = () => {
             </p>
           </div>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );
