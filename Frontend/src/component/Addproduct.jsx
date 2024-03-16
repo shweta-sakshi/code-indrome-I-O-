@@ -6,7 +6,31 @@ import Bill from "./Bill"
 
 
 function App() {
-  const [items, setItems] = useState([
+
+  const userId = useParams();//.....how to get this
+  const [card, setCard] = useState([]);
+  useEffect(() => {
+    let token = localStorage.getItem("usersdatatoken");
+    fetch('/api/get-all-orders/userId', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    }).then(res => res.json())
+      .then(result => {
+        setCard(result.posts)
+      })
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      DashboardValid();
+      setData(true);
+    }, 2000);
+  }, []);
+
+  const [quat, setQuantity] = useState([
     { id: 1, name: "Agricultural Products", price: 500, qty: 0 },
     { id: 2, name: "Medical Products", price: 50, qty: 0 },
     { id: 3, name: "Household Products", price: 50, qty: 0 },

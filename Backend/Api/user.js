@@ -148,7 +148,7 @@ router.post("/login", async (req, res) => {
 
                 //Token generate
                 const token = await userValid.generateAuthtoken();
-
+                console.log("we het token in login endpoint");
                 //we will use this token to generate cookie and use it in frontend
 
                 //cookie generate
@@ -157,10 +157,14 @@ router.post("/login", async (req, res) => {
                     httpOnly: true
                 });
 
+                console.log("created cookies");
+
                 const result = {
                     userValid,
                     token
                 }
+                console.log("here is valid user details:");
+                console.log(result)
                 res.status(201).json({ status: 201, result });
             }
         }

@@ -71,26 +71,26 @@ router.get(
 );
 
 // get all orders of seller
-router.get(
-    "/get-seller-all-orders/:shopId",
-    authenticate,
-    catchAsyncErrors(async (req, res, next) => {
-        try {
-            const orders = await Order.find({
-                "cart.shopId": req.params.shopId,
-            }).sort({
-                createdAt: -1,
-            });
+// router.get(
+//     "/get-seller-all-orders/:shopId",
+//     authenticate,
+//     catchAsyncErrors(async (req, res, next) => {
+//         try {
+//             const orders = await Order.find({
+//                 "cart.shopId": req.params.shopId,
+//             }).sort({
+//                 createdAt: -1,
+//             });
 
-            res.status(200).json({
-                success: true,
-                orders,
-            });
-        } catch (error) {
-            return next(new ErrorHandler(error.message, 500));
-        }
-    })
-);
+//             res.status(200).json({
+//                 success: true,
+//                 orders,
+//             });
+//         } catch (error) {
+//             return next(new ErrorHandler(error.message, 500));
+//         }
+//     })
+// );
 
 // update order status for seller
 router.put(
