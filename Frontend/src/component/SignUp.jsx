@@ -96,14 +96,15 @@ const SignUp = () => {
         }
       })
         .then(res => {
-          toast.success("Check your mail_id", {
+          toast.success(res.message, {
             position: "top-center"
           });
           setInpval({ ...inpval, fname: "", email: "", phone: "", password: "", cpassword: "" });
+          setPhoto(null);
         })
         .catch(error => {
           console.log(error)
-          toast.error("User already Exist", {
+          toast.error(res.message, {
             position: "top-center"
           });
         });

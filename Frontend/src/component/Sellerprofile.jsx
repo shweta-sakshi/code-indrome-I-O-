@@ -106,14 +106,14 @@ const Seller = () => {
                 }
             })
                 .then(res => {
-                    toast.success("Check your mail_id", {
+                    toast.success(res.message, {
                         position: "top-center"
                     });
-                    setInpval({ ...inpval, fname: "", email: "", phone: "", password: "", cpassword: "", address: "", zipCode: "" });
+                    setInpval({ ...inpval, sname: "", email: "", phoneNumber: "", password: "", cpassword: "", address: "", zipCode: "" });
                 })
                 .catch(error => {
                     console.log(error)
-                    toast.error("Shop already Exist", {
+                    toast.error(error.message, {
                         position: "top-center"
                     });
                 });
@@ -169,7 +169,8 @@ const Seller = () => {
                         <FaLock className="ml-2" />
                         <input
                             type={!passShow ? "password" : "text"}
-                            value={inpval.password} onChange={setVal}
+                            value={inpval.password}
+                            onChange={setVal}
                             name="password"
                             placeholder="Password"
                             required
@@ -236,7 +237,7 @@ const Seller = () => {
                         </button>
                         <p className="text-center mt-4">
                             Already have an account?
-                            <a href="/login" className="text-blue-500 hover:underline">
+                            <a href="/sellerloginform" className="text-blue-500 hover:underline">
                                 {" "}
                                 Sign in
                             </a>

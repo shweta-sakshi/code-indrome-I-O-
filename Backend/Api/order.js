@@ -10,6 +10,7 @@ const Product = require("../Models/productSchema");
 // create new order
 router.post(
     "/create-order",
+    authenticate,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const { cart, shippingAddress, user, totalPrice, paymentInfo } = req.body;
@@ -52,6 +53,7 @@ router.post(
 // get all orders of user
 router.get(
     "/get-all-orders/:userId",
+    authenticate,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const orders = await Order.find({ "user._id": req.params.userId }).sort({
@@ -71,6 +73,7 @@ router.get(
 // get all orders of seller
 router.get(
     "/get-seller-all-orders/:shopId",
+    authenticate,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const orders = await Order.find({
@@ -144,9 +147,10 @@ router.put(
     })
 );
 
-// give a refund ----- user
+// give a refund request ----- user
 router.put(
     "/order-refund/:id",
+    authenticate,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const order = await Order.findById(req.params.id);

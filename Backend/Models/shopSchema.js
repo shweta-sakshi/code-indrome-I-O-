@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config()
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keySecret = process.env.SECRETKEY;
@@ -105,7 +106,7 @@ ShopSchema.pre("save", async function (next) {
 });
 
 //Token generator
-ShopSchema.methods.generateAuthtoken = async function () {/* add generateAuthtoken method to ShopSchema */
+ShopSchema.methods.generateAuthtoken = async function (req, res) {/* add generateAuthtoken method to ShopSchema */
     try {
         //create JWT for authentication
         let token1 = jwt.sign({ _id: this._id }, keySecret, {
@@ -113,7 +114,7 @@ ShopSchema.methods.generateAuthtoken = async function () {/* add generateAuthtok
             expiresIn: "1d"
         });
 
-        //adding value to the token array of shop schema
+        //adding value to the token array of shopschema
         this.tokens = this.tokens.concat({ token: token1 })
         await this.save();
         return token1;

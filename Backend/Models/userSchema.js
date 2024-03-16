@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config()
 const { ObjectId } = mongoose.Schema.Types
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -72,11 +73,14 @@ User.pre("save", async function (next) {
 //Token generator
 User.methods.generateAuthtoken = async function () {/* add generateAuthtoken method to usrSchema */
     try {
+        console.log(`Here is key secret: ${keySecret}`)
         //create JWT for authentication
         let token1 = jwt.sign({ _id: this._id }, keySecret, {
             //token expire after one day
             expiresIn: "1d"
         });
+
+        console.log(token1);
 
         //adding value to the token array of user schema
         this.tokens = this.tokens.concat({ token: token1 })
@@ -84,6 +88,7 @@ User.methods.generateAuthtoken = async function () {/* add generateAuthtoken met
         return token1;
 
     } catch (err) {
+        console.log(`in gernerateAuthtoken ${err}`);
         res.status(422).json(err);
     }
 }

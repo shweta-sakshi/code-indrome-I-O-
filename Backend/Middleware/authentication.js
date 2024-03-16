@@ -28,7 +28,7 @@ const authenticate = async (req, res, next) => {
 const authenticateSeller = async (req, res, next) => {
     try {
         const seller_token = req.headers.authorization;
-        const verifytoken = jwt.verify(token, keySecret);
+        const verifytoken = jwt.verify(seller_token, keySecret);
 
         const rootSeller = await shopdb.findOne({ _id: verifytoken._id });
 

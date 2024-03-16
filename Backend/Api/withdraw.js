@@ -1,4 +1,4 @@
-const Shop = require("../model/shop");
+const Shop = require("../Models/shopSchema");
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../Middleware/catchAsyncErrors");
 const express = require("express");
@@ -54,7 +54,7 @@ router.post(
 // get all withdraws --- admnin
 router.get(
     "/get-all-withdraw-request",
-    authenticate,
+    authenticateSeller,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const withdraws = await Withdraw.find().sort({ createdAt: -1 });
@@ -72,7 +72,7 @@ router.get(
 // update withdraw request ---- admin
 router.put(
     "/update-withdraw-request/:id",
-    authenticate,
+    authenticateSeller,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const { sellerId } = req.body;

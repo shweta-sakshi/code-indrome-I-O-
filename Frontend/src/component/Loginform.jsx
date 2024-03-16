@@ -65,6 +65,7 @@ export default function Loginform() {
           }
         })
         .then(res => {
+          //setting token to the localStorage withName usersdatatoken
           localStorage.setItem("usersdatatoken", res.result.token);
           history("/dash");
           setInpval({ ...inpval, email: "", password: "" });
@@ -110,6 +111,9 @@ export default function Loginform() {
               required
               className="w-full px-4 py-2 focus:outline-none"
             />
+            <div className="showpass" onClick={() => setPassShow(!passShow)}>
+              {!passShow ? "Show" : "Hide"}
+            </div>
           </div>
 
         </div>

@@ -5,10 +5,13 @@ import Loginform from './component/Loginform';
 import SignUp from './component/SignUp';
 import Error from "./pages/Error.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
+import Activationpage from "./pages/Activationpage.jsx";
+import Selleractivationpage from "./pages/Selleractivationpage.jsx";
 import Card1 from "./component/Card1";
 import Dash from "./component/Dashboard.jsx";
 import Profile from './component/Userprofile';
 import Sellerprofile from './component/Sellerprofile';
+import Sellerloginform from './component/Sellerloginform.jsx'
 import Paymentdetail from './component/Paymentdetail';
 import Addproduct from './component/Addproduct.jsx';
 
@@ -64,9 +67,12 @@ function App() {
               <Route path="/register" element={<SignUp />} />
               <Route path="/userprofile" element={<Profile />} />
               <Route path="/product_card" element={<Card1 />} />
-              <Route path="/sellerprofile" element={<Sellerprofile />} />
-              <Route path="/Paymentdetail" element={<Paymentdetail />} />
-              <Route path="/Addproduct" element={<Addproduct />} />
+              <Route path="/sellersignupform" element={<Sellerprofile />} />
+              <Route path="/sellerloginform" element={<Sellerloginform />} />
+              <Route path="/seller/activation/:activation_token" element={< Selleractivationpage />} />
+              <Route path="/paymentdetail" element={<Paymentdetail />} />
+              <Route path="/sddproduct" element={<Addproduct />} />
+              <Route path="/activation/:activation_token" element={<Activationpage />} />
               <Route path='*' element={<Error />} />
             </Routes>
           </BrowserRouter>
