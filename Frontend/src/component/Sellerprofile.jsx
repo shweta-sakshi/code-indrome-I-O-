@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
-import { FaUser, FaPhone, FaEnvelope, FaLock } from "react-icons/fa";
+import {
+  FaUser,
+  FaPhone,
+  FaEnvelope,
+  FaLock,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import axios from "axios";
 
 const Seller = () => {
@@ -121,133 +127,171 @@ const Seller = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="wrapper bg-white p-8 rounded shadow-md">
-                <form>
-                    <div className="mb-4 text-center text-4xl">Sign Up</div>
-
-                    <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
-                        <FaUser className="ml-2" />
-                        <input
-                            type="text"
-                            placeholder="Shop Name"
-                            onChange={setVal}
-                            value={inpval.sname}
-                            name="sname"
-                            required
-                            className="w-full px-4 py-2  focus:outline-none"
-                        />
-                    </div>
-
-                    <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
-                        <FaPhone className="ml-2" />
-                        <input
-                            type="tel"
-                            name="phoneNumber"
-                            placeholder="Phone Number"
-                            onChange={setVal}
-                            value={inpval.phoneNumber}
-                            required
-                            className="w-full px-4 py-2  focus:outline-none"
-                        />
-                    </div>
-
-                    <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
-                        <FaEnvelope className="ml-2" />
-                        <input
-                            type="email"
-                            onChange={setVal}
-                            value={inpval.email}
-                            name="email"
-                            placeholder="Email Address"
-                            required
-                            className="w-full px-4 py-2  focus:outline-none"
-                        />
-                    </div>
-
-                    <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
-                        <FaLock className="ml-2" />
-                        <input
-                            type={!passShow ? "password" : "text"}
-                            value={inpval.password}
-                            onChange={setVal}
-                            name="password"
-                            placeholder="Password"
-                            required
-                            className="w-full px-4 py-2  focus:outline-none"
-                        />
-                        <div className="showpass" onClick={() => setPassShow(!passShow)}>
-                            {!passShow ? "Show" : "Hide"}
-                        </div>
-                    </div>
-
-                    <div className="mb-6 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
-                        <FaLock className="ml-2" />
-                        <input
-                            type={!cpassShow ? "password" : "text"}
-                            value={inpval.cpassword}
-                            onChange={setVal}
-                            name="cpassword"
-                            placeholder="Confirm Password"
-                            required
-                            className="w-full px-4 py-2  focus:outline-none"
-                        />
-                        <div className="showpass" onClick={() => setCPassShow(!cpassShow)}>
-                            {!cpassShow ? "Show" : "Hide"}
-                        </div>
-                    </div>
-
-                    <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
-                        <FaUser className="ml-2" />
-                        <input
-                            type="text"
-                            placeholder="Shop Location"
-                            onChange={setVal}
-                            value={inpval.address}
-                            name="address"
-                            required
-                            className="w-full px-4 py-2  focus:outline-none"
-                        />
-                    </div>
-
-                    <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
-                        <FaPhone className="ml-2" />
-                        <input
-                            type="phone"
-                            name="zipCode"
-                            placeholder="zip Code"
-                            onChange={setVal}
-                            value={inpval.zipCode}
-                            required
-                            className="w-full px-4 py-2  focus:outline-none"
-                        />
-                    </div>
-
-                    <div>
-                        <input type="file" accept="image/*" onChange={handleFileChange} />
-                    </div>
-
-                    <div>
-                        <button
-                            type="submit"
-                            onClick={addUserdata}
-                            className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none hover:bg-blue-400 "
-                        >
-                            Sign Up
-                        </button>
-                        <p className="text-center mt-4">
-                            Already have an account?
-                            <a href="/sellerloginform" className="text-blue-500 hover:underline">
-                                {" "}
-                                Sign in
-                            </a>
-                        </p>
-                    </div>
-                </form>
-                <ToastContainer />
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
+        <div className="wrapper bg-white p-8 rounded shadow-md m-4">
+          <form>
+            <div className="mb-4 text-center text-4xl">
+              Create a business account
             </div>
+
+            <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
+              <FaUser className="ml-2" />
+              <input
+                type="text"
+                placeholder="Shop Name"
+                onChange={setVal}
+                value={inpval.sname}
+                name="sname"
+                required
+                className="w-full px-4 py-2  focus:outline-none"
+              />
+            </div>
+
+            <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
+              <FaPhone className="ml-2" />
+              <input
+                type="tel"
+                name="phoneNumber"
+                placeholder="Phone Number"
+                onChange={setVal}
+                value={inpval.phoneNumber}
+                required
+                className="w-full px-4 py-2  focus:outline-none"
+              />
+            </div>
+
+            <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
+              <FaEnvelope className="ml-2" />
+              <input
+                type="email"
+                onChange={setVal}
+                value={inpval.email}
+                name="email"
+                placeholder="Email Address"
+                required
+                className="w-full px-4 py-2  focus:outline-none"
+              />
+            </div>
+
+            <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
+              <FaLock className="ml-2" />
+              <input
+                type={!passShow ? "password" : "text"}
+                value={inpval.password}
+                onChange={setVal}
+                name="password"
+                placeholder="Password"
+                required
+                className="w-full px-4 py-2  focus:outline-none"
+              />
+              <div
+                className="showpass"
+                onClick={() => setPassShow(!passShow)}
+              ></div>
+            </div>
+
+            <div className="mb-6 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
+              <FaLock className="ml-2" />
+              <input
+                type={!cpassShow ? "password" : "text"}
+                value={inpval.cpassword}
+                onChange={setVal}
+                name="cpassword"
+                placeholder="Confirm Password"
+                required
+                className="w-full px-4 py-2  focus:outline-none"
+              />
+              <div
+                className="showpass"
+                onClick={() => setCPassShow(!cpassShow)}
+              ></div>
+            </div>
+
+            <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
+              <FaUser className="ml-2" />
+              <input
+                type="text"
+                placeholder="Shop Location"
+                onChange={setVal}
+                value={inpval.address}
+                name="address"
+                required
+                className="w-full px-4 py-2  focus:outline-none"
+              />
+            </div>
+
+            <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
+              <FaMapMarkerAlt className="ml-2" />
+              <input
+                type="phone"
+                name="zipCode"
+                placeholder="zip Code"
+                onChange={setVal}
+                value={inpval.zipCode}
+                required
+                className="w-full px-4 py-2  focus:outline-none"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="photo" className="block text-gray-700">
+                Please provide the image of the Trade License:
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="border border-gray-400 text-gray-400 rounded px-3 py-2 w-full hover:border-gray-600 hover:border-2"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="photo" className="block text-gray-700">
+                Please provide the image of the Chemical Storage License:
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="border border-gray-400 text-gray-400 rounded px-3 py-2 w-full hover:border-gray-600 hover:border-2"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="photo" className="block text-gray-700">
+                Please provide the image of the Import-Export Code (IEC):
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="border text-gray-400 border-gray-400 rounded px-3 py-2 w-full hover:border-gray-600 hover:border-2"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  onClick={addUserdata}
+                  className=" bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none hover:bg-blue-400 "
+                >
+                  Sign Up
+                </button>
+              </div>
+              <p className="text-center mt-4">
+                Already have an account?
+                <a href="/sellerloginform" className="text-blue-500 hover:underline">
+                  {" "}
+                  Sign in
+                </a>
+              </p>
+            </div>
+          </form>
+          <ToastContainer />
         </div>
-    )
+      </div>
+    );
 }
 
 export default Seller

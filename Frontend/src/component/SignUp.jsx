@@ -160,15 +160,17 @@ const SignUp = () => {
             <FaLock className="ml-2" />
             <input
               type={!passShow ? "password" : "text"}
-              value={inpval.password} onChange={setVal}
+              value={inpval.password}
+              onChange={setVal}
               name="password"
               placeholder="Password"
               required
               className="w-full px-4 py-2  focus:outline-none"
             />
-            <div className="showpass" onClick={() => setPassShow(!passShow)}>
-              {!passShow ? "Show" : "Hide"}
-            </div>
+            <div
+              className="showpass"
+              onClick={() => setPassShow(!passShow)}
+            ></div>
           </div>
 
           <div className="mb-6 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
@@ -182,13 +184,25 @@ const SignUp = () => {
               required
               className="w-full px-4 py-2  focus:outline-none"
             />
-            <div className="showpass" onClick={() => setCPassShow(!cpassShow)}>
-              {!cpassShow ? "Show" : "Hide"}
-            </div>
+            <div
+              className="showpass"
+              onClick={() => setCPassShow(!cpassShow)}
+            ></div>
           </div>
 
-          <div>
-            <input type="file" accept="image/*" onChange={handleFileChange} />
+          <div className="mb-4">
+            <label
+              htmlFor="photo"
+              className="block cursor-pointer text-gray-700"
+            >
+              Upload file:
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="border border-gray-300 rounded px-3 py-2 w-full hover:border-gray-600 hover:border-2"
+            />
           </div>
 
           <div>

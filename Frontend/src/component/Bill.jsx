@@ -1,26 +1,29 @@
-import BillTotal from "./BillTotal"
-import BillItems from "./BillItem"
+import React from "react";
+import BillTotal from "./BillTotal";
+import BillItems from "./BillItem";
 
 function Bill({ items }) {
-  const requiredItems = items.filter((item) => {
-    return item.qty > 0
-  })
+  const requiredItems = items.filter((item) => item.qty > 0);
 
-  const renderedItems = requiredItems.map((item) => {
-    return <BillItems item={item} />
-  })
+  const renderedItems = requiredItems.map((item) => (
+    <BillItems key={item.id} item={item} />
+  ));
 
   return (
-    <>
-      <div className="w-1/2 p-4 m-5 flex flex-col items-center justify-start gap-4">
-        <p className="font-poppins text-xl font-bold">Checkout</p>
-        <div className="w-full mt-2 flex flex-col items-center justify-between gap-4 pb-4 border-b-2">
-          {renderedItems}
-        </div>
-        <BillTotal items={items} />
+    <div className="w-full max-w-xl p-4 mx-auto mt-5">
+      <p className="text-xl font-bold text-center mb-4">Checkout</p>
+      <div className="w-full border border-gray-300 rounded-md shadow-md overflow-hidden">
+        {renderedItems.length > 0 ? (
+          <div className="divide-y divide-gray-300">
+            {renderedItems}
+            <BillTotal items={items} />
+          </div>
+        ) : (
+          <p className="p-4 text-center">No items in the cart</p>
+        )}
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default Bill
+export default Bill;

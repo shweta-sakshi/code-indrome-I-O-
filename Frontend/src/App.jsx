@@ -3,16 +3,17 @@ import { useEffect, useContext, useState } from 'react';
 import { LoginContext } from './component/contexProvider/Context.jsx';
 import Loginform from './component/Loginform';
 import SignUp from './component/SignUp';
+import Profile from './component/Userprofile';
 import Error from "./pages/Error.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
 import Activationpage from "./pages/Activationpage.jsx";
 import Selleractivationpage from "./pages/Selleractivationpage.jsx";
 import Card1 from "./component/Card1";
 import Dash from "./component/Dashboard.jsx";
-import Profile from './component/Userprofile';
 import Sellerprofile from './component/Sellerprofile';
 import Sellerloginform from './component/Sellerloginform.jsx'
 import Paymentdetail from './component/Paymentdetail';
+import { RiLoader4Line } from "react-icons/ri";
 import Addproduct from './component/Addproduct.jsx';
 
 function App() {
@@ -57,6 +58,11 @@ function App() {
 
   return (
     <>
+      {/* <div className="flex">
+        <Sidebar sidebarToggle={sidebarToggle} />
+        <Dash sidebarToggle={sidebarToggle}
+        setSidebarToggle={setSidebarToggle}/>
+      </div> */}
       {data ? (
         <>
           <BrowserRouter>
@@ -78,8 +84,11 @@ function App() {
           </BrowserRouter>
         </>
       ) : (
-        <div>
-          <h1>Loading...</h1>
+        <div className="flex justify-center items-center h-screen">
+          <div className="text-center flex">
+            <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" />
+            <h1 className="text-xl m-2">Loading...</h1>
+          </div>
         </div>
       )}
     </>
