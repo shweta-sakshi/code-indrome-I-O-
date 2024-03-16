@@ -1,9 +1,11 @@
-import CartItem from "./CartItem"
+import React from "react";
+import CartItem from "./CartItem";
+import Dashboard from "./Dashboard";
 
 function Cart({ items, removeAllFromCart }) {
   const requiredItems = items.filter((item) => {
-    return item.qty > 0
-  })
+    return item.qty > 0;
+  });
 
   const renderedItems = requiredItems.map((item) => {
     return (
@@ -12,8 +14,8 @@ function Cart({ items, removeAllFromCart }) {
         key={item.id}
         removeAllFromCart={removeAllFromCart}
       />
-    )
-  })
+    );
+  });
 
   return (
     <>
@@ -24,7 +26,7 @@ function Cart({ items, removeAllFromCart }) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Cart
+export default Cart;

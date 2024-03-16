@@ -1,21 +1,22 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect, useContext, useState } from 'react';
-import { LoginContext } from './component/contexProvider/Context.jsx';
-import Loginform from './component/Loginform';
-import SignUp from './component/SignUp';
-import Profile from './component/Userprofile';
+import { useEffect, useContext, useState } from "react";
+import { LoginContext } from "./component/contexProvider/Context.jsx";
+import Loginform from "./component/Loginform";
+import SignUp from "./component/SignUp";
+import Profile from "./component/Userprofile";
 import Error from "./pages/Error.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
 import Activationpage from "./pages/Activationpage.jsx";
 import Selleractivationpage from "./pages/Selleractivationpage.jsx";
 import Card1 from "./component/Card1";
-import Dash from "./component/Dashboard.jsx";
+import Dashboard from "./component/Dashboard.jsx";
 import Userdashboard from "./pages/seller/Sellerdashboard.jsx";
-import Sellerprofile from './component/Sellerprofile';
-import Sellerloginform from './component/Sellerloginform.jsx'
-import Paymentdetail from './component/Paymentdetail';
+import Sellerprofile from "./component/Sellerprofile";
+import Sellerloginform from "./component/Sellerloginform.jsx";
+import Paymentdetail from "./component/Paymentdetail";
 import { RiLoader4Line } from "react-icons/ri";
-import Addproduct from './component/Addproduct.jsx';
+import Addproduct from "./component/Addproduct.jsx";
+import SellerAddProduct from "./component/SellerAddProduct.jsx";
 
 function App() {
   const [data, setData] = useState(false);
@@ -59,11 +60,6 @@ function App() {
 
   return (
     <>
-      {/* <div className="flex">
-        <Sidebar sidebarToggle={sidebarToggle} />
-        <Dash sidebarToggle={sidebarToggle}
-        setSidebarToggle={setSidebarToggle}/>
-      </div> */}
       {data ? (
         <>
           <BrowserRouter>
@@ -71,17 +67,24 @@ function App() {
               <Route path="/" element={<Landingpage />} />
               <Route path="/login" element={<Loginform />} />
               <Route path='/userdashboard' element={<Userdashboard />} />
-              {/* <Route path="/dash" element={<Dash />} /> */}
+              {/* <Route path="/dash" element={<Dashboard />} /> */}
               <Route path="/register" element={<SignUp />} />
               <Route path="/userprofile" element={<Profile />} />
               <Route path="/product_card" element={<Card1 />} />
               <Route path="/sellersignupform" element={<Sellerprofile />} />
               <Route path="/sellerloginform" element={<Sellerloginform />} />
-              <Route path="/seller/activation/:activation_token" element={< Selleractivationpage />} />
+              <Route
+                path="/seller/activation/:activation_token"
+                element={<Selleractivationpage />}
+              />
               <Route path="/paymentdetail" element={<Paymentdetail />} />
               <Route path="/addproduct" element={<Addproduct />} />
-              <Route path="/activation/:activation_token" element={<Activationpage />} />
-              <Route path='*' element={<Error />} />
+              <Route
+                path="/activation/:activation_token"
+                element={<Activationpage />}
+              />
+              <Route path="/sellerAddProduct" element={<SellerAddProduct />} />
+              <Route path="*" element={<Error />} />
             </Routes>
           </BrowserRouter>
         </>

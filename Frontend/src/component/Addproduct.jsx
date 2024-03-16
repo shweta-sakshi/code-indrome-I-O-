@@ -2,6 +2,7 @@ import { useState } from "react"
 import Itemlist from "./ItemList"
 import Cart from "./Cart"
 import Bill from "./Bill"
+import Dashboard from "./Dashboard"
 
 
 
