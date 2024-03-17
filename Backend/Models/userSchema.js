@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config()
 const { ObjectId } = mongoose.Schema.Types
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -84,6 +85,7 @@ User.methods.generateAuthtoken = async function () {/* add generateAuthtoken met
         return token1;
 
     } catch (err) {
+        console.log(`in gernerateAuthtoken ${err}`);
         res.status(422).json(err);
     }
 }

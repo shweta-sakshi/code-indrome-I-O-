@@ -10,6 +10,7 @@ const Product = require("../Models/productSchema");
 // create new order
 router.post(
     "/create-order",
+    authenticate,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const { cart, shippingAddress, user, totalPrice, paymentInfo } = req.body;
@@ -52,6 +53,7 @@ router.post(
 // get all orders of user
 router.get(
     "/get-all-orders/:userId",
+    authenticate,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const orders = await Order.find({ "user._id": req.params.userId }).sort({
@@ -69,25 +71,26 @@ router.get(
 );
 
 // get all orders of seller
-router.get(
-    "/get-seller-all-orders/:shopId",
-    catchAsyncErrors(async (req, res, next) => {
-        try {
-            const orders = await Order.find({
-                "cart.shopId": req.params.shopId,
-            }).sort({
-                createdAt: -1,
-            });
+// router.get(
+//     "/get-seller-all-orders/:shopId",
+//     authenticate,
+//     catchAsyncErrors(async (req, res, next) => {
+//         try {
+//             const orders = await Order.find({
+//                 "cart.shopId": req.params.shopId,
+//             }).sort({
+//                 createdAt: -1,
+//             });
 
-            res.status(200).json({
-                success: true,
-                orders,
-            });
-        } catch (error) {
-            return next(new ErrorHandler(error.message, 500));
-        }
-    })
-);
+//             res.status(200).json({
+//                 success: true,
+//                 orders,
+//             });
+//         } catch (error) {
+//             return next(new ErrorHandler(error.message, 500));
+//         }
+//     })
+// );
 
 // update order status for seller
 router.put(
@@ -144,9 +147,10 @@ router.put(
     })
 );
 
-// give a refund ----- user
+// give a refund request ----- user
 router.put(
     "/order-refund/:id",
+    authenticate,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const order = await Order.findById(req.params.id);

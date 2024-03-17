@@ -8,19 +8,19 @@ function ItemQuantity({ item, addToCart, removeFromCart }) {
   
     return (
       <>
-        <div class="flex justify-between items-center w-full font-poppins">
+        <div className="flex justify-between items-center w-full font-poppins">
           <button
-            class="bg-blue-500 hover:bg-blue-600 text-white font-bold w-[2.8rem] aspect-square rounded"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-[2.8rem] aspect-square rounded"
             onClick={handleAddClick}
           >
             +
           </button>
-          <span class="text-gray-800 font-bold text-lg">{item.qty}</span>
+          <span className="text-gray-800 font-bold text-lg">{item.qty}</span>
           <button
-            class="bg-blue-500 hover:bg-blue-600 text-white font-bold w-[2.8rem] aspect-square rounded"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-[2.8rem] aspect-square rounded"
             onClick={handleMinusClick}
           >
-            
+            -
           </button>
         </div>
       </>

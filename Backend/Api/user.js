@@ -2,7 +2,7 @@ const express = require('express');
 const Users = require("../Models/userSchema");
 const router = new express.Router();
 const bcrypt = require("bcryptjs");
-const authenticate = require("../Middleware/authentication.js");
+const { authenticate } = require("../Middleware/authentication.js");
 const upload = require("../Middleware/multer.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
 const ErrorHandler = require("../Middleware/error.js");
@@ -30,7 +30,6 @@ router.post("/register", upload.single("file"), async (req, res) => {
         const preuser = await Users.findOne({ email: email });
 
         if (preuser) {
-            console.log("user already exist");
             res.status(422).json({ error: "This Email/phone already Exist" });
         } else if (password != cpassword) {
             res.status(422).json({ error: "Confirm password doesn't match" });
@@ -38,34 +37,27 @@ router.post("/register", upload.single("file"), async (req, res) => {
 
         //when everthing finds to be correct then save the data.
         else {
-            console.log(req.body);
             if (req.file) {
                 const localFilePath = req.file.path;
                 // Upload the local file to Cloudinary
                 cloudinaryResponse = await uploadOnCloudinary(localFilePath);
             }
 
-            console.log("user data...")
             const finalUser = {
                 fname, email, phone, password, cpassword,
                 Avatar: cloudinaryResponse ? cloudinaryResponse.url : ""
             };
-            console.log(finalUser)
 
             //To verify Email account before creating user account
             const ActivationToken = createActivationToken(finalUser);
-            console.log("activation token created");
-            const activationUrl = `http://localhost:8000/activation/${ActivationToken}`
-
+            const activationUrl = `http://localhost:5173/activation/${ActivationToken}`
+            console.log(activationUrl);
             try {
-                console.log("main message is passed");
                 await sendMail({
-                    email: finalUser.fname,
+                    email: finalUser.email,
                     subject: "Activate your Chemical Hub account",
                     message: `Hello ${finalUser.fname}, Welcome to Chemical Hub, Please click on the link within 5 minutes to activate your account: ${activationUrl}`
                 })
-
-                console.log("completed mail");
                 res.status(201).json({
                     success: true,
                     message: "Please check your mail to activate account"
@@ -90,47 +82,48 @@ const createActivationToken = (finalUser) => {
 }
 
 //Activate user
-router.post("/activation", CatchAsyncErrors(async (req, res, next) => {
-    try {
-        const { activation_token } = req.body
-        const newUser = jwt.verify(activation_token, process.env.ACTIVATION_SECRETKEY)
-        if (!newUser) {
-            return next(new ErrorHandler("Invatid Token"))
-        }
-
-        const { fname, email, phone, password, cpassword, Avatar } = newUser
-
-        const user = Users.findOne({ email, phone });
-        if (user) {
-            return next(new ErrorHandler("User already exists", 400));
-        }
-
-        user = await Users.create({
-            fname, email, phone, password, cpassword, Avatar
-        });
-
-        //sending successfull activation mail
+router.post("/activation",
+    CatchAsyncErrors(async (req, res, next) => {
+        console.log("enter to activation");
         try {
-            await sendMail({
-                email: email,
-                subject: "Your account is created",
-                message: `Hello ${fname}, Welcome to Chemical Hub. Now you can login to the website chemical hub`
-            })
-            res.status(201).json({
-                success: true,
-                message: "Account created"
-            })
+            const { activation_token } = req.body
+            const newUser = await jwt.verify(activation_token, process.env.ACTIVATION_SECRETKEY)
+            if (!newUser) {
+                return next(new ErrorHandler("Invatid Token"))
+            }
+
+            const { fname, email, phone, password, cpassword, Avatar } = newUser
+
+            const user = await Users.findOne({ email });
+            if (user) {
+                return next(new ErrorHandler("User already exists", 400));
+            }
+
+            user = await Users.create({
+                fname, email, phone, password, cpassword, Avatar
+            });
+
+            //sending successfull activation mail
+            try {
+                await sendMail({
+                    email: email,
+                    subject: "Your account is created",
+                    message: `Hello ${fname}, Welcome to Chemical Hub. Now you can login to the website chemical hub`
+                })
+                res.status(201).json({
+                    success: true,
+                    message: "Account created"
+                })
+            } catch (error) {
+                res.status(500).json(error);
+            }
+
+            sendToken(user, 201, res);
+
         } catch (error) {
-            console.log("error occur while sending msg");
-            res.status(500).json(error);
+            res.status(500).json(error.message);
         }
-
-        sendToken(user, 201, res);
-
-    } catch (error) {
-        res.status(500).json(error.message);
-    }
-}))
+    }))
 
 //for user Login
 router.post("/login", async (req, res) => {
@@ -138,7 +131,7 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
-        res.stataus(422).json({ error: "fill all the details" });
+        res.status(422).json({ message: "fill all the details" });
     }
 
     try {
@@ -155,7 +148,7 @@ router.post("/login", async (req, res) => {
 
                 //Token generate
                 const token = await userValid.generateAuthtoken();
-
+                console.log("we het token in login endpoint");
                 //we will use this token to generate cookie and use it in frontend
 
                 //cookie generate
@@ -164,10 +157,14 @@ router.post("/login", async (req, res) => {
                     httpOnly: true
                 });
 
+                console.log("created cookies");
+
                 const result = {
                     userValid,
                     token
                 }
+                console.log("here is valid user details:");
+                console.log(result)
                 res.status(201).json({ status: 201, result });
             }
         }

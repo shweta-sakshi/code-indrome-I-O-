@@ -1,6 +1,9 @@
 import React from "react";
-import { FaFlask } from "react-icons/fa";
+import { FaFlask, FaIndustry, FaShippingFast, FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Service1Image from "../photos/Service1Image.jpeg";
+import Service2Image from "../photos/Service2Image.jpeg";
+import Service3Image from "../photos/Service3Image.jpeg";
 
 const LandingPage = () => {
   return (
@@ -30,38 +33,102 @@ const LandingPage = () => {
           Welcome to Chemical Hub
         </div>
         <div className="flex justify-center items-center mb-8">
-          <FaFlask className="text-6xl mr-4 text-white" />
+          <FaFlask className="text-6xl mx-4 text-white" />
           <div className="text-xl text-white">
             Your one-stop solution for all chemical industry needs
           </div>
+        </div>{" "}
+        <div className="text-xl text-white mb-8 max-w-full sm:px-20 px-10 text-center">
+          Explore our extensive collection of products, services, and equipment
+          tailored to meet your requirements.
         </div>
-        <Link
-          to="/explore"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-110"
-        >
-          Explore Now
-        </Link>
+        <div className="flex flex-wrap justify-center items-center">
+          {/* Placeholder content with icons */}
+          <div className="flex flex-col items-center m-4">
+            <FaIndustry className="text-white text-4xl mb-2" />
+            <h3 className="text-white text-lg font-bold">Chemical Products</h3>
+            <p className="text-white">
+              Browse a wide range of chemical products from top manufacturers.
+            </p>
+          </div>
+          <div className="flex flex-col items-center m-4">
+            <FaShippingFast className="text-white text-4xl mb-2" />
+            <h3 className="text-white text-lg font-bold">Fast Shipping</h3>
+            <p className="text-white">
+              Enjoy fast and reliable shipping services for your chemical
+              orders.
+            </p>
+          </div>
+          <div className="flex flex-col items-center m-4">
+            <FaTools className="text-white text-4xl mb-2" />
+            <h3 className="text-white text-lg font-bold">Equipment</h3>
+            <p className="text-white">
+              Find high-quality equipment and machinery for your chemical
+              processes.
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Additional Content */}
+      {/*Services*/}
       <div className="bg-gray-200 py-8">
         <div className="container mx-auto text-center text-gray-800">
-          <h2 className="text-3xl font-bold mb-4">Our Services</h2>
+          <h2 className="text-4xl font-bold mb-4 ">Our Services</h2>
           <p className="text-xl mb-8">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            ultricies ligula non semper vehicula.
+            Explore our diverse range of high-quality chemical products sourced
+            from trusted manufacturers worldwide.
           </p>
-          <img
-            src="https://via.placeholder.com/400x200"
-            alt="Services"
-            className="mb-4 rounded-lg"
-          />
-          <Link
-            to="/services"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded hover:shadow-md"
-          >
-            Learn More
-          </Link>
+          <div className="container mx-auto py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-8 mx-4">
+              {/* Service 1 */}
+              <div className="bg-white rounded-lg shadow-md">
+                <img
+                  src={Service1Image}
+                  alt="Service 1"
+                  className="w-full h-64 object-cover rounded-t-lg"
+                />
+                <div className="p-6">
+                  <h2 className="text-xl font-semibold mb-2">Service 1</h2>
+                  <p className="text-gray-700 mb-4">
+                    Description of Service 1. Lorem ipsum dolor sit amet,
+                    consectetur adipiscing elit.
+                  </p>
+                </div>
+              </div>
+
+              {/* Service 2 */}
+              <div className="bg-white rounded-lg shadow-md">
+                <img
+                  src={Service2Image}
+                  alt="Service 2"
+                  className="w-full h-64 object-cover rounded-t-lg"
+                />
+                <div className="p-6">
+                  <h2 className="text-xl font-semibold mb-2">Service 2</h2>
+                  <p className="text-gray-700 mb-4">
+                    Description of Service 2. Lorem ipsum dolor sit amet,
+                    consectetur adipiscing elit.
+                  </p>
+                </div>
+              </div>
+
+              {/* Service 3 */}
+              <div className="bg-white rounded-lg shadow-md">
+                <img
+                  src={Service3Image}
+                  alt="Service 3"
+                  className="w-full h-64 object-cover rounded-t-lg"
+                />
+                <div className="p-6">
+                  <h2 className="text-xl font-semibold mb-2">Service 3</h2>
+                  <p className="text-gray-700 mb-4">
+                    Description of Service 3. Lorem ipsum dolor sit amet,
+                    consectetur adipiscing elit.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

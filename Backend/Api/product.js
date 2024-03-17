@@ -11,6 +11,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 // create product
 router.post(
     "/create-product",
+    authenticateSeller,
     catchAsyncErrors(async (req, res, next) => {
         try {
             const shopId = req.body.shopId;

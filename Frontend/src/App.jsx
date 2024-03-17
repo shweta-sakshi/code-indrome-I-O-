@@ -1,18 +1,22 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect, useContext, useState } from 'react';
-import { LoginContext } from './component/contexProvider/Context.jsx';
-import Loginform from './component/Loginform';
-import SignUp from './component/SignUp';
+import { useEffect, useContext, useState } from "react";
+import { LoginContext } from "./component/contexProvider/Context.jsx";
+import Loginform from "./component/Loginform";
+import SignUp from "./component/SignUp";
+import Profile from "./component/Userprofile";
 import Error from "./pages/Error.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
+import Activationpage from "./pages/Activationpage.jsx";
+import Selleractivationpage from "./pages/Selleractivationpage.jsx";
 import Card1 from "./component/Card1";
-import Sidebar from "./component/Sidebar.jsx";
-import Dash from "./component/Dashboard.jsx";
-import Profile from './component/UserProfile';
-import Sellerprofile from './component/Sellerprofile';
-import Paymentdetail from './component/Paymentdetail';
-import Addproduct from './component/Addproduct.jsx';
+import Dashboard from "./component/Dashboard.jsx";
+import Userdashboard from "./pages/seller/Sellerdashboard.jsx";
+import Sellerprofile from "./component/Sellerprofile";
+import Sellerloginform from "./component/Sellerloginform.jsx";
+import Paymentdetail from "./component/Paymentdetail";
+import { RiLoader4Line } from "react-icons/ri";
+import Addproduct from "./component/Addproduct.jsx";
+import SellerAddProduct from "./component/SellerAddProduct.jsx";
 import TrackOrder from './component/TrackOrder.jsx';
 import Rating from "./component/Rating.jsx";
 
@@ -59,42 +63,44 @@ function App() {
     }, 2000);
   }, []);
 
-  //this variable is for opening and closing of sidebar
-  const [sidebarToggle, setSidebarToggle] = useState(false);
-
   return (
     <>
-      {/* this is sidebar and navbar */}
-      {/* <div className="flex">
-        <Sidebar sidebarToggle={sidebarToggle} />
-        <Dash
-          sidebarToggle={sidebarToggle}
-          setSidebarToggle={setSidebarToggle}
-        />
-      </div> */}
-
       {data ? (
         <>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Landingpage />} />
               <Route path="/login" element={<Loginform />} />
-              <Route path="/dash" element={<Dashboard />} />
+              <Route path='/userdashboard' element={<Userdashboard />} />
+              {/* <Route path="/dash" element={<Dashboard />} /> */}
               <Route path="/register" element={<SignUp />} />
               <Route path="/userprofile" element={<Profile />} />
               <Route path="/product_card" element={<Card1 />} />
-              <Route path="/sellerprofile" element={<Sellerprofile />} />
-              <Route path="/Paymentdetail" element={<Paymentdetail />} />
-              <Route path="/Addproduct" element={<Addproduct />} />
+              <Route path="/sellersignupform" element={<Sellerprofile />} />
+              <Route path="/sellerloginform" element={<Sellerloginform />} />
+              <Route
+                path="/seller/activation/:activation_token"
+                element={<Selleractivationpage />}
+              />
+              <Route path="/paymentdetail" element={<Paymentdetail />} />
+              <Route path="/addproduct" element={<Addproduct />} />
               <Route path='/trackOrder' element={<TrackOrder />} />
               <Route path='/rating' element={<Rating/>} />
-              <Route path='*' element={<Error />} />
+              <Route
+                path="/activation/:activation_token"
+                element={<Activationpage />}
+              />
+              <Route path="/sellerAddProduct" element={<SellerAddProduct />} />
+              <Route path="*" element={<Error />} />
             </Routes>
           </BrowserRouter>
         </>
       ) : (
-        <div>
-          <h1>Loading...</h1>
+        <div className="flex justify-center items-center h-screen">
+          <div className="text-center flex">
+            <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" />
+            <h1 className="text-xl m-2">Loading...</h1>
+          </div>
         </div>
       )}
     </>
