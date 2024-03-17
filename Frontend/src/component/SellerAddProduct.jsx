@@ -2,12 +2,13 @@ import React, { useState } from "react";
 
 const SellerAddProduct = () => {
   const [productData, setProductData] = useState({
-    productName: "",
-    companyName: "",
+    pname: "",
     price: "",
+    category: "",
+    description: "",
     quantity: "",
-    manufacturingDate: "",
-    expiryDate: "",
+    manufacturing: "",
+    expiry: "",
     image: null,
   });
 
@@ -26,9 +27,80 @@ const SellerAddProduct = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission logic here
+    const { pname, price, category, description, quantity, manufacturing, expiry } = productData;
+    const file = image
+
+    //for file we should use formdata
+    const formData = new FormData();
+    formData.append("pname", pname);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("description", description);
+    formData.append("quantity", quantity);
+    formData.append("manufacturing", manufacturing);
+    formData.append("expiry", expiry);
+    formData.append("file", file);
+
+
+    if (pname === "") {
+      toast.error("Product name is required!", {
+        position: "top-center"
+      });
+    } else if (price === "") {
+      toast.warning("Price is required!", {
+        position: "top-center"
+      });
+    } else if (category === "") {
+      toast.warning("category is required!", {
+        position: "top-center"
+      });
+    } else if (quantity === "") {
+      toast.warning("quantity is required!", {
+        position: "top-center"
+      });
+    } else if (manufacturing === "") {
+      toast.warning("manufactuting date is required!", {
+        position: "top-center"
+      });
+    } else if (expiry === "") {
+      toast.warning("expiry date is required!", {
+        position: "top-center"
+      });
+    } else {
+
+      //getting value of token as createPost require authentication.
+      let token = localStorage.getItem("sellersdatatoken");
+
+      const productData = await fetch("/api/create-product", {
+        method: "POST",
+        headers: {
+          "authorization": token
+        },
+        body: formData
+      });
+
+      const productRes = await productData.json();
+      if (productRes.status === 201) {
+        toast.success("Post Created (❁´◡`❁)😊", {
+          position: "top-center"
+        });
+        setInpval({ ...inpval, title: "", body: "", photo: "" });
+        handleClose()
+      } else if (productRes.status === 422) {
+        toast.error("Try again with all the details!!", {
+          position: "top-center"
+        });
+        setInpval({ ...inpval, title: "", body: "", photo: "" });
+      } else {
+        toast.error("try again!!!", {
+          position: "top-center"
+        });
+        setInpval({ ...inpval, title: "", body: "", photo: "" });
+      }
+    }
   };
 
   return (
@@ -68,28 +140,28 @@ const SellerAddProduct = () => {
               <input
                 type="text"
                 id="productName"
-                name="productName"
-                value={productData.productName}
+                name="pname"
+                value={productData.pname}
                 onChange={handleChange}
                 placeholder="Enter product name"
                 className="w-full px-3 py-2 border rounded mt-1 hover:border-2 hover:border-black"
               />
             </div>
-            {/* Company Name */}
+            {/* Category of product  */}
             <div className="mb-2">
               <label
-                htmlFor="companyName"
+                htmlFor="category"
                 className="text-gray-600 cursor-pointer"
               >
-                Company Name
+                Category
               </label>
               <input
                 type="text"
-                id="companyName"
-                name="companyName"
-                value={productData.companyName}
+                id="category"
+                name="category"
+                value={productData.category}
                 onChange={handleChange}
-                placeholder="Enter company name"
+                placeholder="Enter category of product"
                 className="w-full px-3 py-2 border rounded mt-1 hover:border-2 hover:border-black"
               />
             </div>
@@ -133,16 +205,16 @@ const SellerAddProduct = () => {
             <div className="flex justify-between mb-2">
               <div>
                 <label
-                  htmlFor="manufacturingDate"
+                  htmlFor="manufacturing"
                   className="text-gray-600 cursor-pointer"
                 >
                   Manufacturing Date
                 </label>
                 <input
                   type="date"
-                  id="manufacturingDate"
-                  name="manufacturingDate"
-                  value={productData.manufacturingDate}
+                  id="manufacturing"
+                  name="manufacturing"
+                  value={productData.manufacturing}
                   onChange={handleChange}
                   placeholder="Enter manufacturing date"
                   className="w-full px-3 py-2 border rounded mt-1 hover:border-2 hover:border-black"
@@ -150,21 +222,39 @@ const SellerAddProduct = () => {
               </div>
               <div>
                 <label
-                  htmlFor="expiryDate"
+                  htmlFor="expiry"
                   className="text-gray-600 cursor-pointer"
                 >
                   Expiry Date
                 </label>
                 <input
                   type="date"
-                  id="expiryDate"
-                  name="expiryDate"
-                  value={productData.expiryDate}
+                  id="expiry"
+                  name="expiry"
+                  value={productData.expiry}
                   onChange={handleChange}
                   placeholder="Enter expiry date"
                   className="w-full px-3 py-2 border rounded mt-1 hover:border-2 hover:border-black"
                 />
               </div>
+            </div>
+            {/* Description */}
+            <div className="mb-2">
+              <label
+                htmlFor="description"
+                className="text-lg font-semibold cursor-pointer"
+              >
+                Description
+              </label>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                value={productData.description}
+                onChange={handleChange}
+                placeholder="Dscription of product"
+                className="w-full px-3 py-2 border rounded mt-1 hover:border-2 hover:border-black"
+              />
             </div>
             {/* Add to Cart Button */}
             <button
