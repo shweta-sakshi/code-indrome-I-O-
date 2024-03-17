@@ -11,21 +11,23 @@ const Userdashboard = () => {
     const [card, setCard] = useState([]);
     const [data, setData] = useState(false);
 
-    axios.get('/api/get-all-products', {
-        headers: {
-            "Content-Type": "application/json",
-        }
-    })
-        .then(response => {
-            console.log(response);
-            setCard(response.data.products);
-            setData(true);
+    useEffect(() => {
+        axios.get('/api/get-all-products', {
+            headers: {
+                "Content-Type": "application/json",
+            }
         })
-        .catch(error => {
-            setData(false)
-            console.error('Error fetching products:', error);
-            // Handle error, show error message to user, etc.
-        });
+            .then(response => {
+                console.log(response);
+                setCard(response.data.products);
+                setData(true);
+            })
+            .catch(error => {
+                setData(false)
+                console.error('Error fetching products:', error);
+                // Handle error, show error message to user, etc.
+            });
+    }, [data])
 
     return (
         <>
