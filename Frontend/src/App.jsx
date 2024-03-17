@@ -13,6 +13,11 @@ import Profile from './component/UserProfile';
 import Sellerprofile from './component/Sellerprofile';
 import Paymentdetail from './component/Paymentdetail';
 import Addproduct from './component/Addproduct.jsx';
+import TrackOrder from './component/TrackOrder.jsx';
+import Rating from "./component/Rating.jsx";
+
+
+
 
 function App() {
   const [data, setData] = useState(false);
@@ -81,6 +86,8 @@ function App() {
               <Route path="/sellerprofile" element={<Sellerprofile />} />
               <Route path="/Paymentdetail" element={<Paymentdetail />} />
               <Route path="/Addproduct" element={<Addproduct />} />
+              <Route path='/trackOrder' element={<TrackOrder />} />
+              <Route path='/rating' element={<Rating/>} />
               <Route path='*' element={<Error />} />
             </Routes>
           </BrowserRouter>
