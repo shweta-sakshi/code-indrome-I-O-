@@ -4,54 +4,50 @@ const catchAsyncErrors = require("../Middleware/catchAsyncErrors");
 const router = express.Router();
 const Product = require("../Models/productSchema");
 const Order = require("../Models/orderSchema");
-const Shop = require("../Models/shopSchema");
-const cloudinary = require("cloudinary");
+const Shop = require("../Models/shopSchema.js")
+const upload = require("../Middleware/multer.js");
 const ErrorHandler = require("../utils/ErrorHandler");
 
 // create product
 router.post(
     "/create-product",
     authenticateSeller,
+    upload.single("file"),
     catchAsyncErrors(async (req, res, next) => {
+        const { pname, price, category, description, quantity, manufacturing, expiry } = req.body;
+        let cloudinaryResponse = null;
+
+        if (!pname || !price || !category || !quantity || !manufacturing || !expiry) {
+            return res.status(422).json({ error: "Title and body required" });
+        }
         try {
-            const shopId = req.body.shopId;
-            const shop = await Shop.findById(shopId);
-            if (!shop) {
-                return next(new ErrorHandler("Shop Id is invalid!", 400));
-            } else {
-                let images = [];
+            // Check if file was uploaded and use the local file path
+            if (req.file) {
+                const localFilePath = req.file.path;
+                // Upload the local file to Cloudinary
 
-                if (typeof req.body.images === "string") {
-                    images.push(req.body.images);
-                } else {
-                    images = req.body.images;
-                }
-
-                const imagesLinks = [];
-
-                for (let i = 0; i < images.length; i++) {
-                    const result = await cloudinary.v2.uploader.upload(images[i], {
-                        folder: "products",
-                    });
-
-                    imagesLinks.push({
-                        public_id: result.public_id,
-                        url: result.secure_url,
-                    });
-                }
-
-                const productData = req.body;
-                productData.images = imagesLinks;
-                productData.shop = shop;
-
-                const product = await Product.create(productData);
-
-                res.status(201).json({
-                    success: true,
-                    product,
-                });
+                cloudinaryResponse = await uploadOnCloudinary(localFilePath);
             }
+
+            const newProduct = new Product({
+                pname, price, category, quantity, manufacturing, expiry, description,
+                photo: cloudinaryResponse ? cloudinaryResponse.url : "",
+                shop: req.rootSeller
+            })
+
+            newProduct.shop.password = undefined;
+            newProduct.shop.cpassword = undefined;
+            newProduct.shop.tokens = undefined;
+
+            //save the post.
+            const createProduct = await newProduct.save();
+
+            //send success response.
+            console.log(createProduct)
+            res.status(201).json({ status: 201, createProduct });
+
         } catch (error) {
+            console.log(error)
             return next(new ErrorHandler(error, 400));
         }
     })
@@ -116,6 +112,7 @@ router.get(
                 products,
             });
         } catch (error) {
+            console.log(error)
             return next(new ErrorHandler(error, 400));
         }
     })
