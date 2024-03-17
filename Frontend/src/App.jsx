@@ -8,7 +8,8 @@ import Activationpage from "./pages/Activationpage.jsx";
 import Selleractivationpage from "./pages/Selleractivationpage.jsx";
 import Card1 from "./component/Card1";
 import Dashboard from "./component/Dashboard.jsx";
-import Userdashboard from "./pages/seller/Sellerdashboard.jsx";
+import Userdashboard from "./pages/user/Userdashboard.jsx";
+import Sellerdashboard from "./pages/seller/Sellerdashboard.jsx"
 import Sellerprofile from "./component/Sellerprofile";
 import Sellerloginform from "./component/Sellerloginform.jsx";
 import Paymentdetail from "./component/Paymentdetail";
@@ -32,7 +33,8 @@ function App() {
           <Route path="/sellersignupform" element={<Sellerprofile />} />
           <Route path="/sellerloginform" element={<Sellerloginform />} />
           <Route path="/dash" element={<Dashboard />} />
-          <Route path='/userdashboard' element={<Userdashboard />} />
+          <Route path='/userdash' element={<Userdashboard />} />
+          <Route path="/sellerdash" element={<Sellerdashboard />} />
           <Route
             path="/seller/activation/:activation_token"
             element={<Selleractivationpage />}
@@ -42,7 +44,7 @@ function App() {
             element={<Activationpage />}
           />
           <Route path="/product_card" element={<Card1 />} />
-          <Route path="/trackorder" element={<Userprotectedroute Component={<TrackOrder />} />} />
+          <Route path="/trackorder" element={<Userprotectedroute Component={TrackOrder} />} />
           <Route path="/rating" element={<Userprotectedroute Component={Rating} />} />
           <Route path="/userprofile" element={<Userprotectedroute Component={Profile} />} />
           <Route path="/paymentdetail" element={<Userprotectedroute Component={Paymentdetail} />} />
