@@ -10,6 +10,7 @@ import Activationpage from "./pages/Activationpage.jsx";
 import Selleractivationpage from "./pages/Selleractivationpage.jsx";
 import Card1 from "./component/Card1";
 import Dashboard from "./component/Dashboard.jsx";
+import Userdashboard from "./pages/seller/Sellerdashboard.jsx";
 import Sellerprofile from "./component/Sellerprofile";
 import Sellerloginform from "./component/Sellerloginform.jsx";
 import Paymentdetail from "./component/Paymentdetail";
@@ -65,7 +66,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Landingpage />} />
               <Route path="/login" element={<Loginform />} />
-              <Route path="/dash" element={<Dashboard />} />
+              <Route path='/userdashboard' element={<Userdashboard />} />
+              {/* <Route path="/dash" element={<Dashboard />} /> */}
               <Route path="/register" element={<SignUp />} />
               <Route path="/userprofile" element={<Profile />} />
               <Route path="/product_card" element={<Card1 />} />

@@ -2,7 +2,6 @@ const express = require('express')
 const cookieParser = require("cookie-parser");
 const user = require('./Api/user');
 const Shop = require('./Api/Shop.js');
-const coupon = require('./Api/coupon.js');
 const order = require('./Api/order.js');
 const payment = require('./Api/payment.js');
 const product = require('./Api/product.js');
@@ -23,7 +22,6 @@ app.use(cookieParser());
 app.use(cors());
 app.use("/api", user);
 app.use("/api", Shop);
-app.use("/api", coupon);
 app.use("/api", order);
 app.use("/api", payment);
 app.use("/api", product);

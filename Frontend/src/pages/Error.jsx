@@ -18,7 +18,7 @@ const Error = () => {
           ></path>
         </svg>
         <p className="text-lg font-semibold">
-          Error occurred. Please try again later.
+          Error occurred. Wrong Route.
         </p>
       </div>
     </div>

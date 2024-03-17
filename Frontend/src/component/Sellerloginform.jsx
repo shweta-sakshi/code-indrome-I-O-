@@ -65,7 +65,8 @@ const Sellerloginform = () => {
                     }
                 })
                 .then(res => {
-                    localStorage.setItem("sellersdatatoken", res.result.token);
+                    console.log(res)
+                    localStorage.setItem("sellersdatatoken", res.data.result.token);
                     history("/dash");
                     setInpval({ ...inpval, email: "", password: "" });
                 })
