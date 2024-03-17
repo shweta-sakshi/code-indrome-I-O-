@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import { LoginContext } from '../../component/contexProvider/Context';
 import Dashboard from '../../component/Dashboard';
 import { RiLoader4Line } from "react-icons/ri";
@@ -89,52 +89,62 @@ const Userdashboard = () => {
     }
 
     return (
-        <>
-            <Dashboard />
-            {
-                data ?
-                    <>
-                        {/* rendering number of post cards */}
-                        {card.map(item => (
-                            <div key={item._id}>
-                                <>
-                                    {/* product card*/}
-                                    <div>
-                                        <div className="max-w-sm rounded overflow-hidden shadow-lg text-center hover:cursor-pointer hover:shadow-2xl hover:bg-slate-200">
-                                            <div className="flex border-0 border-b-2 border-gray-400">
-                                                <img
-                                                    src={Person}
-                                                    alt=""
-                                                    className="m-1 h-14 w-14 rounded-full border-2 border-white shadow-md"
-                                                />
-                                                <div className=" text-red-900 text-3xl text-center m-3">{data.product}</div>
-                                            </div>
-                                            <img src={imageSource} alt={data.name} className="w-full sm:h-96" />
-                                            <ul className="border-0 border-t-2 border-gray-400">
-                                                <li className="m-1">
-                                                    <strong>Price:</strong> {data.price}
-                                                </li>
-                                                <li className="m-1">
-                                                    <strong>Rating:</strong> {data.rating}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </>
-                            </div>
-                        ))}
-                    </> :
-                    (
-                        <div className="flex justify-center items-center h-screen">
-                            <div className="text-center flex">
-                                <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" />
-                                <h1 className="text-xl m-2">Loading...</h1>
-                            </div>
+      <>
+        <Dashboard />
+        {data ? (
+          <>
+            {/* rendering number of post cards */}
+            {card.map((item) => (
+              <div key={item._id}>
+                <>
+                  {/* product card*/}
+                  <div>
+                    <div className="max-w-sm rounded overflow-hidden shadow-lg text-center hover:cursor-pointer hover:shadow-2xl hover:bg-slate-200">
+                      <div className="flex border-0 border-b-2 border-gray-400">
+                        <img
+                          src={data.Person}
+                          alt=""
+                          className="m-1 h-14 w-14 rounded-full border-2 border-white shadow-md"
+                        />
+                        <div className=" text-red-900 text-3xl text-center m-3">
+                          {data.product}
                         </div>
-                    )
-            }
-        </>
-    )
+                      </div>
+                      <img
+                        src={data.imageSource}
+                        alt={data.name}
+                        className="w-full sm:h-96"
+                      />
+                      <ul className="border-0 border-t-2 border-gray-400">
+                        <li className="m-1">
+                          <strong>Price:</strong> {data.price}
+                        </li>
+                        <li className="m-1">
+                          <strong>Rating:</strong> {data.rating}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </>
+              </div>
+            ))}
+            <Link
+              to="/sellersignupform"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold sm:p-2 p-1 rounded hover:shadow-md"
+            >
+              Create Business Account
+            </Link>
+          </>
+        ) : (
+          <div className="flex justify-center items-center h-screen">
+            <div className="text-center flex">
+              <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" />
+              <h1 className="text-xl m-2">Loading...</h1>
+            </div>
+          </div>
+        )}
+      </>
+    );
 }
 
 export default Userdashboard

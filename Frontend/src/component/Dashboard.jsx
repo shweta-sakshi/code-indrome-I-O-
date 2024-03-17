@@ -6,7 +6,7 @@ const Dashboard = () => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
 
   return (
-    <div className="w-full">
+    <div className="w-full z-10 relative">
       <Navbar
         sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}

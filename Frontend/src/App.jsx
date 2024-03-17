@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
+import { RiLoader4Line } from "react-icons/ri";
 import { LoginContext } from "./component/contexProvider/Context.jsx";
+import Dashboard from "./component/Dashboard.jsx";
 import Loginform from "./component/Loginform";
 import SignUp from "./component/SignUp";
 import Profile from "./component/Userprofile";
@@ -9,16 +11,15 @@ import Landingpage from "./pages/Landingpage.jsx";
 import Activationpage from "./pages/Activationpage.jsx";
 import Selleractivationpage from "./pages/Selleractivationpage.jsx";
 import Card1 from "./component/Card1";
-import Dashboard from "./component/Dashboard.jsx";
 import Userdashboard from "./pages/seller/Sellerdashboard.jsx";
 import Sellerprofile from "./component/Sellerprofile";
 import Sellerloginform from "./component/Sellerloginform.jsx";
 import Paymentdetail from "./component/Paymentdetail";
-import { RiLoader4Line } from "react-icons/ri";
 import Addproduct from "./component/Addproduct.jsx";
 import SellerAddProduct from "./component/SellerAddProduct.jsx";
 import TrackOrder from './component/TrackOrder.jsx';
 import Rating from "./component/Rating.jsx";
+import ProductInfo from "./component/ProductInfo.jsx";
 
 
 
@@ -78,19 +79,14 @@ function App() {
               <Route path="/product_card" element={<Card1 />} />
               <Route path="/sellersignupform" element={<Sellerprofile />} />
               <Route path="/sellerloginform" element={<Sellerloginform />} />
-              <Route
-                path="/seller/activation/:activation_token"
-                element={<Selleractivationpage />}
-              />
+              <Route path="/seller/activation/:activation_token"element={<Selleractivationpage />}/>
               <Route path="/paymentdetail" element={<Paymentdetail />} />
               <Route path="/addproduct" element={<Addproduct />} />
               <Route path='/trackOrder' element={<TrackOrder />} />
               <Route path='/rating' element={<Rating/>} />
-              <Route
-                path="/activation/:activation_token"
-                element={<Activationpage />}
-              />
+              <Route path="/activation/:activation_token"element={<Activationpage />}/>
               <Route path="/sellerAddProduct" element={<SellerAddProduct />} />
+              <Route path="/productInfo" element={<ProductInfo />} />
               <Route path="*" element={<Error />} />
             </Routes>
           </BrowserRouter>

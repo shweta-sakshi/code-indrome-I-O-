@@ -33,7 +33,7 @@ export default function Loginform() {
   const loginUser = async (e) => {
     e.preventDefault();
 
-    const { email, password } = inpval;
+    const { email, password } = inpval; 
 
     if (email === "") {
       toast.error("email is required!", {
