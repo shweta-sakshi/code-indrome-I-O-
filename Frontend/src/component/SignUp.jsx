@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useState } from 'react';
 import { FaUser, FaPhone, FaEnvelope, FaLock } from "react-icons/fa";
 import axios from "axios";
+import "react-toastify/dist/ReactToastify.css"; 
 
 const SignUp = () => {
 
@@ -222,7 +223,17 @@ const SignUp = () => {
             </p>
           </div>
         </form>
-        <ToastContainer />
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </div>
   );

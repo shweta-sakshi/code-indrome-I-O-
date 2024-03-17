@@ -8,6 +8,7 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import axios from "axios";
+import "react-toastify/dist/ReactToastify.css"; 
 
 const Seller = () => {
 
@@ -281,14 +282,27 @@ const Seller = () => {
               </div>
               <p className="text-center mt-4">
                 Already have an account?
-                <a href="/sellerloginform" className="text-blue-500 hover:underline">
+                <a
+                  href="/sellerloginform"
+                  className="text-blue-500 hover:underline"
+                >
                   {" "}
                   Sign in
                 </a>
               </p>
             </div>
           </form>
-          <ToastContainer />
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </div>
       </div>
     );
