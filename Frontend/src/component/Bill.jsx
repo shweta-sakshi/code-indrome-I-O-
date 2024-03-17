@@ -17,6 +17,11 @@ function Bill({ items }) {
           <div className="divide-y divide-gray-300">
             {renderedItems}
             <BillTotal items={items} />
+            <div className="flex justify-center mt-4">
+              <button className="bg-blue-500 text-white py-2 px-4 rounded-xl hover:bg-blue-600">
+                Place Order
+              </button>
+            </div>
           </div>
         ) : (
           <p className="p-4 text-center">No items in the cart</p>
