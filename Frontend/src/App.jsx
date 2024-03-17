@@ -17,6 +17,8 @@ import Sellerloginform from "./component/Sellerloginform.jsx";
 import Paymentdetail from "./component/Paymentdetail";
 import Addproduct from "./component/Addproduct.jsx";
 import SellerAddProduct from "./component/SellerAddProduct.jsx";
+import Userprotectedroute from "./component/Userprotectedroute.jsx";
+import SellerprotectedRoute from "./component/SellerprotectedRoute.jsx";
 import TrackOrder from './component/TrackOrder.jsx';
 import Rating from "./component/Rating.jsx";
 import ProductInfo from "./component/ProductInfo.jsx";
@@ -25,82 +27,40 @@ import ProductInfo from "./component/ProductInfo.jsx";
 
 
 function App() {
-  const [data, setData] = useState(false);
-
-  const { logindata, setLoginData } = useContext(LoginContext);
-
-  // const history = useNavigate();
-
-  // Function to check if the user is logged in
-  const DashboardValid = async () => {
-    //getting value of token
-    let token = localStorage.getItem("usersdatatoken");
-
-    //calling validate API
-    const res = await fetch("/validuser", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-
-    const data = await res.json();
-
-    if (data.status == 401 || !data) {
-      console.log("User not loggedIn");
-    } else {
-      console.log("user verify");
-      setLoginData(data);
-      // history("/dash");
-      window.location.href = "/dash";
-    }
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      DashboardValid();
-      setData(true);
-    }, 2000);
-  }, []);
 
   return (
     <>
-      {data ? (
-        <>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Landingpage />} />
-              <Route path="/login" element={<Loginform />} />
-              <Route path='/userdashboard' element={<Userdashboard />} />
-              {/* <Route path="/dash" element={<Dashboard />} /> */}
-              <Route path="/register" element={<SignUp />} />
-              <Route path="/userprofile" element={<Profile />} />
-              <Route path="/product_card" element={<Card1 />} />
-              <Route path="/sellersignupform" element={<Sellerprofile />} />
-              <Route path="/sellerloginform" element={<Sellerloginform />} />
-              <Route path="/seller/activation/:activation_token"element={<Selleractivationpage />}/>
-              <Route path="/paymentdetail" element={<Paymentdetail />} />
-              <Route path="/addproduct" element={<Addproduct />} />
-              <Route path='/trackOrder' element={<TrackOrder />} />
-              <Route path='/rating' element={<Rating/>} />
-              <Route path="/activation/:activation_token"element={<Activationpage />}/>
-              <Route path="/sellerAddProduct" element={<SellerAddProduct />} />
-              <Route path="/productInfo" element={<ProductInfo />} />
-              <Route path="*" element={<Error />} />
-            </Routes>
-          </BrowserRouter>
-        </>
-      ) : (
-        <div className="flex justify-center items-center h-screen">
-          <div className="text-center flex">
-            <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" />
-            <h1 className="text-xl m-2">Loading...</h1>
-          </div>
-        </div>
-      )}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landingpage />} />
+          <Route path="/login" element={<Loginform />} />
+          <Route path="/userdashboard" element={<Userdashboard />} />
+          {/* <Route path="/dash" element={<Dashboard />} /> */}
+          <Route path="/register" element={<SignUp />} />
+          <Route path="/userprofile" element={<Profile />} />
+          <Route path="/product_card" element={<Card1 />} />
+          <Route path="/sellersignupform" element={<Sellerprofile />} />
+          <Route path="/sellerloginform" element={<Sellerloginform />} />
+          <Route
+            path="/seller/activation/:activation_token"
+            element={<Selleractivationpage />}
+          />
+          <Route path="/paymentdetail" element={<Paymentdetail />} />
+          <Route path="/addproduct" element={<Addproduct />} />
+          <Route path="/trackOrder" element={<TrackOrder />} />
+          <Route path="/rating" element={<Rating />} />
+          <Route
+            path="/activation/:activation_token"
+            element={<Activationpage />}
+          />
+          <Route path="/sellerAddProduct" element={<SellerAddProduct />} />
+          <Route path="/productInfo" element={<ProductInfo />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
+
 
 export default App;

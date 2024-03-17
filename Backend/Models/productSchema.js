@@ -13,9 +13,6 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter your product category!"],
     },
-    tags: {
-        type: String,
-    },
     quantity: {
         type: Number,
         unit: { type: String, required: true },
@@ -26,29 +23,17 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     expiry: {
-        type: Number,
-        unit: { type: String, required: true },
+        type: Date,
         required: true
     },
-    originalPrice: {
+    price: {
         type: Number,
     },
-    stock: {
-        type: Number,
-        required: [true, "Please enter your product stock!"],
+    photo: {
+        type: String,
+        default:
+            "https://chemindigest.com/wp-content/uploads/2021/04/specialty-chemicals-6.jpg",
     },
-    images: [
-        {
-            public_id: {
-                type: String,
-                required: true,
-            },
-            url: {
-                type: String,
-                required: true,
-            },
-        },
-    ],
     reviews: [
         {
             user: {
@@ -72,13 +57,9 @@ const productSchema = new mongoose.Schema({
     ratings: {
         type: Number,
     },
-    shopId: {
-        type: String,
-        required: true,
-    },
     shop: {
         type: Object,
-        required: true,
+        ref: "Shops",
     },
     sold_out: {
         type: Number,
