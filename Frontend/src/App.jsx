@@ -17,6 +17,11 @@ import Paymentdetail from "./component/Paymentdetail";
 import { RiLoader4Line } from "react-icons/ri";
 import Addproduct from "./component/Addproduct.jsx";
 import SellerAddProduct from "./component/SellerAddProduct.jsx";
+import TrackOrder from './component/TrackOrder.jsx';
+import Rating from "./component/Rating.jsx";
+
+
+
 
 function App() {
 
