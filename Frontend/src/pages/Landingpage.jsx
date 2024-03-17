@@ -9,27 +9,33 @@ const LandingPage = () => {
   return (
     <div className="bg-gradient-to-r from-blue-900 to-blue-400 min-h-screen">
       {/* Navigation Bar */}
-      <nav className="bg-gray-800 p-4 flex justify-between items-center fixed w-full z-10">
+      <nav className="bg-gray-800 p-4 flex justify-between items-center sm:fixed w-full z-10">
         <div className="text-white text-2xl font-bold">Chemical Hub</div>
-        <div>
+        <div className="sm:flex grid grid-rows-1">
+          <Link
+            to="/sellersignupform"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold sm:p-2 p-1 rounded hover:shadow-md"
+          >
+            Create Business Account
+          </Link>
           <Link
             to="/login"
-            className="text-white font-bold py-2 px-4 rounded mr-4 hover:bg-gray-700"
+            className="text-white font-bold sm:p-2 p-1  rounded mx-2 hover:bg-gray-700"
           >
             Log In
           </Link>
           <Link
             to="/register"
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded hover:shadow-md"
+            className="bg-green-500 hover:bg-green-600 text-white font-bold sm:p-2 p-1 rounded hover:shadow-md"
           >
-            Register
+            Create User Account
           </Link>
         </div>
       </nav>
 
       {/* Main Content */}
       <div className="flex flex-col justify-center items-center py-16">
-        <div className="text-5xl font-bold mb-8 text-white text-center mt-4">
+        <div className="text-5xl font-bold mb-8 text-white text-center sm:mt-4 ">
           Welcome to Chemical Hub
         </div>
         <div className="flex justify-center items-center mb-8">

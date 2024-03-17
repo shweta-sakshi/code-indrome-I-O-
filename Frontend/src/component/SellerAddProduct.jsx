@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Dashboard from "./Dashboard";
 
 const SellerAddProduct = () => {
   const [productData, setProductData] = useState({
