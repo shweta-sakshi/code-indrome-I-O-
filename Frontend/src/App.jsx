@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./component/contexProvider/Context.jsx";
-import Loginform from "./component/Loginform";
+import  Loginform  from "./component/Loginform";
 import SignUp from "./component/SignUp";
 import Profile from "./component/Userprofile";
 import Error from "./pages/Error.jsx";
