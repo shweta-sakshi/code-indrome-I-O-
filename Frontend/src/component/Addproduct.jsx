@@ -67,13 +67,20 @@ function App() {
 
   return (
     <div>
-      <Itemlist
-        items={items}
-        addToCart={handleAddItem}
-        removeFromCart={handleRemoveItem}
-      />
-      <div className="flex items-start justify-center">
-        <Bill items={items} />
+      <div>
+        <Dashboard />
+      </div>
+      <div>
+        <div className="mt-16">
+          <Itemlist
+            items={items}
+            addToCart={handleAddItem}
+            removeFromCart={handleRemoveItem}
+          />
+          <div className="flex items-start justify-center">
+            <Bill items={items} />
+          </div>
+        </div>
       </div>
     </div>
   );
