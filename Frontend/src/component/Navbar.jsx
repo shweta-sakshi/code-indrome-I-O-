@@ -21,7 +21,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
           <input
             type="text"
             className="w-full px-4 py-1 pl-12 rounded shadow outline-none hidden md:block"
-            placeholder='Search...'
+            placeholder="Search..."
           />
         </div>
         <div className="text-white">
@@ -33,18 +33,24 @@ const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
             <div className="bg-white text-black z-10 hidden absolute rounded-lg shadow w-32 group-focus:block top-full right-0">
               <ul className="py-2 text-sm">
                 <li>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-200">
-                    Profile
+                  <a
+                    href="/userprofile"
+                    className="block px-4 py-2 hover:bg-gray-200"
+                  >
+                    <div>Profile</div>
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-200">
-                    Settings
+                  <a
+                    href="/userprofile"
+                    className="block px-4 py-2 hover:bg-gray-200"
+                  >
+                    <div>Settings</div>
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-200">
-                    Log Out
+                  <a href="/" className="block px-4 py-2 hover:bg-gray-200">
+                    <div>Log Out</div>
                   </a>
                 </li>
               </ul>
