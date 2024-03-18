@@ -16,7 +16,7 @@ function Rating() {
       <div className="bg-gray-100 min-h-screen flex justify-center items-center">
         <div className="product bg-white p-8 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-4">Product Name</h2>
-          <div className="rating flex mb-4 cursor-pointer text-2xl">
+          <div className="rating flex mb-4 text-2xl cursor-pointer">
             {[1, 2, 3, 4, 5].map((value) => (
               <span
                 key={value}
