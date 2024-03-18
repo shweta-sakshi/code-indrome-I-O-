@@ -4,6 +4,7 @@ const router = new express.Router();
 const bcrypt = require("bcryptjs");
 const { authenticate } = require("../Middleware/authentication.js");
 const upload = require("../Middleware/multer.js");
+const uploadOnCloudinary = require("../utils/Cloudinary.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
 const ErrorHandler = require("../Middleware/error.js");
 const sendMail = require("../utils/sendMail.js");
@@ -19,7 +20,6 @@ router.post("/register", upload.single("file"), async (req, res) => {
     let cloudinaryResponse = null;
 
     if (!fname || !email || !phone || !password || !cpassword) {
-        console.log("fill all the details");
         res.status(422).json({ error: "fill all the details" });
     }
 
@@ -30,11 +30,10 @@ router.post("/register", upload.single("file"), async (req, res) => {
         const preuser = await Users.findOne({ email: email });
 
         if (preuser) {
-            res.status(422).json({ error: "This Email/phone already Exist" });
+            res.status(422).json({ message: "This Email/phone already Exist" });
         } else if (password != cpassword) {
             res.status(422).json({ error: "Confirm password doesn't match" });
         }
-
         //when everthing finds to be correct then save the data.
         else {
             if (req.file) {
@@ -70,7 +69,7 @@ router.post("/register", upload.single("file"), async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        res.status(422).json(err);
+        res.status(402).json(err);
     }
 });
 
@@ -87,6 +86,7 @@ router.post("/activation",
         console.log("enter to activation");
         try {
             const { activation_token } = req.body
+            console.log(activation_token)
             const newUser = await jwt.verify(activation_token, process.env.ACTIVATION_SECRETKEY)
             if (!newUser) {
                 return next(new ErrorHandler("Invatid Token"))
@@ -121,6 +121,7 @@ router.post("/activation",
             sendToken(user, 201, res);
 
         } catch (error) {
+            console.log(error);
             res.status(500).json(error.message);
         }
     }))

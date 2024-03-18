@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useState } from 'react';
 import { FaUser, FaPhone, FaEnvelope, FaLock } from "react-icons/fa";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
 
@@ -42,7 +42,7 @@ const SignUp = () => {
 
     const { fname, email, phone, password, cpassword } = inpval;
     const file = photofile;
-
+    console.log(file)
     if (fname === "") {
       toast.warning("fname is required!", {
         position: "top-center"
@@ -83,32 +83,36 @@ const SignUp = () => {
       });
     } else {
       //everything is checked and user data will be transfer to backend database.
-
-      axios.post("/api/register", {
-        fname: fname,
-        email: email,
-        phone: phone,
-        file: file,
-        password: password,
-        cpassword: cpassword
-      }, {
+      console.log(file)
+      const formData = new FormData();
+      formData.append("fname", fname);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("file", file);
+      formData.append("password", password);
+      formData.append("cpassword", cpassword);
+      const res = await axios.post("/api/register", formData, {
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "multipart/form-data"
+        },
       })
-        .then(res => {
-          toast.success(res.message, {
-            position: "top-center"
-          });
-          setInpval({ ...inpval, fname: "", email: "", phone: "", password: "", cpassword: "" });
-          setPhoto(null);
-        })
-        .catch(error => {
-          console.log(error)
-          toast.error(res.message, {
-            position: "top-center"
-          });
+      if (res.status === 201) {
+        toast.success("Check your E_mail", {
+          position: "top-center"
         });
+      } else if (res.status === 402) {
+        toast.error("User already exist", {
+          position: "top-center"
+        });
+      } else if (res.status === 422) {
+        toast.error("Invalid Credential", {
+          position: "top-center"
+        });
+      } else {
+        toast.error("Give valid email", {
+          position: "top-center"
+        });
+      }
     }
   }
 

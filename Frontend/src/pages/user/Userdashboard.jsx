@@ -17,56 +17,61 @@ const Userdashboard = () => {
                 "Content-Type": "application/json",
             }
         })
-            .then(response => {
-                console.log(response);
-                setCard(response.data.products);
+            .then(res => {
+                setCard(res.data.products);
                 setData(true);
             })
             .catch(error => {
                 setData(false)
                 console.error('Error fetching products:', error);
-                // Handle error, show error message to user, etc.
             });
     }, [data])
+
+    const openProduct = (item) => {
+        console.log(item)
+    }
 
     return (
         <>
             {
                 data ?
                     (
-                        <>
+                        <div>
                             {/* rendering number of post cards */}
-                            {card && card.length > 0 ?.map(item => (
+                            {card.map(item => (
                                 <div key={item._id}>
-                                    {/* product card*/}
-                                    <div className="max-w-sm rounded overflow-hidden shadow-lg text-center hover:cursor-pointer hover:shadow-2xl hover:bg-slate-200">
+                                    {/* product card */}
+                                    <div
+                                        onClick={openProduct(item)}
+                                        className="max-w-sm rounded overflow-hidden shadow-lg text-center hover:cursor-pointer hover:shadow-2xl hover:bg-slate-200"
+                                    >
                                         <div className="flex border-0 border-b-2 border-gray-400">
                                             <img
-                                                src={Person}
-                                                alt=""
+                                                src="https://chemindigest.com/wp-content/uploads/2021/04/specialty-chemicals-6.jpg"
+                                                alt={item.shop.Avatar}
                                                 className="m-1 h-14 w-14 rounded-full border-2 border-white shadow-md"
                                             />
-                                            <div className=" text-red-900 text-3xl text-center m-3">{data.product}</div>
+                                            <div className=" text-red-900 text-3xl text-center m-3">{item.pname}</div>
                                         </div>
-                                        <img src={imageSource} alt={data.name} className="w-full sm:h-96" />
+                                        <img src="https://chemindigest.com/wp-content/uploads/2021/04/specialty-chemicals-6.jpg" alt={data.name} className="w-full sm:h-96" />
                                         <ul className="border-0 border-t-2 border-gray-400">
                                             <li className="m-1">
-                                                <strong>Price:</strong> {data.price}
+                                                <strong>Price:</strong> {item.price}
                                             </li>
                                             <li className="m-1">
-                                                <strong>Rating:</strong> {data.rating}
+                                                <strong>Rating:</strong> 4.5
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             ))}
-                        </>
+                        </div>
                     ) :
                     (
                         <div className="flex justify-center items-center h-screen">
                             <div className="text-center flex">
-                                <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" />
-                                <h1 className="text-xl m-2">Loading...</h1>
+                                {/* <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" /> */}
+                                <h1 className="text-xl m-2">No Product Available</h1>
                             </div>
                         </div>
                     )

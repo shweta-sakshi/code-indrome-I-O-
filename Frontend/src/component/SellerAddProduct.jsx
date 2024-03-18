@@ -45,7 +45,7 @@ const SellerAddProduct = () => {
     formData.append("expiry", expiry);
     formData.append("file", file);
 
-
+    console.log(formData)
     if (pname === "") {
       toast.error("Product name is required!", {
         position: "top-center"
@@ -85,7 +85,7 @@ const SellerAddProduct = () => {
 
       const productRes = await productData.json();
       if (productRes.status === 201) {
-        toast.success("Post Created (❁´◡`❁)😊", {
+        toast.success("Product Created (❁´◡`❁)😊", {
           position: "top-center"
         });
         setInpval({ ...inpval, title: "", body: "", photo: "" });
