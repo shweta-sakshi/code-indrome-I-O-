@@ -113,7 +113,7 @@ const Sellerloginform = () => {
                 className="w-full px-4 py-2 focus:outline-none"
               />
               <div className="showpass" onClick={() => setPassShow(!passShow)}>
-                {!passShow ? "Show" : "Hide"}
+               
               </div>
             </div>
           </div>

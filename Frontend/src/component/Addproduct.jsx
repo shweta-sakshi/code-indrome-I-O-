@@ -1,34 +1,34 @@
 import { useState } from "react";
 import Itemlist from "./ItemList";
+// import Cart from "./Cart";
 import Bill from "./Bill";
 import Dashboard from "./Dashboard";
 
 function App() {
+  // const userId = useParams();//.....how to get this
+  // const [card, setCard] = useState([]);
+  // useEffect(() => {
+  //   let token = localStorage.getItem("usersdatatoken");
+  //   fetch('/api/get-all-orders/userId', {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": token
+  //     }
+  //   }).then(res => res.json())
+  //     .then(result => {
+  //       setCard(result.posts)
+  //     })
+  // }, [])
 
-  const userId = useParams();//.....how to get this
-  const [card, setCard] = useState([]);
-  useEffect(() => {
-    let token = localStorage.getItem("usersdatatoken");
-    fetch('/api/get-all-orders/userId', {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
-    }).then(res => res.json())
-      .then(result => {
-        setCard(result.posts)
-      })
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     DashboardValid();
+  //     setData(true);
+  //   }, 2000);
+  // }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      DashboardValid();
-      setData(true);
-    }, 2000);
-  }, []);
-
-  const [quat, setQuantity] = useState([
+  const [items, setItems] = useState([
     { id: 1, name: "Agricultural Products", price: 500, qty: 0 },
     { id: 2, name: "Medical Products", price: 50, qty: 0 },
     { id: 3, name: "Household Products", price: 50, qty: 0 },
@@ -63,18 +63,20 @@ function App() {
     setItems(updatedItems);
   };
 
-  
-
   return (
     <div>
-      <Itemlist
-        items={items}
-        addToCart={handleAddItem}
-        removeFromCart={handleRemoveItem}
-      />
-      <div className="flex items-start justify-center">
-        <Bill items={items} />
-      </div>
+     
+      <div >
+          <Itemlist
+            items={items}
+            addToCart={handleAddItem}
+          removeFromCart={handleRemoveItem}
+          />
+          <div className="flex items-start justify-center">
+            <Bill items={items} />
+          </div>
+        </div>
+     
     </div>
   );
 }

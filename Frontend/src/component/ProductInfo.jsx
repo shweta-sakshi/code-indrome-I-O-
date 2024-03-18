@@ -32,7 +32,7 @@ const ProductInfo = (data) => {
         <Dashboard />
       </div>
       <div className="flex justify-center items-center h-screen ">
-        <div className="max-w-md rounded overflow-hidden mt-6 ">
+        <div className="max-w-md rounded overflow-hidden mt-16 ">
           <div>
             <img src={Services} alt="product image" className="w-full" />
           </div>
