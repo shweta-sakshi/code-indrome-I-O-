@@ -52,7 +52,7 @@ function App() {
           <Route path="/paymentdetail" element={<Userprotectedroute Component={Paymentdetail} />} />
           <Route path="/cart" element={<Userprotectedroute Component={Addproduct} />} />
           <Route path="/addproduct" element={<SellerprotectedRoute Component={SellerAddProduct} />} />
-          <Route path="/productInfo" element={<ProductInfo />} />
+          <Route path="/productInfo/:pname/:price/:manufacturing/:expiry/:category" element={<ProductInfo />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>

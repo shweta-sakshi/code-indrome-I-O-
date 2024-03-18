@@ -88,18 +88,19 @@ const SellerAddProduct = () => {
         toast.success("Product Created (❁´◡`❁)😊", {
           position: "top-center"
         });
-        setInpval({ ...inpval, title: "", body: "", photo: "" });
+        setInpval({ ...inpval, pname: "", price: "", category: "", description: "", quantity: "", manufacturing: "", expiry: "", image: null });
+
         handleClose()
       } else if (productRes.status === 422) {
         toast.error("Try again with all the details!!", {
           position: "top-center"
         });
-        setInpval({ ...inpval, title: "", body: "", photo: "" });
+        setInpval({ ...inpval, pname: "", price: "", category: "", description: "", quantity: "", manufacturing: "", expiry: "", image: null });
       } else {
         toast.error("try again!!!", {
           position: "top-center"
         });
-        setInpval({ ...inpval, title: "", body: "", photo: "" });
+        setInpval({ ...inpval, pname: "", price: "", category: "", description: "", quantity: "", manufacturing: "", expiry: "", image: null });
       }
     }
   };
