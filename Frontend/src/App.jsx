@@ -1,8 +1,4 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect, useContext, useState } from "react";
-import { RiLoader4Line } from "react-icons/ri";
-import { LoginContext } from "./component/contexProvider/Context.jsx";
-import Dashboard from "./component/Dashboard.jsx";
 import Loginform from "./component/Loginform";
 import SignUp from "./component/SignUp";
 import Profile from "./component/Userprofile";
@@ -36,24 +32,15 @@ function App() {
         <Routes>
           <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Loginform />} />
-          <Route path="/userdashboard" element={<Userdashboard />} />
-          {/* <Route path="/dash" element={<Dashboard />} /> */}
           <Route path="/register" element={<SignUp />} />
-          <Route path="/userprofile" element={<Profile />} />
-          <Route path="/product_card" element={<Card1 />} />
           <Route path="/sellersignupform" element={<Sellerprofile />} />
           <Route path="/sellerloginform" element={<Sellerloginform />} />
-          <Route path="/dash" element={<Dashboard />} />
           <Route path='/userdash' element={<Userdashboard />} />
           <Route path="/sellerdash" element={<Sellerdashboard />} />
           <Route
             path="/seller/activation/:activation_token"
             element={<Selleractivationpage />}
           />
-          <Route path="/paymentdetail" element={<Paymentdetail />} />
-          <Route path="/addproduct" element={<Addproduct />} />
-          <Route path="/trackOrder" element={<TrackOrder />} />
-          <Route path="/rating" element={<Rating />} />
           <Route
             path="/activation/:activation_token"
             element={<Activationpage />}

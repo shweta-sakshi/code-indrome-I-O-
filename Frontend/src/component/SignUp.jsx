@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useState } from 'react';
 import { FaUser, FaPhone, FaEnvelope, FaLock } from "react-icons/fa";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
 
@@ -83,18 +83,18 @@ const SignUp = () => {
       });
     } else {
       //everything is checked and user data will be transfer to backend database.
-
-      const res = await axios.post("/api/register", {
-        fname: fname,
-        email: email,
-        phone: phone,
-        file: file,
-        password: password,
-        cpassword: cpassword
-      }, {
+      console.log(file)
+      const formData = new FormData();
+      formData.append("fname", fname);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("file", file);
+      formData.append("password", password);
+      formData.append("cpassword", cpassword);
+      const res = await axios.post("/api/register", formData, {
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "multipart/form-data"
+        },
       })
       if (res.status === 201) {
         toast.success("Check your E_mail", {

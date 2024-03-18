@@ -14,7 +14,7 @@ const fs = require("fs");
 
 //for user registration
 router.post("/register", upload.single("file"), async (req, res) => {
-    
+
     const { fname, email, phone, password, cpassword } = req.body
 
     let cloudinaryResponse = null;
@@ -26,9 +26,9 @@ router.post("/register", upload.single("file"), async (req, res) => {
     try {
         //we are cheking if email entered by user is already in database or not.
         //registration will be done only for new users
-        
+
         const preuser = await Users.findOne({ email: email });
-        
+
         if (preuser) {
             res.status(422).json({ message: "This Email/phone already Exist" });
         } else if (password != cpassword) {
@@ -36,7 +36,6 @@ router.post("/register", upload.single("file"), async (req, res) => {
         }
         //when everthing finds to be correct then save the data.
         else {
-            //console.log(req.body)
             if (req.file) {
                 const localFilePath = req.file.path;
                 // Upload the local file to Cloudinary
