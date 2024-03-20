@@ -15,7 +15,6 @@ const Seller = () => {
 
   const [passShow, setPassShow] = useState(false);
   const [cpassShow, setCPassShow] = useState(false);
-
   const [photofile, setPhoto] = useState(null);
 
   const [inpval, setInpval] = useState({
@@ -108,9 +107,8 @@ const Seller = () => {
       formData.append("cpassword", cpassword);
       formData.append("address", address);
       formData.append("zipCode", zipCode);
-      axios.post("/api/seller-SignUp", {
-        formData
-      }, {
+      axios.post("/api/seller-SignUp",
+        formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }

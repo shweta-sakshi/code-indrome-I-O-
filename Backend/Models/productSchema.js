@@ -57,7 +57,7 @@ const productSchema = new mongoose.Schema({
     ratings: {
         type: Number,
     },
-    shop: {
+    shopId: {
         type: Object,
         ref: "Shops",
     },

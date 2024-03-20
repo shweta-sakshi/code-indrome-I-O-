@@ -59,6 +59,8 @@ router.get(
     "/get-all-products-shop/:id",
     catchAsyncErrors(async (req, res, next) => {
         try {
+            console.log(`params: ${req.params}`)
+            console.log(`this is body: ${req.body}`)
             const products = await Product.find({ shopId: req.params.id });
 
             res.status(201).json({
@@ -66,7 +68,8 @@ router.get(
                 products,
             });
         } catch (error) {
-            return next(new ErrorHandler(error, 400));
+            console.log(error)
+            req.send(400).json({ error })
         }
     })
 );

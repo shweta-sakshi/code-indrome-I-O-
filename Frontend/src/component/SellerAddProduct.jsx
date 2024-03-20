@@ -105,6 +105,10 @@ const SellerAddProduct = () => {
     }
   };
 
+  const AddtoCart = async()=>{
+    
+  }
+
   return (
     <div>
       <div>
@@ -265,6 +269,7 @@ const SellerAddProduct = () => {
               {/* Add to Cart Button */}
               <button
                 type="submit"
+                onClick={AddtoCart}
                 className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full"
               >
                 Add item

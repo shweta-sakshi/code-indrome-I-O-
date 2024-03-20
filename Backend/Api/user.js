@@ -32,7 +32,7 @@ router.post("/register", upload.single("file"), async (req, res) => {
         if (preuser) {
             res.status(422).json({ message: "This Email/phone already Exist" });
         } else if (password != cpassword) {
-            res.status(422).json({ error: "Confirm password doesn't match" });
+            res.status(422).json({ message: "Confirm password doesn't match" });
         }
         //when everthing finds to be correct then save the data.
         else {

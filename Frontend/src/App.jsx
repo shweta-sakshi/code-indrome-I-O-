@@ -6,8 +6,6 @@ import Error from "./pages/Error.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
 import Activationpage from "./pages/Activationpage.jsx";
 import Selleractivationpage from "./pages/Selleractivationpage.jsx";
-import Card1 from "./component/Card1";
-import Dashboard from "./component/Dashboard.jsx";
 import Userdashboard from "./pages/user/Userdashboard.jsx";
 import Sellerdashboard from "./pages/seller/Sellerdashboard.jsx";
 import Sellerprofile from "./component/Sellerprofile";
@@ -41,7 +39,6 @@ function App() {
             path="/activation/:activation_token"
             element={<Activationpage />}
           />
-          <Route path="/product_card" element={<Card1 />} />
           <Route
             path="/trackorder"
             element={<Userprotectedroute Component={TrackOrder} />}

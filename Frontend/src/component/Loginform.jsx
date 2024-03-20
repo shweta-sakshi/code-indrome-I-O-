@@ -55,7 +55,7 @@ export default function Loginform() {
         .then((res) => {
           //setting token to the localStorage withName usersdatatoken
           localStorage.setItem("usersdatatoken", res.data.result.token);
-          history("/dash");
+          history("/userdash");
           setInpval({ ...inpval, email: "", password: "" });
         })
         .catch((error) => {

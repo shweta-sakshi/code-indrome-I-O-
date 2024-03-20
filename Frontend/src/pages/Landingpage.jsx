@@ -16,7 +16,7 @@ const LandingPage = () => {
             to="/sellersignupform"
             className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold sm:p-2 p-1 rounded hover:shadow-md"
           >
-            Create Business Account
+            Business Account
           </Link>
           <Link
             to="/login"
@@ -28,7 +28,7 @@ const LandingPage = () => {
             to="/register"
             className="bg-green-500 hover:bg-green-600 text-white font-bold sm:p-2 p-1 rounded hover:shadow-md"
           >
-            Create User Account
+            SignUp
           </Link>
         </div>
       </nav>
@@ -96,8 +96,7 @@ const LandingPage = () => {
                 <div className="p-6">
                   <h2 className="text-xl font-semibold mb-2">Service 1</h2>
                   <p className="text-gray-700 mb-4">
-                    Description of Service 1. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit.
+                    Description of Service
                   </p>
                 </div>
               </div>
@@ -112,8 +111,7 @@ const LandingPage = () => {
                 <div className="p-6">
                   <h2 className="text-xl font-semibold mb-2">Service 2</h2>
                   <p className="text-gray-700 mb-4">
-                    Description of Service 2. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit.
+                    Description of Service
                   </p>
                 </div>
               </div>
@@ -128,8 +126,7 @@ const LandingPage = () => {
                 <div className="p-6">
                   <h2 className="text-xl font-semibold mb-2">Service 3</h2>
                   <p className="text-gray-700 mb-4">
-                    Description of Service 3. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit.
+                    Description of Service
                   </p>
                 </div>
               </div>
