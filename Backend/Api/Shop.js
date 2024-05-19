@@ -9,6 +9,7 @@ const Shop = require("../Models/shopSchema.js");
 const { authenticateSeller } = require("../Middleware/authentication.js");
 const upload = require("../Middleware/multer.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
+const uploadOnCloudinary = require("../utils/Cloudinary.js");
 const ErrorHandler = require("../Middleware/error.js")
 const fs = require("fs");
 
@@ -60,7 +61,7 @@ router.post("/seller-SignUp", upload.single("file"), async (req, res) => {
                 })
             } catch (error) {
                 console.log(error)
-                return next(new ErrorHandler(error.message, 500))
+                res.status(500).json(error);
             }
 
         }

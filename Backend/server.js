@@ -5,7 +5,6 @@ const Shop = require('./Api/Shop.js');
 const order = require('./Api/order.js');
 const payment = require('./Api/payment.js');
 const product = require('./Api/product.js');
-const withdraw = require('./Api/withdraw.js');
 const cors = require("cors");
 require("dotenv").config()
 require("./Database/conectmongodb.js");
@@ -25,7 +24,6 @@ app.use("/api", Shop);
 app.use("/api", order);
 app.use("/api", payment);
 app.use("/api", product);
-app.use("/api", withdraw);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

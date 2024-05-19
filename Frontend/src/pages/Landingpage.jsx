@@ -9,27 +9,33 @@ const LandingPage = () => {
   return (
     <div className="bg-gradient-to-r from-blue-900 to-blue-400 min-h-screen">
       {/* Navigation Bar */}
-      <nav className="bg-gray-800 p-4 flex justify-between items-center fixed w-full z-10">
+      <nav className="bg-gray-800 p-4 flex justify-between items-center sm:fixed w-full z-10">
         <div className="text-white text-2xl font-bold">Chemical Hub</div>
-        <div>
+        <div className="sm:flex grid grid-rows-1">
+          <Link
+            to="/sellersignupform"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold sm:p-2 p-1 rounded hover:shadow-md"
+          >
+            Business Account
+          </Link>
           <Link
             to="/login"
-            className="text-white font-bold py-2 px-4 rounded mr-4 hover:bg-gray-700"
+            className="text-white font-bold sm:p-2 p-1  rounded mx-2 hover:bg-gray-700"
           >
             Log In
           </Link>
           <Link
             to="/register"
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded hover:shadow-md"
+            className="bg-green-500 hover:bg-green-600 text-white font-bold sm:p-2 p-1 rounded hover:shadow-md"
           >
-            Register
+            SignUp
           </Link>
         </div>
       </nav>
 
       {/* Main Content */}
       <div className="flex flex-col justify-center items-center py-16">
-        <div className="text-5xl font-bold mb-8 text-white text-center mt-4">
+        <div className="text-5xl font-bold mb-8 text-white text-center sm:mt-4 ">
           Welcome to Chemical Hub
         </div>
         <div className="flex justify-center items-center mb-8">
@@ -90,8 +96,7 @@ const LandingPage = () => {
                 <div className="p-6">
                   <h2 className="text-xl font-semibold mb-2">Service 1</h2>
                   <p className="text-gray-700 mb-4">
-                    Description of Service 1. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit.
+                    Description of Service
                   </p>
                 </div>
               </div>
@@ -106,8 +111,7 @@ const LandingPage = () => {
                 <div className="p-6">
                   <h2 className="text-xl font-semibold mb-2">Service 2</h2>
                   <p className="text-gray-700 mb-4">
-                    Description of Service 2. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit.
+                    Description of Service
                   </p>
                 </div>
               </div>
@@ -122,8 +126,7 @@ const LandingPage = () => {
                 <div className="p-6">
                   <h2 className="text-xl font-semibold mb-2">Service 3</h2>
                   <p className="text-gray-700 mb-4">
-                    Description of Service 3. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit.
+                    Description of Service
                   </p>
                 </div>
               </div>

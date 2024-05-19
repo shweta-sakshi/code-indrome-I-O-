@@ -21,7 +21,9 @@ router.post(
             return res.status(422).json({ error: "Title and body required" });
         }
         try {
-            // Check if file was uploaded and use the local file path
+            // Check if file was uploaded and use the local file path\
+            console.log("here is the information about file in backend")
+            console.log(req.file)
             if (req.file) {
                 const localFilePath = req.file.path;
                 // Upload the local file to Cloudinary
@@ -43,7 +45,6 @@ router.post(
             const createProduct = await newProduct.save();
 
             //send success response.
-            console.log(createProduct)
             res.status(201).json({ status: 201, createProduct });
 
         } catch (error) {
@@ -58,6 +59,8 @@ router.get(
     "/get-all-products-shop/:id",
     catchAsyncErrors(async (req, res, next) => {
         try {
+            console.log(`params: ${req.params}`)
+            console.log(`this is body: ${req.body}`)
             const products = await Product.find({ shopId: req.params.id });
 
             res.status(201).json({
@@ -65,7 +68,8 @@ router.get(
                 products,
             });
         } catch (error) {
-            return next(new ErrorHandler(error, 400));
+            console.log(error)
+            req.send(400).json({ error })
         }
     })
 );
@@ -106,7 +110,6 @@ router.get(
     catchAsyncErrors(async (req, res, next) => {
         try {
             const products = await Product.find().sort({ createdAt: -1 });
-
             res.status(201).json({
                 success: true,
                 products,
