@@ -47,7 +47,8 @@ function App() {
       return item;
     });
 
-    setItems(updatedItems);
+    
+    (updatedItems);
   };
 
   const handleRemoveItem = (id) => {
