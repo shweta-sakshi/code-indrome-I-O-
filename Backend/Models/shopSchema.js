@@ -11,11 +11,9 @@ const ShopSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    phonNumber: {
+    phonenumber: {
         type: Number,
         require: true,
-        length: 10,
-        unique: true
     },
     email: {
         type: String,

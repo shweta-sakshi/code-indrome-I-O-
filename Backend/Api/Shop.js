@@ -10,17 +10,18 @@ const { authenticateSeller } = require("../Middleware/authentication.js");
 const upload = require("../Middleware/multer.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
 const uploadOnCloudinary = require("../utils/Cloudinary.js");
-const ErrorHandler = require("../Middleware/error.js")
+const ErrorHandler = require("../Middleware/error.js");
 const fs = require("fs");
 
 //for Seller registration
 router.post("/seller-SignUp", upload.single("file"), async (req, res) => {
+    // console.log(req.body);
 
-    const { sname, email, phoneNumber, password, cpassword, address, zipCode } = req.body
+    const { sname, email, phonenumber, password, cpassword, address, zipCode } = req.body
 
     let cloudinaryResponse = null;
 
-    if (!sname || !email || !phoneNumber || !password || !cpassword || !address || !zipCode) {
+    if (!sname || !email || !phonenumber || !password || !cpassword || !address || !zipCode) {
         console.log("fill all the details");
         res.status(422).json({ error: "fill all the details" });
     }
@@ -42,9 +43,11 @@ router.post("/seller-SignUp", upload.single("file"), async (req, res) => {
             }
 
             const finalSeller = {
-                sname, email, phoneNumber, password, cpassword, address, zipCode,
+                sname, email, phonenumber, password, cpassword, address, zipCode,
                 Avatar: cloudinaryResponse ? cloudinaryResponse.url : ""
             };
+
+            console.log(finalSeller);
             //To verify Email account before creating user account
             const ActivationToken = createActivationToken(finalSeller);
             const activationUrl = `http://localhost:5173/seller/activation/${ActivationToken}`
@@ -53,7 +56,7 @@ router.post("/seller-SignUp", upload.single("file"), async (req, res) => {
                 await sendMail({
                     email: finalSeller.email,
                     subject: "Activate your Chemical Hub Shop",
-                    message: `Hello ${finalSeller.sname}, Welcome to Chemical Hub, Please click on the link within 5 minutes to activate your Shop: ${activationUrl}`
+                    message: `Shop ${finalSeller.sname} will be activated when you click on the link within 5 minutes: ${activationUrl}`
                 })
                 res.status(201).json({
                     success: true,
@@ -90,28 +93,31 @@ router.post("/seller/activation", CatchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler("Invatid Token"))
         }
 
-        const { sname, email, phoneNumber, password, cpassword, address, zipCode, Avatar } = newSeller
+        const { sname, email, phonenumber, password, cpassword, address, zipCode, Avatar } = newSeller
 
-        const seller = Shop.findOne({ email });
+        const seller = await Shop.findOne({ email });
         if (seller) {
             res.status(400).json("Seller already exists");
         }
 
-        seller = await Shop.create({
-            sname, email, phoneNumber, password, cpassword, address, zipCode, Avatar
+        const StoreSeller = await Shop({
+            sname, phonenumber, email, password, cpassword, address, zipCode, Avatar
         });
+
+        await StoreSeller.save()
 
         try {
             await sendMail({
                 email: email,
                 subject: "Shop Activated",
-                message: `${sname} Shop has been created successfully, Thanyou for choosing Chemical Hub`
+                message: `${sname} Shop has been created successfully, Thankyou for choosing Chemical Hub`
             })
             res.status(201).json({
                 success: true,
                 message: "Shop created you can login now"
             })
         } catch (error) {
+            console.log(error)
             return next(new ErrorHandler(error.message, 500))
         }
 

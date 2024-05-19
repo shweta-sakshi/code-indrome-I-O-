@@ -20,7 +20,7 @@ const Seller = () => {
   const [inpval, setInpval] = useState({
     sname: "",
     email: "",
-    phoneNumber: "",
+    phonenumber: "",
     password: "",
     cpassword: "",
     address: "",
@@ -39,6 +39,7 @@ const Seller = () => {
     })
   };
 
+//On chooding image value of photo will be set.
   const handleFileChange = (e) => {
     setPhoto(e.target.files[0]);
   };
@@ -47,9 +48,8 @@ const Seller = () => {
   const addUserdata = async (e) => {
     e.preventDefault();
 
-    const { sname, email, phoneNumber, password, cpassword, address, zipCode } = inpval;
+    const { sname, email, phonenumber, password, cpassword, address, zipCode } = inpval;
     const file = photofile;
-    console.log(file)
     if (sname === "") {
       toast.warning("fname is required!", {
         position: "top-center"
@@ -62,7 +62,7 @@ const Seller = () => {
       toast.warning("includes @ in your email!", {
         position: "top-center"
       });
-    } else if (phoneNumber === "") {
+    } else if (phonenumber === "") {
       toast.warning("Phone number require!", {
         position: "top-center"
       });
@@ -101,12 +101,13 @@ const Seller = () => {
       const formData = new FormData();
       formData.append("sname", sname);
       formData.append("email", email);
-      formData.append("phoneNumber", phoneNumber);
+      formData.append("phonenumber", phonenumber);
       formData.append("file", file);
       formData.append("password", password);
       formData.append("cpassword", cpassword);
       formData.append("address", address);
       formData.append("zipCode", zipCode);
+      console.log(formData);
       axios.post("/api/seller-SignUp",
         formData, {
         headers: {
@@ -117,7 +118,7 @@ const Seller = () => {
           toast.success(res.message, {
             position: "top-center"
           });
-          setInpval({ ...inpval, sname: "", email: "", phoneNumber: "", password: "", cpassword: "", address: "", zipCode: "" });
+          setInpval({ ...inpval, sname: "", email: "", phonenumber: "", password: "", cpassword: "", address: "", zipCode: "", photofile: null });
         })
         .catch(error => {
           console.log(error)
@@ -152,11 +153,11 @@ const Seller = () => {
           <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
             <FaPhone className="ml-2" />
             <input
-              type="tel"
-              name="phoneNumber"
+              type="number"
+              name="phonenumber"
               placeholder="Phone Number"
               onChange={setVal}
-              value={inpval.phoneNumber}
+              value={inpval.phonenumber}
               required
               className="w-full px-4 py-2  focus:outline-none"
             />
@@ -247,6 +248,7 @@ const Seller = () => {
             />
           </div>
 
+          {/* Certification photos..... */}
           {/* <div className="mb-4">
               <label htmlFor="photo" className="block text-gray-700">
                 Please provide the image of the Chemical Storage License:

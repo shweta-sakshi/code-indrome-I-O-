@@ -18,7 +18,7 @@ function Itemlist({ items, addToCart, removeFromCart }) {
       </div>
       <div>
         <div className="text-center font-poppins text-4xl font-bold p-5 ">
-          <div className="mt-16">Pick Your Items</div>
+          <div className="mt-16">Items In Cart</div>
         </div>
         <div className="px-10 grid gap-10 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 justify-center items-center p-2 ">
           {renderedItems}

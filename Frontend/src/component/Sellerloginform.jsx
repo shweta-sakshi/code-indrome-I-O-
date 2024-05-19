@@ -158,4 +158,4 @@ const Sellerloginform = () => {
   );
 }
 
-export default Sellerloginform
+export default Sellerloginform;

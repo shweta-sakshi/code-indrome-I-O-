@@ -1,5 +1,5 @@
 import React from "react";
-import { FaHome,FaListAlt,FaShoppingCart,FaCog } from "react-icons/fa";
+import { FaHome, FaListAlt, FaShoppingCart, FaCog } from "react-icons/fa";
 
 const Sidebar = ({ sidebarToggle }) => {
   return (

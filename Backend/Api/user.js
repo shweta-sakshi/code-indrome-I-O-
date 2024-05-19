@@ -6,9 +6,9 @@ const { authenticate } = require("../Middleware/authentication.js");
 const upload = require("../Middleware/multer.js");
 const uploadOnCloudinary = require("../utils/Cloudinary.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
-const ErrorHandler = require("../Middleware/error.js");
+const { ErrorHandler } = require("../Middleware/error.js");
 const sendMail = require("../utils/sendMail.js");
-const { sendToken } = require("../utils/sendToken.js");
+const sendToken = require("../utils/sendToken.js");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 
@@ -34,7 +34,7 @@ router.post("/register", upload.single("file"), async (req, res) => {
         } else if (password != cpassword) {
             res.status(422).json({ message: "Confirm password doesn't match" });
         }
-        //when everthing finds to be correct then save the data.
+        //when everything finds to be correct then save the data.
         else {
             if (req.file) {
                 const localFilePath = req.file.path;
@@ -50,7 +50,8 @@ router.post("/register", upload.single("file"), async (req, res) => {
             //To verify Email account before creating user account
             const ActivationToken = createActivationToken(finalUser);
             const activationUrl = `http://localhost:5173/activation/${ActivationToken}`
-            console.log(activationUrl);
+
+            //sending token in email;
             try {
                 await sendMail({
                     email: finalUser.email,
@@ -73,7 +74,7 @@ router.post("/register", upload.single("file"), async (req, res) => {
     }
 });
 
-//create Activation Token
+//create Activation Token function
 const createActivationToken = (finalUser) => {
     return jwt.sign(finalUser, process.env.ACTIVATION_SECRETKEY, {
         expiresIn: "5m",
@@ -83,10 +84,8 @@ const createActivationToken = (finalUser) => {
 //Activate user
 router.post("/activation",
     CatchAsyncErrors(async (req, res, next) => {
-        console.log("enter to activation");
         try {
             const { activation_token } = req.body
-            console.log(activation_token)
             const newUser = await jwt.verify(activation_token, process.env.ACTIVATION_SECRETKEY)
             if (!newUser) {
                 return next(new ErrorHandler("Invatid Token"))
@@ -96,12 +95,15 @@ router.post("/activation",
 
             const user = await Users.findOne({ email });
             if (user) {
+
                 return next(new ErrorHandler("User already exists", 400));
             }
 
-            user = await Users.create({
+            const StoreUser = await Users({
                 fname, email, phone, password, cpassword, Avatar
             });
+
+            await StoreUser.save()
 
             //sending successfull activation mail
             try {
@@ -146,10 +148,8 @@ router.post("/login", async (req, res) => {
                 res.status(422).json({ error: "incorrect details" });
             } else {
                 //we will be using JWT(token) for authentication through headers
-
                 //Token generate
                 const token = await userValid.generateAuthtoken();
-                console.log("we het token in login endpoint");
                 //we will use this token to generate cookie and use it in frontend
 
                 //cookie generate
@@ -158,20 +158,16 @@ router.post("/login", async (req, res) => {
                     httpOnly: true
                 });
 
-                console.log("created cookies");
-
                 const result = {
                     userValid,
                     token
                 }
-                console.log("here is valid user details:");
-                console.log(result)
                 res.status(201).json({ status: 201, result });
             }
         }
     } catch (err) {
-        res.status(401).json(err);
         console.log(err);
+        res.status(401).json(err);
     }
 })
 

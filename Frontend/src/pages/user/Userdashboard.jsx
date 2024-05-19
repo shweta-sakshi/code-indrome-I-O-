@@ -31,7 +31,7 @@ const Userdashboard = () => {
 
     return (
         <div>
-            <div className="">
+            <div>
                 <Dashboard />
             </div>
             <div className="">
@@ -74,8 +74,8 @@ const Userdashboard = () => {
                 ) : (
                     <div className="flex justify-center items-center h-screen">
                         <div className="text-center flex">
-                            {/* <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" /> */}
-                            <h1 className="text-xl m-2">No Product Available</h1>
+                            <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" />
+                            <h1 className="text-xl m-2">Loading....</h1>
                         </div>
                     </div>
                 )}

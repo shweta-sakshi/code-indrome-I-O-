@@ -49,7 +49,7 @@ router.post(
 
         } catch (error) {
             console.log(error)
-            return next(new ErrorHandler(error, 400));
+            return next(new ErrorHandler(error.message, 500))
         }
     })
 );
@@ -104,7 +104,7 @@ router.delete(
     })
 );
 
-// get all products
+// get all products for user
 router.get(
     "/get-all-products",
     catchAsyncErrors(async (req, res, next) => {
