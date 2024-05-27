@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
+    "antd": "^5.17.3",
     "axios": "^1.6.7",
     "dom": "^0.0.3",
     "http-proxy-middleware": "^2.0.6",

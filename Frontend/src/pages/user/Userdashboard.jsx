@@ -52,9 +52,12 @@ const Userdashboard = () => {
                                             {item.pname}
                                         </div>
                                     </div>
-                                    <Link to={`/productInfo/${item.pname}/${item.price}/${item.manufacturing}/${item.expiry}/${item.category}`}>
+                                    {/* Use the state property of Link to pass the product data. */}
+                                    <Link to='/productInfo'
+                                        state={{ productInformation: item }}
+                                    >
                                         <img
-                                            src="https://chemindigest.com/wp-content/uploads/2021/04/specialty-chemicals-6.jpg"
+                                            src={item.photo}
                                             alt={data.name}
                                             className="w-full sm:h-96"
                                         />

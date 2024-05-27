@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from 'react';
 import axios from "axios";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaUser, FaLock } from "react-icons/fa";
 import Button from "./Button";
+import { Sellarlogincontext } from "./contexProvider/Sellarcontext";
 import "react-toastify/dist/ReactToastify.css";
 
 const Sellerloginform = () => {
-
+  const { Sellarlogindata, setSellarlogindata } = useContext(Sellarlogincontext)
   const [passShow, setPassShow] = useState(false)
 
   const [inpval, setInpval] = useState({
@@ -69,6 +70,7 @@ const Sellerloginform = () => {
           console.log(res)
           localStorage.setItem("sellersdatatoken", res.data.result.token);
           history("/sellerdash");
+          setSellarlogindata(true);
           setInpval({ ...inpval, email: "", password: "" });
         })
         .catch(error => {

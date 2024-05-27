@@ -63,7 +63,7 @@ function App() {
             path="/addproduct"
             element={<SellerprotectedRoute Component={SellerAddProduct} />}
           />
-          <Route path="/productInfo/:pname/:price/:manufacturing/:expiry/:category" element={<ProductInfo />} />
+          <Route path="/productInfo" element={<ProductInfo />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>

@@ -1,7 +1,15 @@
-import React from 'react'
-import { FaBars, FaBell, FaSearch, FaUserCircle } from 'react-icons/fa'
+import React, { useContext } from 'react'
+import { FaBars, FaShoppingCart, FaBell, FaHeart, FaSearch, FaUserCircle } from 'react-icons/fa'
+import { Link } from 'react-router-dom';
+import { Badge } from "antd";
+import { useCartproductdata } from './contexProvider/Productcontext';
+import { LoginContext } from './contexProvider/Context';
 
 const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
+
+  const [cartdata] = useCartproductdata();
+  console.log(cartdata);
+
   return (
     <div className="bg-gray-800 px-4 py-3 flex justify-between w-full fixed">
       <div className="flex items-center text-xl">
@@ -23,9 +31,26 @@ const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
             className="w-full px-4 py-1 pl-12 rounded shadow outline-none hidden md:block"
             placeholder="Search..."
           />
-        </div>
+        </div>-
+        <Link to="/sellersignupform">
+          <div className="text-white">
+            Become a Sellar
+          </div>
+        </Link>
         <div className="text-white">
           <FaBell className="w-6 h-6 hover:cursor-pointer" />
+        </div>
+
+        <Badge count={cartdata?.length} >
+          <Link to='/cart'>
+            <div className="text-white">
+              <FaShoppingCart className="w-6 h-6 hover:cursor-pointer" />
+            </div>
+          </Link>
+        </Badge>
+
+        <div className="text-white">
+          <FaHeart className="w-6 h-6 hover:cursor-pointer" />
         </div>
         <div className="relative">
           <button className="text-white group">

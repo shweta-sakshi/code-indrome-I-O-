@@ -1,17 +1,46 @@
 import React, { useState } from "react";
 import Dashboard from "./Dashboard";
 import Services from "../photos/services.jpeg";
-import { useNavigate, useParams } from "react-router";
+import { useLocation } from "react-router-dom";
+import { useCartproductdata } from "./contexProvider/Productcontext";
+import { toast } from "react-toastify";
 
-const ProductInfo = (data) => {
-  const { pname, price, manufacturing, expiry, category } = useParams()
-  console.log(pname)
-  const image = data.image;
+/*
+1. Update the Link in Userdashboard: Use the state property to pass the product data.
+2. Access the Passed Data in the Target Component: Use the useLocation hook to access the data passed via the state.
+*/
+
+const ProductInfo = () => {
+
+  const location = useLocation();
+  const productdata = location.state.productInformation || {};
+
+  if (!productdata) {
+    return <div>No product data available</div>;
+  }
+
+  const productInformation = { ...productdata, number: 0 };
+
+  const [cartdata, setcartdata] = useCartproductdata();
   const [quantity, setQuantity] = useState(0);
 
   // Function to handle adding the product to the cart
   const handleAddToCart = () => {
-    console.log(`Product added to cart with quantity: ${quantity}`);
+    let mycart = [...cartdata]
+    let index = mycart.findIndex(item => item._id === productInformation._id);
+
+    if (index !== -1) {
+      mycart[index].number += quantity;
+    } else {
+      productInformation.number = quantity;
+      mycart.push(productInformation);
+    }
+
+    setcartdata(mycart);
+    localStorage.setItem('Cart', JSON.stringify(mycart));
+    toast.success("Item successfully added to cart!!", {
+      position: "top-center"
+    });
   };
 
   // Function to handle incrementing the quantity
@@ -38,22 +67,22 @@ const ProductInfo = (data) => {
           </div>
           <ul className="border-t-2 border-gray-400 mt-2">
             <li className="m-1">
-              <strong>Product Name:</strong> {pname}
+              <strong>Product Name:</strong> {productInformation.pname}
             </li>
             <li className="m-1">
-              <strong>Price:</strong> {price}
+              <strong>Price:</strong> {productInformation.price}
             </li>
             <li className="m-1">
-              <strong>Rating:</strong> {data.rating}
+              <strong>Rating:</strong> {productInformation.rating}
             </li>
             <li className="m-1">
-              <strong>Manufacturing Date:</strong> {manufacturing}
+              <strong>Manufacturing Date:</strong> {productInformation.manufacturing}
             </li>
             <li className="m-1">
-              <strong>Expiry Date:</strong> {expiry}
+              <strong>Expiry Date:</strong> {productInformation.expiry}
             </li>
             <li className="m-1">
-              <strong>Category :</strong> {category}
+              <strong>Category :</strong> {productInformation.category}
             </li>
             <li className="m-1 flex">
               <strong>Set Quantity :</strong>

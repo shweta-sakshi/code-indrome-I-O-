@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { FaUser, FaLock } from "react-icons/fa";
 import Button from "./Button";
-import "react-toastify/dist/ReactToastify.css"; 
+import { LoginContext } from "./contexProvider/Context";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Loginform() {
+  const { logindata, setLogindata } = useContext(LoginContext);
   const [passShow, setPassShow] = useState(false);
   const [inpval, setInpval] = useState({ email: "", password: "" });
   const history = useNavigate();
@@ -56,6 +58,7 @@ export default function Loginform() {
           //setting token to the localStorage withName usersdatatoken
           localStorage.setItem("usersdatatoken", res.data.result.token);
           history("/userdash");
+          setLogindata(true);
           setInpval({ ...inpval, email: "", password: "" });
         })
         .catch((error) => {

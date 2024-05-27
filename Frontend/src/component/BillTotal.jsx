@@ -3,7 +3,7 @@ import React from "react";
 function BillTotal({ items }) {
   let totalAmount = 0;
   for (let item of items) {
-    totalAmount += item.price * item.qty;
+    totalAmount += item.price * item.number;
   }
 
   return (
