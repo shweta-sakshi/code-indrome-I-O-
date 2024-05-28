@@ -3,27 +3,38 @@ const router = express.Router();
 const catchAsyncErrors = require("../Middleware/catchAsyncErrors");
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-// const uuid = require("uuid/v4");
-// //to create unique ids so that we are not charging again and again from same user.
-// const idempotancykey = uuid()
 
-//pay for product
-router.post(
-    "/payment",
+router.post("/payment",
     catchAsyncErrors(async (req, res, next) => {
-        const myPayment = await stripe.paymentIntents.create({
-            amount: req.body.price,
-            currency: "rupee",
-            metadata: {
-                company: "chemicalHub",
-            },
-        });
-        res.status(200).json({
-            success: true,
-            client_secret: myPayment.client_secret,
-        });
+        const { items, customer } = req.body;
+
+        try {
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items: items.map(item => ({
+                    price_data: {
+                        currency: 'inr',  // You can use any currency for testing
+                        product_data: {
+                            name: item.pname,
+                        },
+                        unit_amount: item.price * 100,  // Amount in cents for USD
+                    },
+                    quantity: item.quantity,
+                })),
+                customer_email: customer.email,
+                billing_address_collection: 'required',
+                mode: 'payment',
+                success_url: `${req.headers.origin}/success`,
+                cancel_url: `${req.headers.origin}/cancel`,
+            });
+
+            res.status(200).json({ id: session.id });
+        } catch (error) {
+            console.error("Error creating Stripe session:", error);
+            res.status(500).json({ error: "Internal Server Error" });
+        }
     })
-);
+)
 
 router.get(
     "/stripeapikey",

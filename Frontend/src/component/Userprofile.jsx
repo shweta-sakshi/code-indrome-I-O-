@@ -27,7 +27,7 @@ const UserProfile = () => {
   return (
     <div>
       <div>
-        <Dashboard/>
+        <Dashboard />
       </div>
       <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
         <div className="max-w-md mx-auto m-8 p-6 bg-white rounded shadow-md mt-[70px]">

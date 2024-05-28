@@ -8,7 +8,6 @@ import { LoginContext } from './contexProvider/Context';
 const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
 
   const [cartdata] = useCartproductdata();
-  console.log(cartdata);
 
   return (
     <div className="bg-gray-800 px-4 py-3 flex justify-between w-full fixed">

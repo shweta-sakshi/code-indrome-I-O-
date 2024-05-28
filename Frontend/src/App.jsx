@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Loginform from "./component/Loginform";
 import SignUp from "./component/SignUp";
-import Profile from "./component/Userprofile";
+import Profile from "./component/UserProfile.jsx";
 import Error from "./pages/Error.jsx";
 import Landingpage from "./pages/Landingpage.jsx";
 import Activationpage from "./pages/Activationpage.jsx";
