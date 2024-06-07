@@ -2,12 +2,14 @@ const express = require('express');
 const Users = require("../Models/userSchema");
 const router = new express.Router();
 const bcrypt = require("bcryptjs");
-const authenticate = require("../Middleware/authentication.js");
+const { authenticate } = require("../Middleware/authentication.js");
 const upload = require("../Middleware/multer.js");
+const uploadOnCloudinary = require("../utils/Cloudinary.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
-const ErrorHandler = require("../Middleware/error.js");
+const { ErrorHandler } = require("../Middleware/error.js");
 const sendMail = require("../utils/sendMail.js");
 const sendToken = require("../utils/sendToken.js");
+const jwt = require("jsonwebtoken");
 const fs = require("fs");
 
 //for user registration
@@ -15,129 +17,116 @@ router.post("/register", upload.single("file"), async (req, res) => {
 
     const { fname, email, phone, password, cpassword } = req.body
 
+    let cloudinaryResponse = null;
+
     if (!fname || !email || !phone || !password || !cpassword) {
-        console.log("fill all the details");
         res.status(422).json({ error: "fill all the details" });
     }
 
     try {
-        //we are cheking if email and phone number entered by user is already in database or not.
+        //we are cheking if email entered by user is already in database or not.
         //registration will be done only for new users
-        const preuser = await Users.findOne({ email: email, phone: phone });
+
+        const preuser = await Users.findOne({ email: email });
 
         if (preuser) {
-            //if user already exist then unlink the image.
-            const filename = req.file.filename;
-            const filepath = `StoreFiles/${filename}`
-            fs.unlink(filepath, (err) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({ message: "Error while deleting file" });
-                } else {
-                    res.json({ message: "File deleted successfully" });
-                }
-            })
-            //console.log("user already exist");
-            res.status(422).json({ error: "This Email/phone already Exist" });
-
+            res.status(422).json({ message: "This Email/phone already Exist" });
         } else if (password != cpassword) {
-
-            //if password doesn't match then unlink the image.
-            const filename = req.file.filename;
-            const filepath = `StoreFiles/${filename}`
-            fs.unlink(filepath, (err) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({ message: "Error while deleting file" });
-                }
-            })
-
-            res.status(422).json({ error: "Confirm password doesn't match" });
+            res.status(422).json({ message: "Confirm password doesn't match" });
         }
-
-        //when everthing finds to be correct then save the data.
+        //when everything finds to be correct then save the data.
         else {
+            if (req.file) {
+                const localFilePath = req.file.path;
+                // Upload the local file to Cloudinary
+                cloudinaryResponse = await uploadOnCloudinary(localFilePath);
+            }
 
-            const filename = req.file.filename;
-            const fileurl = path.join(filename);
-
-            const Avatar = fileurl;
-
-            const finalUser = { fname, email, phone, password, cpassword, Avatar };
+            const finalUser = {
+                fname, email, phone, password, cpassword,
+                Avatar: cloudinaryResponse ? cloudinaryResponse.url : ""
+            };
 
             //To verify Email account before creating user account
             const ActivationToken = createActivationToken(finalUser);
-            const activationUrl = `http://localhost:3000/activation/${ActivationToken}`
+            const activationUrl = `http://localhost:5173/activation/${ActivationToken}`
 
+            //sending token in email;
             try {
                 await sendMail({
-                    email: finalUser.fname,
+                    email: finalUser.email,
                     subject: "Activate your Chemical Hub account",
                     message: `Hello ${finalUser.fname}, Welcome to Chemical Hub, Please click on the link within 5 minutes to activate your account: ${activationUrl}`
                 })
                 res.status(201).json({
-                    succss: true,
+                    success: true,
                     message: "Please check your mail to activate account"
                 })
             } catch (error) {
-                return next(new ErrorHandler(error.message, 500))
+                console.log(error)
+                res.status(500).json(error);
             }
         }
 
     } catch (err) {
-        res.status(422).json(err);
         console.log(err);
+        res.status(402).json(err);
     }
 });
 
-//create Activation Token
+//create Activation Token function
 const createActivationToken = (finalUser) => {
-    return JsonWebTokenError.sign(finalUser, process.env.ACTIVATION_SECRETKEY, {
+    return jwt.sign(finalUser, process.env.ACTIVATION_SECRETKEY, {
         expiresIn: "5m",
     })
 }
 
 //Activate user
-router.post("/activation", CatchAsyncErrors(async (req, res, next) => {
-    try {
-        const { activation_token } = req.body
-        const newUser = jwt.verify(activation_token, process.env.ACTIVATION_SECRETKEY)
-        if (!newUser) {
-            return next(new ErrorHandler("Invatid Token"))
-        }
-
-        const { fname, email, phone, password, cpassword, Avatar } = newUser
-
-        const user = Users.findOne({ email, phone });
-        if (user) {
-            return next(new ErrorHandler("User already exists", 400));
-        }
-
-        user = await Users.create({
-            fname, email, phone, password, cpassword, Avatar
-        });
-
-        //sending successfull activation mail
+router.post("/activation",
+    CatchAsyncErrors(async (req, res, next) => {
         try {
-            await sendMail({
-                email: email,
-                subject: "Your account is created",
-                message: `Hello ${fname}, Welcome to Chemical Hub. Now you can login to the website chemical hub`
-            })
-            res.status(201).json({
-                succss: true,
-                message: "Account created"
-            })
+            const { activation_token } = req.body
+            const newUser = await jwt.verify(activation_token, process.env.ACTIVATION_SECRETKEY)
+            if (!newUser) {
+                return next(new ErrorHandler("Invatid Token"))
+            }
+
+            const { fname, email, phone, password, cpassword, Avatar } = newUser
+
+            const user = await Users.findOne({ email });
+            if (user) {
+
+                return next(new ErrorHandler("User already exists", 400));
+            }
+
+            const StoreUser = await Users({
+                fname, email, phone, password, cpassword, Avatar
+            });
+
+            await StoreUser.save()
+
+            //sending successfull activation mail
+            try {
+                await sendMail({
+                    email: email,
+                    subject: "Your account is created",
+                    message: `Hello ${fname}, Welcome to Chemical Hub. Now you can login to the website chemical hub`
+                })
+                res.status(201).json({
+                    success: true,
+                    message: "Account created"
+                })
+            } catch (error) {
+                res.status(500).json(error);
+            }
+
+            sendToken(user, 201, res);
+
         } catch (error) {
-            return next(new ErrorHandler(error.message, 500))
+            console.log(error);
+            res.status(500).json(error.message);
         }
-
-        sendToken(user, 201, res);
-
-    } catch (error) {
-        return next(new ErrorHandler(error.message, 500));
-    }
-}))
+    }))
 
 //for user Login
 router.post("/login", async (req, res) => {
@@ -145,7 +134,7 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
-        res.stataus(422).json({ error: "fill all the details" });
+        res.status(422).json({ message: "fill all the details" });
     }
 
     try {
@@ -159,10 +148,8 @@ router.post("/login", async (req, res) => {
                 res.status(422).json({ error: "incorrect details" });
             } else {
                 //we will be using JWT(token) for authentication through headers
-
                 //Token generate
                 const token = await userValid.generateAuthtoken();
-
                 //we will use this token to generate cookie and use it in frontend
 
                 //cookie generate
@@ -179,8 +166,8 @@ router.post("/login", async (req, res) => {
             }
         }
     } catch (err) {
-        res.status(401).json(err);
         console.log(err);
+        res.status(401).json(err);
     }
 })
 
@@ -195,9 +182,9 @@ router.get("/validuser", authenticate, async (req, res) => {
     }
 });
 
-//seller signout
+//user signout
 //if user doesn't have token then we can't logout them
-router.get("/SignOut", authenticate, async (req, res) => {
+router.get("/logout", authenticate, async (req, res) => {
     try {
 
         //clear token

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config()
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keySecret = process.env.SECRETKEY;
@@ -10,11 +11,9 @@ const ShopSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    phonNumber: {
-        type: Number,
-        require: true,
-        length: 10,
-        unique: true
+    phonenumber: {
+        type: String,
+        require: true
     },
     email: {
         type: String,
@@ -46,13 +45,39 @@ const ShopSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    zipCode: {
-        type: Number,
-        require: true
+    gstin: {
+        type: String,
+        required: true,
     },
+    withdrawMethod: {
+        type: Object,
+    },
+    availableBalance: {
+        type: Number,
+        default: 0,
+    },
+    transections: [
+        {
+            amount: {
+                type: Number,
+                required: true,
+            },
+            status: {
+                type: String,
+                default: "Processing",
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now(),
+            },
+            updatedAt: {
+                type: Date,
+            },
+        },
+    ],
     createdAt: {
         type: Date,
-        Default: Date.now(),
+        default: Date.now(),
     },
     resetPasswordToken: String,
     resetPasswordTime: Date,
@@ -78,9 +103,8 @@ ShopSchema.pre("save", async function (next) {
     next()
 });
 
-
 //Token generator
-ShopSchema.methods.generateAuthtoken = async function () {/* add generateAuthtoken method to ShopSchema */
+ShopSchema.methods.generateAuthtoken = async function (req, res) {/* add generateAuthtoken method to ShopSchema */
     try {
         //create JWT for authentication
         let token1 = jwt.sign({ _id: this._id }, keySecret, {
@@ -88,7 +112,7 @@ ShopSchema.methods.generateAuthtoken = async function () {/* add generateAuthtok
             expiresIn: "1d"
         });
 
-        //adding value to the token array of shop schema
+        //adding value to the token array of shopschema
         this.tokens = this.tokens.concat({ token: token1 })
         await this.save();
         return token1;
@@ -98,7 +122,16 @@ ShopSchema.methods.generateAuthtoken = async function () {/* add generateAuthtok
     }
 }
 
-//creating model in collection Called shops using Shop and store it in usrdb variable
+//creating model in collection Called shops using Shop and store it in shopdb variable
 const shopdb = new mongoose.model("Shops", ShopSchema);
+
+//To remove duplicate index.
+// shopdb.collection.dropIndex('phonNumber_1', function (err, result) {
+//     if (err) {
+//         console.error("index not found");
+//     } else {
+//         console.log('Index dropped');
+//     }
+// })
 
 module.exports = shopdb;

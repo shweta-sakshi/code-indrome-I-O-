@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config()
 const { ObjectId } = mongoose.Schema.Types
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -14,8 +15,6 @@ const User = new mongoose.Schema({
     phone: {
         type: Number,
         require: true,
-        length: 10,
-        unique: true
     },
     email: {
         type: String,
@@ -35,7 +34,7 @@ const User = new mongoose.Schema({
     },
     address: {
         type: String,
-        default:""
+        default: ""
     },
     role: {
         type: String,
@@ -59,7 +58,6 @@ const User = new mongoose.Schema({
     ]
 });
 
-
 //password hashing
 User.pre("save", async function (next) {
 
@@ -70,7 +68,6 @@ User.pre("save", async function (next) {
 
     next()
 });
-
 
 //Token generator
 User.methods.generateAuthtoken = async function () {/* add generateAuthtoken method to usrSchema */
@@ -87,10 +84,10 @@ User.methods.generateAuthtoken = async function () {/* add generateAuthtoken met
         return token1;
 
     } catch (err) {
+        console.log(`in gernerateAuthtoken ${err}`);
         res.status(422).json(err);
     }
 }
-
 
 //creating model in collection Called User using User and store it in usrdb variable
 const usrdb = new mongoose.model("Users", User);
