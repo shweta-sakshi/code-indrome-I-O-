@@ -17,12 +17,14 @@ router.post("/payment",
                         product_data: {
                             name: item.pname,
                         },
-                        unit_amount: item.price * 100,  // Amount in cents for USD
+                        unit_amount: item.price * 100,
                     },
                     quantity: item.quantity,
                 })),
-                customer_email: customer.email,
                 billing_address_collection: 'required',
+                shipping_address_collection: {
+                    allowed_countries: ['IN', 'US', 'CA'],
+                },
                 mode: 'payment',
                 success_url: `${req.headers.origin}/success`,
                 cancel_url: `${req.headers.origin}/cancel`,

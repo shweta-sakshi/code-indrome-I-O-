@@ -12,8 +12,6 @@ function Bill({ items }) {
     <BillItems key={item._id} item={item} />
   ));
 
-  console.log(items)
-
   const handlePayment = async () => {
     try {
       const response = await fetch('/api/payment', {
@@ -27,18 +25,6 @@ function Bill({ items }) {
             price: item.price,
             quantity: item.number,
           })),
-          customer: {
-            name: "Shweta Kumari",
-            email: "shweta25sakshi@gmail.com",
-            id: items._id,
-            address: {
-              line1: "123 Example Street",
-              city: "Mumbai",
-              state: "MH",
-              postal_code: "400001",
-              country: "IN",
-            },
-          }
         }),
       });
 

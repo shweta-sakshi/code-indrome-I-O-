@@ -5,6 +5,7 @@ const Shop = require('./Api/Shop.js');
 const order = require('./Api/order.js');
 const payment = require('./Api/payment.js');
 const product = require('./Api/product.js');
+const cart = require('./Api/cart.js');
 
 const cors = require("cors");
 require("dotenv").config()
@@ -25,6 +26,7 @@ app.use("/api", Shop);
 app.use("/api", order);
 app.use("/api", payment);
 app.use("/api", product);
+app.use("/api", cart);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

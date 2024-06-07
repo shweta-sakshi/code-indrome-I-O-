@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import SignatureCanvas from 'react-signature-canvas'
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -7,15 +8,19 @@ import {
   FaEnvelope,
   FaLock,
   FaMapMarkerAlt,
+  FaStore,
 } from "react-icons/fa";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from 'react-router-dom';
 
 const Seller = () => {
 
   const [passShow, setPassShow] = useState(false);
   const [cpassShow, setCPassShow] = useState(false);
   const [photofile, setPhoto] = useState(null);
+  const [sign, setSign] = useState();
+  const [url, setUrl] = useState();
 
   const [inpval, setInpval] = useState({
     sname: "",
@@ -24,8 +29,19 @@ const Seller = () => {
     password: "",
     cpassword: "",
     address: "",
-    zipCode: ""
+    gstin: ""
   });
+
+  const clearSign = () => {
+    sign.clear()
+  }
+
+  const saveSign = () => {
+    setUrl(sign.toDataURL('image / png'));
+  }
+
+  console.log(sign)
+  console.log(url)
 
 
   const setVal = (e) => {
@@ -39,7 +55,7 @@ const Seller = () => {
     })
   };
 
-//On chooding image value of photo will be set.
+  //On chooding image value of photo will be set.
   const handleFileChange = (e) => {
     setPhoto(e.target.files[0]);
   };
@@ -48,7 +64,7 @@ const Seller = () => {
   const addUserdata = async (e) => {
     e.preventDefault();
 
-    const { sname, email, phonenumber, password, cpassword, address, zipCode } = inpval;
+    const { sname, email, phonenumber, password, cpassword, address, gstin } = inpval;
     const file = photofile;
     if (sname === "") {
       toast.warning("fname is required!", {
@@ -92,40 +108,52 @@ const Seller = () => {
       toast.error("Address can't be empty!", {
         position: "top-center"
       });
-    } else if (zipCode === "") {
-      toast.error("zip code can't be empty!", {
+    } else if (gstin === "") {
+      toast.error("GSTIN Number is compulsary!", {
         position: "top-center"
       });
     } else {
-      //everything is checked and user data will be transfer to backend database.
-      const formData = new FormData();
-      formData.append("sname", sname);
-      formData.append("email", email);
-      formData.append("phonenumber", phonenumber);
-      formData.append("file", file);
-      formData.append("password", password);
-      formData.append("cpassword", cpassword);
-      formData.append("address", address);
-      formData.append("zipCode", zipCode);
-      console.log(formData);
-      axios.post("/api/seller-SignUp",
-        formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      })
-        .then(res => {
-          toast.success(res.message, {
-            position: "top-center"
-          });
-          setInpval({ ...inpval, sname: "", email: "", phonenumber: "", password: "", cpassword: "", address: "", zipCode: "", photofile: null });
+
+      var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+
+      fetch("https://sheet.gstincheck.co.in/check/{859603f1083ace79196efc723ac8612f}/{gstin}", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          console.log(result)
+          //everything is checked and user data will be transfer to backend database.
+          const formData = new FormData();
+          formData.append("sname", sname);
+          formData.append("email", email);
+          formData.append("phonenumber", phonenumber);
+          formData.append("file", file);
+          formData.append("password", password);
+          formData.append("cpassword", cpassword);
+          formData.append("address", address);
+          formData.append("gstin", gstin);
+          console.log(formData);
+          axios.post("/api/seller-SignUp",
+            formData, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          })
+            .then(res => {
+              toast.success(res.message, {
+                position: "top-center"
+              });
+              setInpval({ ...inpval, sname: "", email: "", phonenumber: "", password: "", cpassword: "", address: "", gstin: "", photofile: null });
+            })
+            .catch(error => {
+              console.log(error)
+              toast.error(error.message, {
+                position: "top-center"
+              });
+            });
         })
-        .catch(error => {
-          console.log(error)
-          toast.error(error.message, {
-            position: "top-center"
-          });
-        });
+        .catch(error => console.log('error', error));
     }
   }
 
@@ -153,7 +181,7 @@ const Seller = () => {
           <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
             <FaPhone className="ml-2" />
             <input
-              type="number"
+              type="tel"
               name="phonenumber"
               placeholder="Phone Number"
               onChange={setVal}
@@ -211,7 +239,7 @@ const Seller = () => {
           </div>
 
           <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
-            <FaUser className="ml-2" />
+            <FaMapMarkerAlt className="ml-2" />
             <input
               type="text"
               placeholder="Shop Location"
@@ -224,13 +252,13 @@ const Seller = () => {
           </div>
 
           <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
-            <FaMapMarkerAlt className="ml-2" />
+            <FaStore className="ml-2" />
             <input
-              type="phone"
-              name="zipCode"
-              placeholder="zip Code"
+              type="text"
+              placeholder="GSTIN Number"
               onChange={setVal}
-              value={inpval.zipCode}
+              value={inpval.gstin}
+              name="gstin"
               required
               className="w-full px-4 py-2  focus:outline-none"
             />
@@ -272,6 +300,33 @@ const Seller = () => {
                 className="border text-gray-400 border-gray-400 rounded px-3 py-2 w-full hover:border-gray-600 hover:border-2"
               />
             </div> */}
+
+          <div >
+            <label htmlFor="photo" className="block text-gray-700">
+              Signature:
+            </label>
+            <div className="mb-4 flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
+              <SignatureCanvas penColor='blue'
+                // style={{ border: "2px solid black" }}
+                ref={data => setSign(data)}
+                canvasProps={{ width: 500, height: 200, className: 'sigCanvas' }} />,
+            </div>
+            <div className='flex items-center justify-between'>
+              <button onClick={saveSign}>
+                save
+              </button>
+              <button className='mr-4'
+                onClick={clearSign}
+              >
+                clear
+              </button>
+            </div>
+          </div>
+
+          <div>
+            Here is image
+            <img className="text-6xl mx-4 text-white" src={url} />
+          </div>
 
           <div>
             <div className="flex justify-center">

@@ -1,3 +1,4 @@
+// not used
 function CartItem({ item, removeAllFromCart }) {
   const handleDeleteClick = () => {
     removeAllFromCart(item.id)

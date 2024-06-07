@@ -3,31 +3,13 @@ import { useNavigate, Link } from "react-router-dom";
 import { LoginContext } from "../../component/contexProvider/Context";
 import Dashboard from "../../component/Dashboard";
 import { RiLoader4Line } from "react-icons/ri";
+import { useProductlistdata } from "../../component/contexProvider/Productcontext.jsx"
 import axios from "axios";
 
 const Userdashboard = () => {
     //getting all the products added by sellers.
-    const [card, setCard] = useState([]);
-    const [data, setData] = useState(false);
-    const history = useNavigate();
 
-    useEffect(() => {
-        axios
-            .get("/api/get-all-products", {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            .then((res) => {
-                setCard(res.data.products);
-                setData(true);
-            })
-            .catch((error) => {
-                setData(false);
-                console.error("Error fetching products:", error);
-            });
-    }, [data]);
-
+    const { card, data } = useProductlistdata();
 
     return (
         <div>
@@ -38,7 +20,7 @@ const Userdashboard = () => {
                 {data ? (
                     <div className="px-10 grid gap-10 lg:grid-cols-3  sm:grid-cols-2 justify-center items-center p-2">
                         {/* rendering number of post cards */}
-                        {card.map((item) => (
+                        {card?.map((item) => (
                             <div key={item._id} className="">
                                 {/* product card */}
                                 <div className="max-w-sm rounded overflow-hidden shadow-lg text-center hover:cursor-pointer hover:shadow-2xl hover:bg-slate-200 mt-16">
@@ -54,7 +36,7 @@ const Userdashboard = () => {
                                     </div>
                                     {/* Use the state property of Link to pass the product data. */}
                                     <Link to='/productInfo'
-                                        state={{ productInformation: item }}
+                                        state={{ productInformation: item._id }}
                                     >
                                         <img
                                             src={item.photo}
@@ -74,14 +56,15 @@ const Userdashboard = () => {
                             </div>
                         ))}
                     </div>
-                ) : (
-                    <div className="flex justify-center items-center h-screen">
-                        <div className="text-center flex">
-                            <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" />
-                            <h1 className="text-xl m-2">Loading....</h1>
+                ) :
+                    (
+                        <div className="flex justify-center items-center h-screen">
+                            <div className="text-center flex">
+                                <RiLoader4Line className="animate-spin text-blue-500 text-4xl m-2" />
+                                <h1 className="text-xl m-2">Loading....</h1>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
             </div>
         </div>
     );

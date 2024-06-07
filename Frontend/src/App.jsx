@@ -18,6 +18,7 @@ import SellerprotectedRoute from "./component/SellerprotectedRoute.jsx";
 import TrackOrder from "./component/TrackOrder.jsx";
 import Rating from "./component/Rating.jsx";
 import ProductInfo from "./component/ProductInfo.jsx";
+import Paymentsucceed from "./component/Paymentsucceed.jsx";
 
 function App() {
   return (
@@ -54,6 +55,9 @@ function App() {
           <Route
             path="/paymentdetail"
             element={<Userprotectedroute Component={Paymentdetail} />}
+          />
+          <Route path="/success"
+            element={<Paymentsucceed />}
           />
           <Route
             path="/cart"

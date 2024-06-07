@@ -12,8 +12,8 @@ const ShopSchema = new mongoose.Schema({
         trim: true
     },
     phonenumber: {
-        type: Number,
-        require: true,
+        type: String,
+        require: true
     },
     email: {
         type: String,
@@ -45,8 +45,8 @@ const ShopSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    zipCode: {
-        type: Number,
+    gstin: {
+        type: String,
         required: true,
     },
     withdrawMethod: {
@@ -122,7 +122,16 @@ ShopSchema.methods.generateAuthtoken = async function (req, res) {/* add generat
     }
 }
 
-//creating model in collection Called shops using Shop and store it in usrdb variable
+//creating model in collection Called shops using Shop and store it in shopdb variable
 const shopdb = new mongoose.model("Shops", ShopSchema);
+
+//To remove duplicate index.
+// shopdb.collection.dropIndex('phonNumber_1', function (err, result) {
+//     if (err) {
+//         console.error("index not found");
+//     } else {
+//         console.log('Index dropped');
+//     }
+// })
 
 module.exports = shopdb;

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Dashboard from "./Dashboard";
 import Services from "../photos/services.jpeg";
 import { useLocation } from "react-router-dom";
-import { useCartproductdata } from "./contexProvider/Productcontext";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { useProductlistdata } from "./contexProvider/Productcontext";
 
 /*
 1. Update the Link in Userdashboard: Use the state property to pass the product data.
@@ -16,31 +17,36 @@ const ProductInfo = () => {
   const productdata = location.state.productInformation || {};
 
   if (!productdata) {
-    return <div>No product data available</div>;
+    return <div>Product data Not available</div>;
   }
 
-  const productInformation = { ...productdata, number: 0 };
+  const { card } = useProductlistdata();
+  const item = card[card.findIndex(id => id._id === productdata)];
 
-  const [cartdata, setcartdata] = useCartproductdata();
+  const productInformation = { ...item, number: 0 };
+
+  console.log(productdata);
+  console.log(item)
+  console.log(productInformation);
+
   const [quantity, setQuantity] = useState(0);
 
   // Function to handle adding the product to the cart
   const handleAddToCart = () => {
-    let mycart = [...cartdata]
-    let index = mycart.findIndex(item => item._id === productInformation._id);
-
-    if (index !== -1) {
-      mycart[index].number += quantity;
-    } else {
-      productInformation.number = quantity;
-      mycart.push(productInformation);
-    }
-
-    setcartdata(mycart);
-    localStorage.setItem('Cart', JSON.stringify(mycart));
-    toast.success("Item successfully added to cart!!", {
-      position: "top-center"
-    });
+    productInformation.number = quantity;
+    let token = localStorage.getItem("usersdatatoken");
+    axios.post('/api/addtocart', {
+      product: productInformation
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    }).then(res => {
+      console.log(res);
+    }).catch(error => {
+      console.log(error);
+    })
   };
 
   // Function to handle incrementing the quantity

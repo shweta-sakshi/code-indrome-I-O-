@@ -1,25 +1,39 @@
-import React, { useState, useContext, createContext, useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import axios from 'axios';
 
-export const Cartproductdata = createContext("");
+export const Productlistdata = createContext("");
 
 const Productcontext = ({ children }) => {
 
-    const [cartdata, setcartdata] = useState([]);
+    const [card, setCard] = useState([]);
+    const [data, setData] = useState(false);
 
     useEffect(() => {
-        let existingCartdata = localStorage.getItem('Cart')
-        if (existingCartdata) setcartdata(JSON.parse(existingCartdata));
-    }, [])
+        axios
+            .get("/api/get-all-products", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                setCard(res.data.products);
+                setData(true);
+            })
+            .catch((error) => {
+                setData(false);
+                console.error("Error fetching products:", error);
+            });
+    }, [data]);
 
     return (
         <>
-            <Cartproductdata.Provider value={[cartdata, setcartdata]}>
+            <Productlistdata.Provider value={{ card, setCard, data, setData }}>
                 {children}
-            </Cartproductdata.Provider>
+            </Productlistdata.Provider>
         </>
     )
 }
 
-const useCartproductdata = () => useContext(Cartproductdata);
+const useProductlistdata = () => useContext(Productlistdata);
 
-export { useCartproductdata, Productcontext };
+export { Productcontext, useProductlistdata }

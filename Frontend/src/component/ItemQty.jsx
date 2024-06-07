@@ -1,4 +1,4 @@
-import { useCartproductdata } from "./contexProvider/Productcontext";
+import { useCartproductdata } from "./contexProvider/Cartcontext";
 
 function ItemQuantity({ item }) {
 

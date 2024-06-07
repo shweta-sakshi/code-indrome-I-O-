@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { FaBars, FaShoppingCart, FaBell, FaHeart, FaSearch, FaUserCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 import { Badge } from "antd";
-import { useCartproductdata } from './contexProvider/Productcontext';
+import { useCartproductdata } from './contexProvider/Cartcontext';
 import { LoginContext } from './contexProvider/Context';
 
 const Navbar = ({ sidebarToggle, setSidebarToggle }) => {

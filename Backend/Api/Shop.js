@@ -4,7 +4,7 @@ const router = new express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const sendMail = require("../utils/sendMail.js");
-const sendSellerToken = require("../utils/sendSellerToken.js");
+const sendShopToken = require("../utils/sendSellerToken.js");
 const Shop = require("../Models/shopSchema.js");
 const { authenticateSeller } = require("../Middleware/authentication.js");
 const upload = require("../Middleware/multer.js");
@@ -17,11 +17,11 @@ const fs = require("fs");
 router.post("/seller-SignUp", upload.single("file"), async (req, res) => {
     // console.log(req.body);
 
-    const { sname, email, phonenumber, password, cpassword, address, zipCode } = req.body
+    const { sname, email, phonenumber, password, cpassword, address, gstin } = req.body
 
     let cloudinaryResponse = null;
 
-    if (!sname || !email || !phonenumber || !password || !cpassword || !address || !zipCode) {
+    if (!sname || !email || !phonenumber || !password || !cpassword || !address || !gstin) {
         console.log("fill all the details");
         res.status(422).json({ error: "fill all the details" });
     }
@@ -43,7 +43,7 @@ router.post("/seller-SignUp", upload.single("file"), async (req, res) => {
             }
 
             const finalSeller = {
-                sname, email, phonenumber, password, cpassword, address, zipCode,
+                sname, email, phonenumber, password, cpassword, address, gstin,
                 Avatar: cloudinaryResponse ? cloudinaryResponse.url : ""
             };
 
@@ -63,14 +63,14 @@ router.post("/seller-SignUp", upload.single("file"), async (req, res) => {
                     message: "Please check your mail to activate Shop"
                 })
             } catch (error) {
-                console.log(error)
+                console.log("here is the error in sending mail" + error)
                 res.status(500).json(error);
             }
 
         }
 
     } catch (error) {
-        console.log(error)
+        console.log("error in here" + error)
         res.status(422).json(error);
     }
 });
@@ -93,7 +93,7 @@ router.post("/seller/activation", CatchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler("Invatid Token"))
         }
 
-        const { sname, email, phonenumber, password, cpassword, address, zipCode, Avatar } = newSeller
+        const { sname, email, phonenumber, password, cpassword, address, gstin, Avatar } = newSeller
 
         const seller = await Shop.findOne({ email });
         if (seller) {
@@ -101,7 +101,7 @@ router.post("/seller/activation", CatchAsyncErrors(async (req, res, next) => {
         }
 
         const StoreSeller = await Shop({
-            sname, phonenumber, email, password, cpassword, address, zipCode, Avatar
+            sname, phonenumber, email, password, cpassword, address, gstin, Avatar
         });
 
         await StoreSeller.save()
@@ -117,11 +117,11 @@ router.post("/seller/activation", CatchAsyncErrors(async (req, res, next) => {
                 message: "Shop created you can login now"
             })
         } catch (error) {
-            console.log(error)
+            console.log("error in sending msg" + error)
             return next(new ErrorHandler(error.message, 500))
         }
 
-        sendSellerToken(seller, 201, res);
+        sendShopToken(seller, 201, res); 
 
     } catch (error) {
         console.log(error)

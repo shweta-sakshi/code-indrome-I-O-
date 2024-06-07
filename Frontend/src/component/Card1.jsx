@@ -1,3 +1,4 @@
+// not used
 import React from "react";
 import Hydoxide from "../photos/Hydroxide.jpg";
 import Sulfuric from "../photos/Sulfuric-acid.jpg";

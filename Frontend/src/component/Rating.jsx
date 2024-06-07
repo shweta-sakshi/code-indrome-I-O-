@@ -20,9 +20,8 @@ function Rating() {
             {[1, 2, 3, 4, 5].map((value) => (
               <span
                 key={value}
-                className={`star text-${
-                  rating >= value ? "yellow" : "white"
-                }-500`}
+                className={`star text-${rating >= value ? "yellow" : "white"
+                  }-500`}
                 onClick={() => handleStarClick(value)}
               >
                 &#9733;
@@ -38,6 +37,7 @@ function Rating() {
           </button>
           <div className="reviews mt-4">
             {/* Reviews will be displayed here */}
+            <h1>here  is all reviews</h1>
           </div>
         </div>
       </div>

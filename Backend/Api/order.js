@@ -7,10 +7,6 @@ const Order = require("../Models/orderSchema");
 const Shop = require("../Models/shopSchema");
 const Product = require("../Models/productSchema");
 
-//add to cart
-router.post("/add-to-cart", authenticate, async(req, res, next)=>{
-
-})
 // create new order
 router.post(
     "/create-order",

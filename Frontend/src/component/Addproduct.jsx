@@ -2,8 +2,7 @@ import { useState } from "react";
 import Itemlist from "./ItemList";
 // import Cart from "./Cart";
 import Bill from "./Bill";
-import { useCartproductdata } from "./contexProvider/Productcontext";
-import Dashboard from "./Dashboard";
+import { useCartproductdata } from "./contexProvider/Cartcontext";
 
 function App() {
 
