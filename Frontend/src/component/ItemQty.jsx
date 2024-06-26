@@ -4,6 +4,7 @@ function ItemQuantity({ item }) {
 
   const [cartdata, setcartdata] = useCartproductdata();
 
+  // This function will handle the increment of the quantity of the product.
   const handleAddClick = (pid) => {
     try {
       let mycart = [...cartdata]
@@ -15,6 +16,8 @@ function ItemQuantity({ item }) {
       console.log(error);
     }
   }
+
+  // This function will handle the decrement of the quantity of the product.
   const handleMinusClick = (pid) => {
     try {
       let mycart = [...cartdata]

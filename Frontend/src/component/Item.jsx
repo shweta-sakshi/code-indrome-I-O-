@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { useProductlistdata } from './contexProvider/Productcontext';
 
 function Item({ item }) {
-
-  console.log(item);
+  // Fetching all products from context.
   const { card } = useProductlistdata();
 
+  // Remove item from cart.
   const handleRemoveItem = (pid) => {
     const productIndex = card.findIndex(items => items._id === pid);
     const token = localStorage.getItem("usersdatatoken");
@@ -23,11 +23,13 @@ function Item({ item }) {
   }
 
 
+  // This will render the item.
   return (
     <>
       <div className="flex justify-center w-full" >
         <div className="w-full max-w-[25rem] flex flex-col items-center justify-center p-2 bg-blue-50 shadow-xl ">
           <div className="flex items-center">
+            {/* Link to product information page. */}
             <Link to='/productInfo'
               state={{ productInformation: item.productId }}
             >
@@ -48,6 +50,7 @@ function Item({ item }) {
                 item={item}
               />
             </div>
+            {/* Remove button */}
             <button
               className="bg-red-500 text-white text-lg font-medium font-poppins ml-6 rounded-md p-2 hover:bg-red-800"
               onClick={() => handleRemoveItem(item.productId)}

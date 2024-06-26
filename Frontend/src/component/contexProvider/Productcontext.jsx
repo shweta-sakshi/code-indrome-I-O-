@@ -5,9 +5,11 @@ export const Productlistdata = createContext("");
 
 const Productcontext = ({ children }) => {
 
+    // This is the state that will be shared
     const [card, setCard] = useState([]);
     const [data, setData] = useState(false);
 
+    // Fetching all products
     useEffect(() => {
         axios
             .get("/api/get-all-products", {
@@ -25,6 +27,7 @@ const Productcontext = ({ children }) => {
             });
     }, [data]);
 
+    // This is the provider that will wrap the components that need access to the shared state.
     return (
         <>
             <Productlistdata.Provider value={{ card, setCard, data, setData }}>

@@ -1,3 +1,4 @@
+// Describe : Bill Item component for Bill page.
 function BillItems({ item }) {
   return (
     <div className="flex items-center justify-between w-full font-poppins p-2 rounded-md">

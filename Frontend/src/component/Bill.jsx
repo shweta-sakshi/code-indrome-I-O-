@@ -6,18 +6,22 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = await loadStripe('pk_test_51PIGDNSH5URDaC5ADL7tuEAVnpXYFvIR5zEMLK5O50PllvYi4tKlYvWWuXlb0aclBXuKEKqinSNlWs6YeuIVZCSm002k2bkjqV');
 
 function Bill({ items }) {
-  const requiredItems = items.filter((item) => item.number > 0);
 
+  // This will filter out the items that are not in the cart.
+  const requiredItems = items.filter((item) => item.number > 0);
   const renderedItems = requiredItems.map((item) => (
     <BillItems key={item._id} item={item} />
   ));
 
+  // This function will handle the payment process.
   const handlePayment = async () => {
     try {
+      const token = localStorage.getItem('usersdatatoken');
       const response = await fetch('/api/payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          "Authorization": token
         },
         body: JSON.stringify({
           items: items.map(item => ({
@@ -40,6 +44,7 @@ function Bill({ items }) {
     }
   }
 
+  // This will render the bill.
   return (
     <div className="w-full max-w-xl p-4 mx-auto mt-5">
       <p className="text-xl font-bold text-center mb-4 mt-20">Checkout</p>

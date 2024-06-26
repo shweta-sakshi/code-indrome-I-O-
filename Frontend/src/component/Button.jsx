@@ -1,5 +1,5 @@
 import React from 'react'
-
+// This is button component which is used to display the button. we can give the button name as props.
 const button = (data) => {
   return (
     <div>

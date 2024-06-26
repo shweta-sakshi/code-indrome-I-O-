@@ -1,5 +1,6 @@
 import React from "react";
 
+// This component is used to display the total amount of the bill.
 function BillTotal({ items }) {
   let totalAmount = 0;
   for (let item of items) {

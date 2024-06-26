@@ -13,3 +13,11 @@ GOAL:
 -different types of payment options
 -shipping address
 -contact number
+
+#ngrok allows us to develop and test webhook integrations locally without deploying our application
+
+# FRONTEND WORKFLOW!!
+
+All the product data is stored in the global variable 'Productlistdata' using context.
+Cart data is stored in the global variable 'cartdata' using context.
+Payment is done using Stripe.

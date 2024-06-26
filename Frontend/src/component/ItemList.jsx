@@ -2,6 +2,7 @@ import Dashboard from "./Dashboard";
 import Item from "./Item";
 
 function Itemlist({ items }) {
+  // This component is used to display the list of items in the cart.
   const renderedItems = items.map((item) => (
     <Item
       item={item}

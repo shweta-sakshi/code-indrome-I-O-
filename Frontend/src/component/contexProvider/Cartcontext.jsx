@@ -5,8 +5,10 @@ export const Cartproductdata = createContext("");
 
 const Cartcontext = ({ children }) => {
 
+    // This is the state that will be shared
     const [cartdata, setcartdata] = useState([]);
 
+    // Fetching all products in cart of user.
     useEffect(() => {
         let token = localStorage.getItem("usersdatatoken");
         axios.get('/api/getitemsfromcart', {
@@ -22,8 +24,9 @@ const Cartcontext = ({ children }) => {
                 console.log("in Cartcontext: " + error);
             })
         // if (existingCartdata) setcartdata(JSON.parse(existingCartdata));
-    }, [])
+    }, [cartdata])
 
+    // This is the provider that will wrap the components that need access to the shared state.
     return (
         <>
             <Cartproductdata.Provider value={[cartdata, setcartdata]}>

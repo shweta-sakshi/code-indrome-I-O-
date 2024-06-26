@@ -71,4 +71,14 @@ router.post('/removefromcart', authenticate, async (req, res) => {
     }
 });
 
+// payment
+router.post('/payment', authenticate, async (req, res) => {
+    const { payment } = req.body;
+    const cart = await Cart.findOne({ user: req.userId });
+    cart.items = [];
+    cart.subTotal = 0;
+    await cart.save();
+    res.status(200).json({ message: 'Payment successful' });
+});
+
 module.exports = router;

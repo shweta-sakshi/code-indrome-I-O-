@@ -13,11 +13,13 @@ export default function Loginform() {
   const [inpval, setInpval] = useState({ email: "", password: "" });
   const history = useNavigate();
 
+  // This function will set the value of the input fields.
   const setVal = (e) => {
     const { name, value } = e.target;
     setInpval((prev) => ({ ...prev, [name]: value }));
   };
 
+  // This function will handle the login of the user.
   const loginUser = async (e) => {
     e.preventDefault();
     const { email, password } = inpval;
@@ -75,6 +77,7 @@ export default function Loginform() {
       <form className="bg-white p-8 rounded shadow-md">
         <div className="text-4xl text-center mb-8">Login</div>
 
+        {/* This is the input field for the email. */}
         <div className="mb-4">
           <div className="flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
             <FaUser className="ml-2" />
@@ -90,6 +93,7 @@ export default function Loginform() {
           </div>
         </div>
 
+        {/* This is the input field for the password. */}
         <div className="mb-4">
           <div className="flex items-center border border-gray-400 rounded hover:border-gray-600 hover:border-2">
             <FaLock className="ml-2" />
@@ -109,11 +113,13 @@ export default function Loginform() {
           </div>
         </div>
 
+        {/* This is the checkbox for the remember me. */}
         <div className="mb-4 flex items-center">
           <input type="checkbox" className="mr-2 hover:cursor-pointer" />
           <span>Remember me</span>
         </div>
 
+        {/* This is the link for the forgot password. */}
         <a
           href="#"
           className="block text-blue-500 text-center mb-4 hover:underline"
@@ -121,6 +127,7 @@ export default function Loginform() {
           Forgot Password?
         </a>
 
+        {/* This is the button for the login. */}
         <button
           type="submit"
           onClick={loginUser}
@@ -129,10 +136,12 @@ export default function Loginform() {
           Login
         </button>
 
+        {/* This is the text for the register. */}
         <div className="text-center mt-4">
           <p>Don't have an account?</p>
         </div>
 
+        {/* This is the button for the register. */}
         <div className="flex items-center justify-center">
           <Link to="/register">
             <Button info="Register Here" />
