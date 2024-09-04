@@ -121,7 +121,7 @@ router.post("/seller/activation", CatchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler(error.message, 500))
         }
 
-        sendShopToken(seller, 201, res); 
+        sendToken(seller, 201, res);
 
     } catch (error) {
         console.log(error)

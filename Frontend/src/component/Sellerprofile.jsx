@@ -264,7 +264,7 @@ const Seller = () => {
             />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label htmlFor="photo" className="block text-gray-700">
               Please provide the image of the Trade License:
             </label>
@@ -274,7 +274,7 @@ const Seller = () => {
               onChange={handleFileChange}
               className="border border-gray-400 text-gray-400 rounded px-3 py-2 w-full hover:border-gray-600 hover:border-2"
             />
-          </div>
+          </div> */}
 
           {/* Certification photos..... */}
           {/* <div className="mb-4">
@@ -301,7 +301,7 @@ const Seller = () => {
               />
             </div> */}
 
-          <div >
+          {/* <div >
             <label htmlFor="photo" className="block text-gray-700">
               Signature:
             </label>
@@ -321,12 +321,12 @@ const Seller = () => {
                 clear
               </button>
             </div>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             Here is image
             <img className="text-6xl mx-4 text-white" src={url} />
-          </div>
+          </div> */}
 
           <div>
             <div className="flex justify-center">
