@@ -4,7 +4,6 @@ import { LoginContext } from "../../component/contexProvider/Context";
 import Dashboard from "../../component/Dashboard";
 import { RiLoader4Line } from "react-icons/ri";
 import { useProductlistdata } from "../../component/contexProvider/Productcontext.jsx"
-import axios from "axios";
 
 const Userdashboard = () => {
     //getting all the products added by sellers.

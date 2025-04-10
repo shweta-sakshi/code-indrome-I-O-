@@ -3,9 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const catchAsyncErrors = require("../Middleware/catchAsyncErrors");
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-const paymentDetails = require("../Models/PaymentSucceed");
-const Order = require('../Models/orderSchema');
-const Cart = require("../Models/cart");
+const PaymentSucceeded = require("../Models/PaymentSucceed");
 const { authenticate } = require("../Middleware/authentication");
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -76,6 +74,9 @@ router.get('/order-summary/:paymentId', async (req, res) => {
     }
 });
 
+//A webhook is a way for backend to receive real-time updates from an external service
+// without needing to request data repeatedly.
+
 router.post('/webhooks', bodyParser.raw({ type: 'application/json' }), async (request, response) => {
 
     console.log('inside webhook.');
@@ -125,7 +126,7 @@ const handleCheckoutSession = async (session) => {
 
     // Save payment details in database.
     CartItems.items.map(async (item) => {
-        const newpayment = new paymentDetails({
+        const newpayment = new PaymentSucceeded({
             user: userId,
             paymentId: session.id,
             item: {

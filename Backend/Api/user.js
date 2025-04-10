@@ -184,32 +184,32 @@ router.get("/validuser", authenticate, async (req, res) => {
 
 //user signout
 //if user doesn't have token then we can't logout them
-// router.get("/logout", authenticate, async (req, res) => {
-//     try {
+router.get("/logout", authenticate, async (req, res) => {
+    try {
 
-//         //clear token
-//         req.rootUser.tokens = req.rootUser.tokens.filter((curelem) => {
-//             return curelem.token !== req.token
-//         });
+        //clear token
+        req.rootUser.tokens = req.rootUser.tokens.filter((curelem) => {
+            return curelem.token !== req.token
+        });
 
-//         //clear cookie
-//         const cookies = Object.keys(req.cookies);
-//         cookies.forEach(cookie => {
-//             res.clearCookie(cookie, { path: "/" });
-//         });
+        //clear cookie
+        const cookies = Object.keys(req.cookies);
+        cookies.forEach(cookie => {
+            res.clearCookie(cookie, { path: "/" });
+        });
 
-//         try {
-//             await req.rootUser.save();
-//         } catch (error) {
-//             console.log("error while logout");
-//         }
+        try {
+            await req.rootUser.save();
+        } catch (error) {
+            console.log("error while logout");
+        }
 
-//         res.status(201).json({ status: 201 });
+        res.status(201).json({ status: 201 });
 
-//     } catch (error) {
-//         res.status(401).json({ status: 401, error });
-//     }
-// });
+    } catch (error) {
+        res.status(401).json({ status: 401, error });
+    }
+});
 
 module.exports = router;
 

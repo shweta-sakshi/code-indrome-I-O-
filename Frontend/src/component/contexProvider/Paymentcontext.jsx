@@ -23,11 +23,13 @@ const Paymentcontext = ({ children }) => {
             })
             .catch((error) => {
                 setData(false);
-                console.error("Error fetching orders:", error);
-            });
-    }, [data]);
+                console.error("Error fetching orders:");
+                console.log(error);
 
-    // This is the provider that will wrap the components that need access to the shared state.
+            });
+    }, []);
+
+    // Wrap the components that need access to the shared state.
     return (
         <>
             <Ordersdetail.Provider value={{ detail, setDetail, data, setData }}>

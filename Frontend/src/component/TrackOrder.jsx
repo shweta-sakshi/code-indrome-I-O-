@@ -24,31 +24,6 @@ function TrackOrder() {
     }
   }, [data, detail]);
 
-  // Mock data for delivered and in-progress orders
-  // const deliveredOrders = [
-  //   {
-  //     orderId: 'x3yhd45',
-  //     date: '02/04/2024',
-  //     trackingNumber: '2345674556787345',
-  //     status: 'Delivered',
-  //     items: [
-  //       { name: 'Product A', quantity: 1, price: 29.99 },
-  //       { name: 'Product B', quantity: 2, price: 49.99 },
-  //     ],
-  //   },
-  // ];
-
-  // const inProgressOrders = [
-  //   {
-  //     orderId: 'a1b2c3d4',
-  //     date: '02/04/2024',
-  //     trackingNumber: '1234567890123456',
-  //     status: 'Shipped',
-  //     progress: ['Processed', 'Shipped', 'Out for Delivery', 'Arrived'],
-  //     currentStep: 2, // Index of the current step (0-based)
-  //   },
-  // ];
-
   return (
     <div>
       <Dashboard />

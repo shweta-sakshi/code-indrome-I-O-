@@ -4,8 +4,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../Middleware/catchAsyncErrors");
 const { authenticate, authenticateSeller } = require("../Middleware/authentication");
 const Order = require("../Models/orderSchema");
-const Shop = require("../Models/shopSchema");
-const Product = require("../Models/productSchema");
+const PaymentSucceed = require("../Models/PaymentSucceed");
 
 // create new order
 router.post(
@@ -54,7 +53,7 @@ router.post(
 router.get('/orders', authenticate, async (req, res) => {
     try {
         const userId = req.userId;
-        const orders = await paymentDetails.find({ user: userId });
+        const orders = await PaymentSucceed.find({ user: userId });
         res.status(201).json({
             success: true,
             orders,

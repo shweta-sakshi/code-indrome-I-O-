@@ -6,7 +6,7 @@ const Sellersidebar = ({ sidebarToggle }) => {
     return (
         <div>
             <div
-                className={`${sidebarToggle ? " hidden " : " block "} w-64 mt-14
+                className={`${sidebarToggle ? " block" : " hidden "} w-64 mt-14
          bg-gray-800 h-full px-4 py-2 fixed`}
             >
                 <div className="my-2 mb-4">

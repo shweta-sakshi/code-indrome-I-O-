@@ -75,7 +75,7 @@ router.get(
     })
 );
 
-// get all products in dataBase.
+// get all products
 router.get(
     "/get-all-products",
     catchAsyncErrors(async (req, res, next) => {
