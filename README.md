@@ -2,18 +2,14 @@
 
 # <h3>Chemical Market Place</h3>
 
-MERN project
-Live Project: https://heroic-kitsune-a6f0c0.netlify.app/
+# Live website: https://heroic-kitsune-a6f0c0.netlify.app/
 
-# <h4>PAYMENT STEPS: </h4>
+# <h4>PAYMENT Details: </h4>
 
 test card for India is: 4000 0035 6000 0008
-GOAL:
--different types of payment options
--shipping address
--contact number
 
--------payment workflow--------
+# --------------payment workflow---------------
+
 ![Stripe payment steps](./Frontend/src/assets/StripeCheckout.jpg)
 
 # <h1>DOCUMENTATION:</h1>
