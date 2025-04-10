@@ -10,6 +10,7 @@ const Userdashboard = () => {
     //getting all the products added by sellers.
 
     const { card, data } = useProductlistdata();
+    console.log(card);
 
     return (
         <div>
@@ -27,7 +28,7 @@ const Userdashboard = () => {
                                     <div className="flex border-0 border-b-2 border-gray-400">
                                         <img
                                             src="https://chemindigest.com/wp-content/uploads/2021/04/specialty-chemicals-6.jpg"
-                                            alt={item.shop.Avatar}
+                                            alt={item.pname}
                                             className="m-1 h-14 w-14 rounded-full border-2 border-white shadow-md"
                                         />
                                         <div className=" text-red-900 text-3xl text-center m-3">

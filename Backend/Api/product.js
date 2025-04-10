@@ -3,9 +3,8 @@ const { authenticate, authenticateSeller } = require("../Middleware/authenticati
 const catchAsyncErrors = require("../Middleware/catchAsyncErrors");
 const router = express.Router();
 const Product = require("../Models/productSchema");
-const Order = require("../Models/orderSchema");
-const Shop = require("../Models/shopSchema.js")
 const upload = require("../Middleware/multer.js");
+const uploadOnCloudinary = require("../utils/Cloudinary.js");
 const ErrorHandler = require("../utils/ErrorHandler");
 
 // create product
@@ -22,8 +21,8 @@ router.post(
         }
         try {
             // Check if file was uploaded and use the local file path\
-            console.log("here is the information about file in backend")
-            console.log(req.file)
+            // console.log("here is the information about file in backend")
+            // console.log(req.file)
             if (req.file) {
                 const localFilePath = req.file.path;
                 // Upload the local file to Cloudinary
@@ -37,9 +36,11 @@ router.post(
                 shop: req.rootSeller
             })
 
-            newProduct.shop.password = undefined;
-            newProduct.shop.cpassword = undefined;
-            newProduct.shop.tokens = undefined;
+            if (newProduct.shop) {
+                newProduct.shop.password = undefined;
+                newProduct.shop.cpassword = undefined;
+                newProduct.shop.tokens = undefined;
+            }
 
             //save the post.
             const createProduct = await newProduct.save();
@@ -74,7 +75,7 @@ router.get(
     })
 );
 
-// get all products for user
+// get all products in dataBase.
 router.get(
     "/get-all-products",
     catchAsyncErrors(async (req, res, next) => {

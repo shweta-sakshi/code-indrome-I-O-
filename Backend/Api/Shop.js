@@ -11,7 +11,6 @@ const upload = require("../Middleware/multer.js");
 const CatchAsyncErrors = require("../Middleware/catchAsyncErrors.js");
 const uploadOnCloudinary = require("../utils/Cloudinary.js");
 const ErrorHandler = require("../Middleware/error.js");
-const fs = require("fs");
 
 //for Seller registration
 router.post("/seller-SignUp", upload.single("file"), async (req, res) => {
@@ -183,35 +182,6 @@ router.get("/validseller", authenticateSeller, async (req, res) => {
         res.status(401).json({ status: 401, err });
     }
 });
-
-//seller signout
-//if seller doesn't have token then we can't logout them
-// router.get("/sellersignOut", authenticateSeller, async (req, res) => {
-//     try {
-
-//         //clear token
-//         req.rootSeller.tokens = req.rootSeller.tokens.filter((curelem) => {
-//             return curelem.token !== req.token
-//         });
-
-//         //clear cookie
-//         const cookies = Object.keys(req.cookies);
-//         cookies.forEach(cookie => {
-//             res.clearCookie(cookie, { path: "/" });
-//         });
-
-//         try {
-//             await req.rootSeller.save();
-//         } catch (error) {
-//             console.log("error while logout");
-//         }
-
-//         res.status(201).json({ status: 201, message: "Logout Complete" });
-
-//     } catch (error) {
-//         res.status(401).json({ status: 401, error });
-//     }
-// });
 
 module.exports = router;
 

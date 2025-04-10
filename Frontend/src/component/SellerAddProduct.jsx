@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Dashboard from "./Dashboard";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const SellerAddProduct = () => {
   const [productData, setProductData] = useState({
@@ -32,7 +34,7 @@ const SellerAddProduct = () => {
     e.preventDefault();
     // Handle form submission logic here
     const { pname, price, category, description, quantity, manufacturing, expiry } = productData;
-    const file = image
+    const file = productData.image
 
     //for file we should use formdata
     const formData = new FormData();
@@ -88,25 +90,23 @@ const SellerAddProduct = () => {
         toast.success("Product Created (❁´◡`❁)😊", {
           position: "top-center"
         });
-        setInpval({ ...inpval, pname: "", price: "", category: "", description: "", quantity: "", manufacturing: "", expiry: "", image: null });
-
-        handleClose()
+        setProductData({ ...productData, pname: "", price: "", category: "", description: "", quantity: "", manufacturing: "", expiry: "", image: null });
       } else if (productRes.status === 422) {
         toast.error("Try again with all the details!!", {
           position: "top-center"
         });
-        setInpval({ ...inpval, pname: "", price: "", category: "", description: "", quantity: "", manufacturing: "", expiry: "", image: null });
+        setProductData({ ...productData, pname: "", price: "", category: "", description: "", quantity: "", manufacturing: "", expiry: "", image: null });
       } else {
         toast.error("try again!!!", {
           position: "top-center"
         });
-        setInpval({ ...inpval, pname: "", price: "", category: "", description: "", quantity: "", manufacturing: "", expiry: "", image: null });
+        setProductData({ ...productData, pname: "", price: "", category: "", description: "", quantity: "", manufacturing: "", expiry: "", image: null });
       }
     }
   };
 
-  const AddtoCart = async()=>{
-    
+  const AddtoCart = async () => {
+
   }
 
   return (
@@ -277,6 +277,17 @@ const SellerAddProduct = () => {
             </div>
           </div>
         </form>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </div>
   );

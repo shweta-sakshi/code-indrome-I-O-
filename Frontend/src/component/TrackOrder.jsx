@@ -1,62 +1,145 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Dashboard from './Dashboard';
+import { useOrdersdetail } from '../component/contexProvider/Paymentcontext';
 
 function TrackOrder() {
-    return (
-      <div>
-        <div>
-          <Dashboard />
-        </div>
-        <div className="bg-blue-300 min-h-screen flex justify-center items-center ">
-          <div className="container mx-auto p-8 bg-gray-100 relative">
-            <div className="details flex flex-wrap justify-between gap-4 sm:max-w-80">
-              <div className="order">
-                <h1 className="text-xl font-bold">
-                  Order<span className="text-blue-700 ">x3yhd45</span>
-                </h1>
+
+  const { detail, data } = useOrdersdetail();
+  console.log(detail);
+
+  const [deliveredOrders, setDeliveredOrders] = useState([]);
+  const [inProgressOrders, setInProgressOrders] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      setDeliveredOrders([]);
+      setInProgressOrders([]);
+      detail.forEach((products) => {
+        if (products.DeliveryStatus === 'Order Placed') {
+          setInProgressOrders((prev) => [...prev, products]);
+        } else {
+          setDeliveredOrders((prev) => [...prev, products]);
+        }
+      });
+    }
+  }, [data, detail]);
+
+  // Mock data for delivered and in-progress orders
+  // const deliveredOrders = [
+  //   {
+  //     orderId: 'x3yhd45',
+  //     date: '02/04/2024',
+  //     trackingNumber: '2345674556787345',
+  //     status: 'Delivered',
+  //     items: [
+  //       { name: 'Product A', quantity: 1, price: 29.99 },
+  //       { name: 'Product B', quantity: 2, price: 49.99 },
+  //     ],
+  //   },
+  // ];
+
+  // const inProgressOrders = [
+  //   {
+  //     orderId: 'a1b2c3d4',
+  //     date: '02/04/2024',
+  //     trackingNumber: '1234567890123456',
+  //     status: 'Shipped',
+  //     progress: ['Processed', 'Shipped', 'Out for Delivery', 'Arrived'],
+  //     currentStep: 2, // Index of the current step (0-based)
+  //   },
+  // ];
+
+  return (
+    <div>
+      <Dashboard />
+      <div className="bg-blue-300 min-h-screen p-8">
+        {/* Delivered Orders Section */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6">Delivered Orders</h2>
+          {(deliveredOrders || []).map((order, index) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-md mb-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold">
+                  Order <span className="text-blue-700">{order.ShippingAddress}</span>
+                </h3>
+                <p className="text-green-600 font-semibold">{order.DeliveryStatus}</p>
               </div>
-              <div className="date">
-                <p className="text-base">Expected Arrival 02/04/2024 </p>
-                <p>
-                  USPS <b className="text-blue-700">2345674556787345</b>
+              <div className="mb-4">
+                <p className="text-gray-600">
+                  Delivered on: <b>{order.paymentDate}</b>
+                </p>
+                <p className="text-gray-600">
+                  Tracking Number: <b className="text-blue-700">{order._id}</b>
                 </p>
               </div>
+              <div>
+                <h4 className="text-lg font-semibold mb-2">Items:</h4>
+                {order.item.map((it, idx) => (
+                  <div key={idx} className="flex justify-between mb-2">
+                    <p>{it.pname} (x{item.number})</p>
+                    <p>${item.price.toFixed(2)}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="track my-16">
-              <ul
-                id="progress"
-                className="list-none flex flex-wrap justify-between gap-4 text-center"
-              >
-                <li className="active"></li>
-                <li className="active"></li>
-                <li className="active"></li>
-                <li className=""></li>
-              </ul>
+          ))}
+        </div>
+
+        {/* In-Progress Orders Section */}
+        <div>
+          <h2 className="text-2xl font-bold mb-6">Track Orders</h2>
+          {(inProgressOrders || []).map((order, index) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-md mb-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold">
+                  Order <span className="text-blue-700">{order._id}</span>
+                </h3>
+                <p className="text-yellow-600 font-semibold">{order.DeliveryStatus}</p>
+              </div>
+              <div className="mb-4">
+                <p className="text-gray-600">
+                  Expected Arrival: <b>{order.paymentDate}</b>
+                </p>
+                <p className="text-gray-600">
+                  Tracking Number: <b className="text-blue-700">{order._id}</b>
+                </p>
+              </div>
+
+              <div className="track my-8">
+                <div>
+                  <div key={index} className="flex justify-between mb-2">
+                    <p>{order.item.pname} (x{order.item.number})</p>
+                    <p>${order.item.price.toFixed(2)}</p>
+                  </div>
+                </div>
+                {/* <ul className="list-none flex justify-between gap-4 text-center">
+                  {order.progress.map((step, idx) => (
+                    <li
+                      key={idx}
+                      className={`flex-1 relative ${idx <= order.currentStep ? 'text-blue-700' : 'text-gray-400'
+                        }`}
+                    >
+                      <div
+                        className={`w-6 h-6 rounded-full mx-auto mb-2 ${idx <= order.currentStep ? 'bg-blue-700' : 'bg-gray-400'
+                          }`}
+                      ></div>
+                      <p>{step}</p>
+                      {idx < order.progress.length - 1 && (
+                        <div
+                          className={`absolute top-3 left-1/2 h-0.5 w-full ${idx < order.currentStep ? 'bg-blue-700' : 'bg-gray-400'
+                            }`}
+                        ></div>
+                      )}
+                    </li>
+                  ))}
+                </ul> */}
+              </div>
             </div>
-            <div className="list">
-              <p>
-                order <b>Processed</b>
-              </p>
-            </div>
-            <div className="list">
-              <p>
-                order <b>shipped</b>
-              </p>
-            </div>
-            <div className="list">
-              <p>
-                order <b>out of delivery</b>
-              </p>
-            </div>
-            <div className="list">
-              <p>
-                order <b>Arrived</b>
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 export default TrackOrder;

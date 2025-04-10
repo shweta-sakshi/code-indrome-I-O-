@@ -15,7 +15,7 @@ router.post(
         try {
             const { cart, shippingAddress, user, totalPrice, paymentInfo } = req.body;
 
-            //   group cart items by shopId
+            // group cart items by shopId
             const shopItemsMap = new Map();
 
             for (const item of cart) {
@@ -50,24 +50,18 @@ router.post(
     })
 );
 
-// get all orders of user
-router.get(
-    "/get-all-orders/:userId",
-    authenticate,
-    catchAsyncErrors(async (req, res, next) => {
-        try {
-            const orders = await Order.find({ "user._id": req.params.userId }).sort({
-                createdAt: -1,
-            });
-
-            res.status(200).json({
-                success: true,
-                orders,
-            });
-        } catch (error) {
-            return next(new ErrorHandler(error.message, 500));
-        }
-    })
-);
+//get orders of user.
+router.get('/orders', authenticate, async (req, res) => {
+    try {
+        const userId = req.userId;
+        const orders = await paymentDetails.find({ user: userId });
+        res.status(201).json({
+            success: true,
+            orders,
+        });
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+})
 
 module.exports = router;

@@ -19,6 +19,7 @@ import TrackOrder from "./component/TrackOrder.jsx";
 import Rating from "./component/Rating.jsx";
 import ProductInfo from "./component/ProductInfo.jsx";
 import Paymentsucceed from "./component/Paymentsucceed.jsx";
+import Navbar from "./component/Navbar.jsx";
 
 function App() {
   return (

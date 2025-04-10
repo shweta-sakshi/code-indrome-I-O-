@@ -6,17 +6,20 @@ import Context from './component/contexProvider/Context.jsx'
 import { Cartcontext } from './component/contexProvider/Cartcontext.jsx'
 import Sellarcontext from './component/contexProvider/Sellarcontext.jsx'
 import { Productcontext } from './component/contexProvider/Productcontext.jsx'
+import { Paymentcontext } from './component/contexProvider/Paymentcontext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Context>
-    <Productcontext>
-      <Sellarcontext>
-        <Cartcontext>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
-        </Cartcontext>
-      </Sellarcontext>
-    </Productcontext>
+    <Paymentcontext>
+      <Productcontext>
+        <Sellarcontext>
+          <Cartcontext>
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>
+          </Cartcontext>
+        </Sellarcontext>
+      </Productcontext>
+    </Paymentcontext>
   </Context>,
 )

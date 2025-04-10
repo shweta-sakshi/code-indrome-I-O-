@@ -3,7 +3,7 @@ import BillTotal from "./BillTotal";
 import BillItems from "./BillItem";
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = await loadStripe('pk_test_51PIGDNSH5URDaC5ADL7tuEAVnpXYFvIR5zEMLK5O50PllvYi4tKlYvWWuXlb0aclBXuKEKqinSNlWs6YeuIVZCSm002k2bkjqV');
+const stripePromise = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 function Bill({ items }) {
 
