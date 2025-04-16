@@ -43,7 +43,7 @@ router.post("/payment", authenticate,
             res.status(500).json({ error: "Internal Server Error" });
         }
     })
-)
+);
 
 router.get('/order-summary/:paymentId', async (req, res) => {
     try {

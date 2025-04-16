@@ -1,35 +1,41 @@
 # <h1>code-indrome-I-O-</h1>
 
-# <h3>Chemical Market Place</h3>
+# <h2>Chemical Market Place</h2>
 
-# Live website: https://heroic-kitsune-a6f0c0.netlify.app/
+An e-commerce platform that allows chemical sellers to list products and buyers to purchase them. The platform includes user authentication, email verification, product management, Stripe-based payment integration, and user-friendly interfaces for buyers and sellers.
 
-# <h4>PAYMENT Details: </h4>
+## Tech Stack
 
-test card for India is: 4000 0035 6000 0008
+- **Frontend**: React+vite, Tailwind CSS
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **Authentication**: JWT & Cookies
+- **Email Services**: Nodemailer
+- **Payments**: Stripe API
 
-# --------------payment workflow---------------
+## Features
 
-![Stripe payment steps](./Frontend/src/assets/StripeCheckout.jpg)
+- Secure registration & login (JWT-based)
+- Email verification using Nodemailer
+- Buyer/Seller role separation
+- Sellers can manage product listings
+- Buyers can add products to cart and checkout via Stripe
+- Real-time payment confirmation
+- Mobile-responsive UI
 
-# <h1>DOCUMENTATION:</h1>
+## Live Website
 
-1. Pasword Hasing[0]
-   -Earlier days we use encrypt-Decrypt(2-way connection). when ever user want to login his password will be compaired to decrypted password, increases security issue.
-   -We uses one way connection: hasing algorithm.
-   store hashed password and during login password given by user is also hashed and compare it with the stored hashed password.
+[Click here to visit chemicalMarketplace](https://heroic-kitsune-a6f0c0.netlify.app/)
 
-   -bcrypt.hash function takes arg as password, round;
-   -schema.pre method is use to perform task before saving the docunment. and use compare function uses pass by user and saved pass;
+## How to Use the Website
 
-2. Token generation[JWT]
-   -defined function to genrate token in schema(schema.method.name = );
+- **Register** as a buyer or seller using your email (includes email verification).
+- **Sellers** can add, update, or remove products.
+- **Buyers** can browse products, add to cart, and make secure payments via Stripe.
+- All users can manage their account and view order history.
 
-   -syntax to generate token: jwt.sign({payload} secerateKey,{ expiresIn:});
-   secrete key is of choice of developer.
+## Stripe Payment Workflow
 
-   -payload: user ID.
+- Test card for India: `4000 0035 6000 0008`
 
-3. Cookies/session -https://www.geeksforgeeks.org/understanding-cookies-in-web-browsers/
-
-4. Nodemailer: -https://www.freecodecamp.org/news/use-nodemailer-to-send-emails-from-your-node-js-server/
+![Stripe workflow](./Frontend/src/assets/StripeCheckout.jpg)
